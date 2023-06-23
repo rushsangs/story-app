@@ -1,0 +1,23 @@
+.storyContainer {
+    text-align: center;
+    justify-items: center;
+    padding: 0 10px;
+}
+
+.storyTitle {
+    font-size: 16px;
+    font-weight: 800px;
+    text-align: center;
+    justify-self: center;
+    line-height: 40px;
+}
+
+.storyHead {
+    height: 80px;
+    background-color: '#fff';
+}
+
+.storyBody {
+    overflow-y: scroll;
+    height: calc(100vh - 80px);
+}
