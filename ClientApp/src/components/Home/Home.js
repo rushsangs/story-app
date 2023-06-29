@@ -22,8 +22,22 @@ const Home = () => {
         <StoryPanel />
       </Sider>
 
-      <div className={styles.help} onClick={() => { setShowHelpModal(true) }}><QuestionCircleFilled style={{ fontSize: '32px', color: '#1b79ff'}}/></div>
-      <Modal title="Basic Modal" open={showHelpModal} onCancel={() => { setShowHelpModal(false) }} footer={null}>
+      <div
+        className={styles.help}
+        onClick={() => {
+          setShowHelpModal(true);
+        }}
+      >
+        <QuestionCircleFilled style={{ fontSize: "32px", color: "#1b79ff" }} />
+      </div>
+      <Modal
+        title="Basic Modal"
+        open={showHelpModal}
+        onCancel={() => {
+          setShowHelpModal(false);
+        }}
+        footer={null}
+      >
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>

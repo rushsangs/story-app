@@ -12,12 +12,17 @@
     line-height: 40px;
 }
 
-.storyHead {
-    height: 80px;
-    background-color: '#fff';
+.regenerateMsg {
+    height: 50px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: red;
+    opacity: 60%;
+    color: white
 }
 
 .storyBody {
+    margin-top: 10px;
     overflow-y: scroll;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 150px);
 }
