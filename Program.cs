@@ -1,8 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using story_app.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+// builder.Services.AddDbContext<DropdownRowContext>(opt =>
+    // opt.UseInMemoryDatabase("DropdownRows"));
 
 var app = builder.Build();
 

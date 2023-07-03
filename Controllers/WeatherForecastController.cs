@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NarrativePlanning;
 
 namespace story_app.Controllers;
 
@@ -19,14 +20,20 @@ public class WeatherForecastController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<WeatherForecast> Get()
+    public IEnumerable<string> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = DateTime.Now.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+        string path = Directory.GetCurrentDirectory();
+        string file = "/HeadSpace2/Tests/TestData/domain2.json";
+        NarrativePlanning.DomainBuilder.JSONDomainBuilder domain = new NarrativePlanning.DomainBuilder.JSONDomainBuilder(path + file);
+        WorldState initial = domain.initial;
+        WorldState goal = domain.goal;
+        List<HardConstraint> constraints = domain.middle;
+        List<Operator> actions = domain.operators;
+
+        Tuple<WorldState, WorldState, List<Operator>> x = PAC.PAC_C(initial, goal, actions, constraints);
+
+        Plan p = new PlanningProblem(x.Item1, x.Item2, x.Item3, domain.desires).HeadSpaceXSolution();
+        return p.steps.Select( x => x.Item1);
+        // .ToArray();
     }
 }
