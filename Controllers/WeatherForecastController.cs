@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NarrativePlanning;
+using story_app.Models;
 
 namespace story_app.Controllers;
 
@@ -35,5 +36,14 @@ public class WeatherForecastController : ControllerBase
         Plan p = new PlanningProblem(x.Item1, x.Item2, x.Item3, domain.desires).HeadSpaceXSolution();
         return p.steps.Select( x => x.Item1);
         // .ToArray();
+    }
+
+    // POST: api/DropdownItem
+    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    [HttpPost]
+    public async Task<ActionResult<List<DropdownItemResponse>>> PostDropdownRow(DropdownItemRequest dropdownItemRequest)
+    {
+        DropdownItemResponse response = new DropdownItemResponse();
+        return CreatedAtAction("GetDropdownItem", response);
     }
 }

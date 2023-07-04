@@ -6,8 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
-// builder.Services.AddDbContext<DropdownRowContext>(opt =>
-    // opt.UseInMemoryDatabase("DropdownRows"));
+builder.Services.AddDbContext<DropdownRowContext>(opt =>
+    opt.UseInMemoryDatabase("DropdownRows"));
 
 var app = builder.Build();
 
