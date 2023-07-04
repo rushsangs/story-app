@@ -16,3 +16,36 @@ public class DropdownItemResponse
     public string Tooltip {get; set;}
     public string Color  {get; set;}
 }
+
+public class StaticDropdownItems
+{
+    public static List<DropdownItemResponse> actionConstraintDropdowns = new List<DropdownItemResponse>();
+    public static void Populate()
+    {
+        DropdownItemResponse r = new DropdownItemResponse();
+        r.Text = "Sometime";
+        r.Tooltip = "The specified action should occur at some point in the story.";
+        r.Color = "";
+        actionConstraintDropdowns.Add(r);
+        r = new DropdownItemResponse();
+        r.Text = "Sometime after";
+        r.Tooltip = "The specified first action should occur before the specified second action in the story.";
+        r.Color = "";
+        actionConstraintDropdowns.Add(r);
+    }
+
+    public static List<DropdownItemResponse> getItems(IEnumerable<string> args)
+    {
+        List<DropdownItemResponse> responses = new List<DropdownItemResponse>();
+        foreach(string arg in args)
+        {
+            DropdownItemResponse r = new DropdownItemResponse();
+            r.Text = arg;
+            r.Tooltip = "";
+            if(arg.Contains("fail"))
+                r.Color = "red";
+            actionConstraintDropdowns.Add(r);
+        }
+        return responses;
+    }
+}

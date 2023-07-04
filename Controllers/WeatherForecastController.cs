@@ -13,6 +13,8 @@ public class WeatherForecastController : ControllerBase
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
+
+    private PlanningProblem planningProblem;
     private readonly ILogger<WeatherForecastController> _logger;
 
     public WeatherForecastController(ILogger<WeatherForecastController> logger)
@@ -20,8 +22,7 @@ public class WeatherForecastController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet]
-    public IEnumerable<string> Get()
+    private void initialize()
     {
         string path = Directory.GetCurrentDirectory();
         string file = "/HeadSpace2/Tests/TestData/domain2.json";
@@ -32,8 +33,15 @@ public class WeatherForecastController : ControllerBase
         List<Operator> actions = domain.operators;
 
         Tuple<WorldState, WorldState, List<Operator>> x = PAC.PAC_C(initial, goal, actions, constraints);
+        this.planningProblem = new PlanningProblem(x.Item1, x.Item2, x.Item3, domain.desires);
+    }
 
-        Plan p = new PlanningProblem(x.Item1, x.Item2, x.Item3, domain.desires).HeadSpaceXSolution();
+    [HttpGet]
+    public IEnumerable<string> Get()
+    {
+        if(this.planningProblem == null)
+            initialize();
+        Plan p = this.planningProblem.HeadSpaceXSolution();
         return p.steps.Select( x => x.Item1);
         // .ToArray();
     }
@@ -43,7 +51,33 @@ public class WeatherForecastController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<List<DropdownItemResponse>>> PostDropdownRow(DropdownItemRequest dropdownItemRequest)
     {
-        DropdownItemResponse response = new DropdownItemResponse();
+        if(planningProblem == null)
+            initialize();
+        StaticDropdownItems.Populate();
+
+        List<DropdownItemResponse> response = new List<DropdownItemResponse>();
+        if(dropdownItemRequest.Page.Equals("beginning"))
+        {
+            // could be worldstate or character beliefs or desires, check group
+        }
+        else if (dropdownItemRequest.Page.Equals("middle"))
+        {
+            // check the main dropdown
+            if(dropdownItemRequest.Main_DropDown.Length > 0)
+            {
+                // populate with actions
+                response = StaticDropdownItems.getItems(planningProblem.groundedoperators.Select(op => op.text));
+            }
+            else
+            {
+                return StaticDropdownItems.actionConstraintDropdowns;
+            }
+        }
+        else if (dropdownItemRequest.Page.Equals("ending"))
+        {
+            // could be worldstate or character beliefs, check group
+        }
+        response.Add(new DropdownItemResponse());
         return CreatedAtAction("GetDropdownItem", response);
     }
 }
