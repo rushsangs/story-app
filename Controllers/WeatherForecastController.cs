@@ -60,38 +60,14 @@ public class WeatherForecastController : ControllerBase
     //     .ToArray();
     // }
     
-    // POST: weatherforecast
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPost]
-    public async Task<ActionResult<List<DropdownItemResponse>>> PostDropdownRow(DropdownItemRequest dropdownItemRequest)
-    {
-        if(planningProblem == null)
-            initialize();
-        StaticDropdownItems.Populate();
+    // // POST: weatherforecast
+    // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+    // [HttpPost]
+    // public async Task<ActionResult<List<DropdownItemResponse>>> PostDropdownRow(DropdownItemRequest dropdownItemRequest)
+    // {
+    //     if(planningProblem == null)
+    //         initialize();
+    //     StaticDropdownItems.Populate();
 
-        List<DropdownItemResponse> response = new List<DropdownItemResponse>();
-        if(dropdownItemRequest.Page.Equals("beginning"))
-        {
-            // could be worldstate or character beliefs or desires, check group
-        }
-        else if (dropdownItemRequest.Page.Equals("middle"))
-        {
-            // check the main dropdown
-            if(dropdownItemRequest.Main_DropDown.Length > 0)
-            {
-                // populate with actions
-                response = StaticDropdownItems.getItems(planningProblem.groundedoperators.Select(op => op.text));
-            }
-            else
-            {
-                return StaticDropdownItems.actionConstraintDropdowns;
-            }
-        }
-        else if (dropdownItemRequest.Page.Equals("ending"))
-        {
-            // could be worldstate or character beliefs, check group
-        }
-        response.Add(new DropdownItemResponse());
-        return CreatedAtAction("GetDropdownItem", response);
-    }
+        
 }

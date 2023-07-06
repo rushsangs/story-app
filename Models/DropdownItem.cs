@@ -53,8 +53,36 @@ public class StaticDropdownItems
             r.Tooltip = "";
             if(arg.Contains("fail"))
                 r.Color = "red";
-            actionConstraintDropdowns.Add(r);
+            responses.Add(r);
         }
         return responses;
+    }
+
+    public static List<DropdownItemResponse> GetNextDropdownItem(DropdownItemRequest dropdownItemRequest, NarrativePlanning.DomainBuilder.JSONDomainBuilder domain)
+    {
+        List<DropdownItemResponse> response = new List<DropdownItemResponse>();
+        if(dropdownItemRequest.Page.Equals("beginning"))
+        {
+            // could be worldstate or character beliefs or desires, check group
+        }
+        else if (dropdownItemRequest.Page.Equals("middle"))
+        {
+            // check the main dropdown
+            if(dropdownItemRequest.Main_DropDown.Length > 0)
+            {
+                // populate with actions
+                response = StaticDropdownItems.getItems(domain.operators.Select(op => op.text));
+            }
+            else
+            {
+                return StaticDropdownItems.actionConstraintDropdowns;
+            }
+        }
+        else if (dropdownItemRequest.Page.Equals("ending"))
+        {
+            // could be worldstate or character beliefs, check group
+        }
+        // response.Add(new DropdownItemResponse());
+        return response;
     }
 }

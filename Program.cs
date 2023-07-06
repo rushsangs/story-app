@@ -1,38 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using NarrativePlanning.DomainBuilder;
 using story_app.Models;
-
-// var builder = WebApplication.CreateBuilder(args);
-
-// // Add services to the container.
-
-// builder.Services.AddControllersWithViews();
-// builder.Services.AddDbContext<DropdownRowContext>(opt =>
-//     opt.UseInMemoryDatabase("DropdownRows"));
-
-// var app = builder.Build();
-
-// // Configure the HTTP request pipeline.
-// if (!app.Environment.IsDevelopment())
-// {
-//     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-//     app.UseHsts();
-// }
-
-// app.UseHttpsRedirection();
-// app.UseStaticFiles();
-// app.UseRouting();
-
-
-// app.MapControllerRoute(
-//     name: "default",
-//     pattern: "{controller}/{action=Index}/{id?}");
-
-// app.MapFallbackToFile("index.html");;
-
-// app.Run();
-
-//////////////////////////////////////////////
-// using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TodoDb>(opt => opt.UseInMemoryDatabase("TodoList"));
@@ -42,6 +10,8 @@ var app = builder.Build();
 
 string path = Directory.GetCurrentDirectory();    
 NarrativePlanning.DomainBuilder.JSONDomainBuilder domain = new NarrativePlanning.DomainBuilder.JSONDomainBuilder(path + "/HeadSpace2/Tests/TestData/domain2.json");
+StaticDropdownItems.Populate();
+
 app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
 {
     DropdownRowSupport.parseDropdownsIntoDomain(allrows, domain);
@@ -60,6 +30,13 @@ app.MapGet("/dropdowns", async () =>
         return Results.Ok(rows);
     }); 
 
+app.MapPost("/dropdowns", async (DropdownItemRequest dItemRequest) =>
+{
+    List<DropdownItemResponse> responses = StaticDropdownItems.GetNextDropdownItem(dItemRequest, domain);
+    return Results.Created("/dropdowns/1", responses);   
+});
+
+///////// REFERENCE CODE ////////
 app.MapGet("/todoitems/complete", async (TodoDb db) =>
     await db.Todos.Where(t => t.IsComplete).Select(x => new TodoItemDTO(x)).ToListAsync());
 
