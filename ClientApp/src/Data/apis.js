@@ -3,10 +3,18 @@ import constraintsData from './constraints'
 import { sometimesAction } from './actions'
 
 
-export const getStoryData = async () => {
-    const response = await fetch('http://localhost:7273/weatherforecast');
+export const getStoryData = async() => {
+    // APPROACH 1 NOT WORKING
+    // const response = fetch('weatherforecast')
+    // .then((response) => {response.json()})
+    // .then((actualData) => {console.log(actualData.body.)});
+    
+    // APPROACH 2 NOT WORKING
+    const response = await fetch('weatherforecast');
     const data = await response.json();
-    return data
+    console.log(data.body);
+    // return data.body;
+    return storyData
 }
 
 export const getConstraintsData = () => {

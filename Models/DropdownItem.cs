@@ -15,6 +15,15 @@ public class DropdownItemResponse
     public string Text {get; set;}
     public string Tooltip {get; set;}
     public string Color  {get; set;}
+
+    public DropdownItemResponse(string text)
+    {
+        this.Text = text;
+        this.Tooltip = "";
+        this.Color = "";
+    }
+
+    public DropdownItemResponse(): this("") {}
 }
 
 public class StaticDropdownItems

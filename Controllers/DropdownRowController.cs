@@ -24,10 +24,15 @@ namespace story_app.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DropdownRow>>> GetDropdownRows()
         {
-          if (_context.DropdownRows == null)
-          {
-              return NotFound();
-          }
+          
+            if (_context.DropdownRows == null)
+            {
+                return NotFound();
+            }
+            // if (!_context.DropdownRows.Any())
+            // {
+            //    _context.DropdownRows.AddRange(DropdownRowSupport.CreateStartupDropdowns("/HeadSpace2/Tests/TestData/domain2.json"));   
+            // }
             return await _context.DropdownRows.ToListAsync();
         }
 
@@ -54,7 +59,7 @@ namespace story_app.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDropdownRow(long id, DropdownRow dropdownRow)
         {
-            if (id != dropdownRow.Id)
+            if (id != dropdownRow.RowId)
             {
                 return BadRequest();
             }
@@ -92,7 +97,7 @@ namespace story_app.Controllers
             _context.DropdownRows.Add(dropdownRow);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetDropdownRow", new { id = dropdownRow.Id }, dropdownRow);
+            return CreatedAtAction("GetDropdownRow", new { id = dropdownRow.RowId }, dropdownRow);
         }
 
         // DELETE: api/DropdownRow/5
@@ -117,7 +122,7 @@ namespace story_app.Controllers
 
         private bool DropdownRowExists(long id)
         {
-            return (_context.DropdownRows?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.DropdownRows?.Any(e => e.RowId == id)).GetValueOrDefault();
         }
     }
 }

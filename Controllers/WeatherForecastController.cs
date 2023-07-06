@@ -39,14 +39,28 @@ public class WeatherForecastController : ControllerBase
     [HttpGet]
     public IEnumerable<string> Get()
     {
+        // String r = "ff";
+        // // List<string> r  =new List<string>();
+        // // r.Add("ff");
+        // return r;
         if(this.planningProblem == null)
             initialize();
         Plan p = this.planningProblem.HeadSpaceXSolution();
-        return p.steps.Select( x => x.Item1);
+        return p.steps.Select( x => x.Item1).ToArray();
         // .ToArray();
     }
-
-    // POST: api/DropdownItem
+    // public IEnumerable<WeatherForecast> Get()
+    // {
+    //     return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+    //     {
+    //         Date = DateTime.Now.AddDays(index),
+    //         TemperatureC = Random.Shared.Next(-20, 55),
+    //         Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+    //     })
+    //     .ToArray();
+    // }
+    
+    // POST: weatherforecast
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
     public async Task<ActionResult<List<DropdownItemResponse>>> PostDropdownRow(DropdownItemRequest dropdownItemRequest)
