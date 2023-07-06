@@ -18,11 +18,9 @@ public class DropdownRow
 public class DropdownRowSupport
 {
     
-    public static List<DropdownRow> CreateStartupDropdowns(string file)
+    public static List<DropdownRow> CreateStartupDropdowns(JSONDomainBuilder domain)
     {
-        string path = Directory.GetCurrentDirectory();    
         List<DropdownRow> allrows = new List<DropdownRow>();
-        NarrativePlanning.DomainBuilder.JSONDomainBuilder domain = new NarrativePlanning.DomainBuilder.JSONDomainBuilder(path + file);
         // create dropdowns for initial world state
         CreateBeginningDropdowns(domain, ref allrows);
         CreateEndingDropdowns(domain, ref allrows);
@@ -37,12 +35,30 @@ public class DropdownRowSupport
     private static void CreateBeginningDropdowns(JSONDomainBuilder domain, ref List<DropdownRow> allrows)
     {
         CombineLiteralsIntoDropdownRows(domain.initial, ref allrows, "beginning", "");
-        // ConvertDesiresToDropdownRows(domain.desires, ref allrows, "beginning");
+        ConvertDesiresToDropdownRows(domain.desires, ref allrows, "beginning");
     }
 
-    private static void ConvertDesiresToDropdownRows(List<Desire> desires, ref List<DropdownRow> allrows, string v)
+    // Desire dropdowns will be
+    // Desire description as main dropdown
+    // second dropdown as Include, Don't Include
+    private static void ConvertDesiresToDropdownRows(List<Desire> desires, ref List<DropdownRow> allrows, string page)
     {
-        throw new NotImplementedException();
+        var includeDropdownItem = new List<DropdownItemResponse>();
+        includeDropdownItem.Add(new DropdownItemResponse("Include"));
+        includeDropdownItem.Add(new DropdownItemResponse("Do Not Include"));
+        foreach(Desire desire in desires)
+        {
+            DropdownRow newRow = new DropdownRow();
+            newRow.RowId = allrows.Count;
+            newRow.Page = page;
+            newRow.Group = "desires";
+            var d = new DropdownItemResponse(desire.ToString());
+            d.Tooltip = JsonConvert.SerializeObject(desire);
+            newRow.Main_DropDown = JsonConvert.SerializeObject(d);
+            // lit_parts.RemoveAt(0);
+            newRow.Arguments = JsonConvert.SerializeObject(includeDropdownItem);
+            allrows.Add(newRow);
+        }
     }
 
     private static void CombineLiteralsIntoDropdownRows(NarrativePlanning.WorldState state, ref  List<DropdownRow> allrows, string page, string group)
@@ -92,9 +108,24 @@ public class DropdownRowSupport
     public static void parseDropdownsIntoDomain(List<DropdownRow> allrows, JSONDomainBuilder domain)
     {
         //parse all beginning dropdowns
-        List<DropdownRow> beginnings = allrows.FindAll((row) => row.Page.Equals("beginning"));
+        List<DropdownRow> beginnings = allrows.FindAll((row) => row.Page.Equals("beginning") && !row.Group.Equals("desires"));
         AddDropdownsToWorldState(domain.initial, beginnings);
+        AddDropdownsToDesires(domain, allrows.FindAll((row) => row.Page.Equals("beginning") && row.Group.Equals("desires")));
         AddDropdownsToWorldState(domain.goal, allrows.FindAll((row) => row.Page.Equals("ending")) );
+    }
+
+    private static void AddDropdownsToDesires(JSONDomainBuilder domain, List<DropdownRow> dropdownRows)
+    {
+        domain.desires.Clear();
+        foreach(DropdownRow row in dropdownRows)
+        {
+            bool include = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Arguments).Select((a)=> a.Text).First().Equals("Include");
+            if(include)
+            {
+                Desire desire = JsonConvert.DeserializeObject<Desire>(JsonConvert.DeserializeObject<DropdownItemResponse>(row.Main_DropDown).Tooltip);
+                domain.desires.Add(desire);
+            }
+        }
     }
 
     private static void AddDropdownsToWorldState(WorldState worldstate, List<DropdownRow> rows)
