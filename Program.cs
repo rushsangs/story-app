@@ -12,6 +12,17 @@ string path = Directory.GetCurrentDirectory();
 NarrativePlanning.DomainBuilder.JSONDomainBuilder domain = new NarrativePlanning.DomainBuilder.JSONDomainBuilder(path + "/HeadSpace2/Tests/TestData/domain2.json");
 StaticDropdownItems.Populate();
 
+app.MapGet("/storygenerator", async() =>
+{
+    Tuple<NarrativePlanning.WorldState, NarrativePlanning.WorldState, List<NarrativePlanning.Operator>> compiled_tuple = NarrativePlanning.PAC.PAC_C(domain.initial, domain.goal, domain.operators, domain.middle);
+    NarrativePlanning.PlanningProblem problem = new NarrativePlanning.PlanningProblem(compiled_tuple.Item1, compiled_tuple.Item2, compiled_tuple.Item3, domain.desires, domain.counterActions, domain.middle);
+    NarrativePlanning.Plan plan = problem.HeadSpaceXSolution();
+    if (plan == null)
+        return Results.Created("/storygenerator/1", new List<string>());
+    else
+        return Results.Created("/storygenerator/1", plan.steps.Select(s=>s.Item1).ToArray());
+});
+
 app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
 {
     DropdownRowSupport.parseDropdownsIntoDomain(allrows, domain);
