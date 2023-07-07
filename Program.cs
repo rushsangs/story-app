@@ -3,6 +3,16 @@ using NarrativePlanning.DomainBuilder;
 using story_app.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:7273",
+                                "https://localhost:5140",
+                                "https://localhost:44470");
+        });
+});
 builder.Services.AddDbContext<TodoDb>(opt => opt.UseInMemoryDatabase("TodoList"));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var app = builder.Build();
@@ -14,7 +24,7 @@ StaticDropdownItems.Populate();
 
 app.MapGet("/storygenerator", async() =>
 {
-    Tuple<NarrativePlanning.WorldState, NarrativePlanning.WorldState, List<NarrativePlanning.Operator>> compiled_tuple = NarrativePlanning.PAC.PAC_C(domain.initial, domain.goal, domain.operators, domain.middle);
+    Tuple<NarrativePlanning.WorldState, NarrativePlanning.WorldState, List<NarrativePlanning.Operator>> compiled_tuple = NarrativePlanning.PAC.PAC_C(domain.initial.clone(), domain.goal.clone(), domain.operators, domain.middle);
     NarrativePlanning.PlanningProblem problem = new NarrativePlanning.PlanningProblem(compiled_tuple.Item1, compiled_tuple.Item2, compiled_tuple.Item3, domain.desires, domain.counterActions, domain.middle);
     NarrativePlanning.Plan plan = problem.HeadSpaceXSolution();
     if (plan == null)
@@ -26,7 +36,7 @@ app.MapGet("/storygenerator", async() =>
 app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
 {
     DropdownRowSupport.parseDropdownsIntoDomain(allrows, domain);
-    Tuple<NarrativePlanning.WorldState, NarrativePlanning.WorldState, List<NarrativePlanning.Operator>> compiled_tuple = NarrativePlanning.PAC.PAC_C(domain.initial, domain.goal, domain.operators, domain.middle);
+    Tuple<NarrativePlanning.WorldState, NarrativePlanning.WorldState, List<NarrativePlanning.Operator>> compiled_tuple = NarrativePlanning.PAC.PAC_C(domain.initial.clone(), domain.goal.clone(), domain.operators, domain.middle);
     NarrativePlanning.PlanningProblem problem = new NarrativePlanning.PlanningProblem(compiled_tuple.Item1, compiled_tuple.Item2, compiled_tuple.Item3, domain.desires, domain.counterActions, domain.middle);
     NarrativePlanning.Plan plan = problem.HeadSpaceXSolution();
     if (plan == null)
@@ -84,7 +94,7 @@ app.MapDelete("/todoitems/{id}", async (int id, TodoDb db) =>
 
     return Results.NotFound();
 });
-
+app.UseCors();
 app.Run();
 
 public class Todo

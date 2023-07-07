@@ -10,11 +10,11 @@ export const getStoryData = async() => {
     // .then((actualData) => {console.log(actualData.body.)});
     
     // APPROACH 2 NOT WORKING
-    const response = await fetch('weatherforecast');
+    const response = await fetch('https://localhost:7273/storygenerator');
     const data = await response.json();
-    console.log(data.body);
-    // return data.body;
-    return storyData
+    console.log(data);
+    return data;
+    // return storyData
 }
 
 export const getConstraintsData = () => {

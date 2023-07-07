@@ -12,9 +12,9 @@ const GlobalSingletonInstance = new GlobalSingletonObject();
 const StoryPanel = () => {
   const [story, setStory] = useState();
 
-  const onGenerateStoryClick = () => {
+  const onGenerateStoryClick = async() => {
     GlobalSingletonInstance.set("showRegenerateMsg", false);
-    const storyData = getStoryData();
+    const storyData = await getStoryData();
     setStory(storyData);
   };
 
