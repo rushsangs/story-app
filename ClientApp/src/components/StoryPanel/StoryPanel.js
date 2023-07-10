@@ -12,25 +12,29 @@ const GlobalSingletonInstance = new GlobalSingletonObject();
 const StoryPanel = ({dropdownComponents}) => {
   const [story, setStory] = useState();
 
-const FormatDropdowns = (components) => {
+const ExtractDataFromDropdowns = (components) => {
   var response  = [];
   for (let i = 0; i < components.length; i++){
-    console.log(components[i]);
-    const element = {}; 
+    const id = components[i].id;
+    const element = components[i].component; 
+    console.log(element);
+    // get all the options selected from inside element
+    // but element is a react element
   }
 };
 
 const onGenerateStoryClick = async() => {
   GlobalSingletonInstance.set("showRegenerateMsg", false);
-  // const allDropdownData = FormatDropdowns(dropdownComponents);
+  const allDropdownData = ExtractDataFromDropdowns(dropdownComponents);
   const storyData = await getStoryData();
+  // const storyData = ["hello", "test"];
   setStory(storyData);
 };
 
   return (
     <div className={styles.storyContainer}>
       <div className={styles.storyTitle}>Generate story</div>
-      <Button block onClick={onGenerateStoryClick()}>
+      <Button block onClick={() => onGenerateStoryClick()}>
         Generate
         <CaretRightOutlined />
       </Button>
