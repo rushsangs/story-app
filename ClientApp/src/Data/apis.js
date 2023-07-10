@@ -11,6 +11,11 @@ export const getStoryData = async() => {
     return data;
 }
 
+
+export const getMockStoryData = async() => {
+    return storyData
+}
+
 export const getConstraintsData = () => {
     return constraintsData
 }

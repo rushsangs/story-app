@@ -10,6 +10,8 @@ const { Sider, Content } = Layout;
 
 const Home = () => {
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const [dropdownComponents, setDropdownComponents] = useState([]);
+  const [componentId, setComponentId] = useState(0);
 
   const onTaskClick = async() => {
     console.log("test")
@@ -31,11 +33,11 @@ const Home = () => {
             Task 1
           </Button>
       </div>
-        <TabsPanel />
+        <TabsPanel componentId = {componentId}  dropdownComponents = {dropdownComponents} onComponentChange={(x) => setComponentId(x)} onDropdownChange={(x) => setDropdownComponents(x)}/>
           
       </Content>
       <Sider theme={"light"} width="25%">
-        <StoryPanel />
+        <StoryPanel dropdownComponents = {dropdownComponents} />
       </Sider>
 
       <div

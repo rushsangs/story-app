@@ -4,9 +4,9 @@ import Beginning from "../Beginning/Beginning";
 import Actions from "../Actions/Actions";
 import Ending from "../Ending/Ending";
 
-const TabsPanel = () => {
+const TabsPanel = ({componentId, dropdownComponents, onComponentChange, onDropdownChange}) => {
+ 
   const tabs = ["Beginning", "Actions", "Ending"];
-
   const onChange = (key) => {
     console.log(key);
   };
@@ -33,7 +33,7 @@ const TabsPanel = () => {
           return {
             label: tabs[i],
             key: id,
-            children: <Component />,
+            children: <Component componentId={componentId} dropdownComponents={dropdownComponents} onComponentChange={(x) => onComponentChange(x)} onDropdownChange={(x) => onDropdownChange(x)}/>,
           };
         })}
       />

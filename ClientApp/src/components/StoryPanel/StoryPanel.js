@@ -3,25 +3,34 @@ import React, { useEffect, useState } from "react";
 import { Card, Space, Button } from "antd";
 import { List, Typography } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
-import { getStoryData } from "../../Data/apis";
+import { getStoryData, getMockStoryData } from "../../Data/apis";
 import styles from "./StoryPanel.module.css";
 import { GlobalSingletonObject } from "../../utils/dataContext";
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
-const StoryPanel = () => {
+const StoryPanel = ({dropdownComponents}) => {
   const [story, setStory] = useState();
 
-  const onGenerateStoryClick = async() => {
-    GlobalSingletonInstance.set("showRegenerateMsg", false);
-    const storyData = await getStoryData();
-    setStory(storyData);
-  };
+const FormatDropdowns = (components) => {
+  var response  = [];
+  for (let i = 0; i < components.length; i++){
+    console.log(components[i]);
+    const element = {}; 
+  }
+};
+
+const onGenerateStoryClick = async() => {
+  GlobalSingletonInstance.set("showRegenerateMsg", false);
+  // const allDropdownData = FormatDropdowns(dropdownComponents);
+  const storyData = await getStoryData();
+  setStory(storyData);
+};
 
   return (
     <div className={styles.storyContainer}>
       <div className={styles.storyTitle}>Generate story</div>
-      <Button block onClick={onGenerateStoryClick}>
+      <Button block onClick={onGenerateStoryClick()}>
         Generate
         <CaretRightOutlined />
       </Button>

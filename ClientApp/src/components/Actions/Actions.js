@@ -5,10 +5,7 @@ import { GlobalSingletonObject } from "../../utils/dataContext";
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
-const Actions = () => {
-  const [dropdownComponents, setDropdownComponents] = useState([]);
-  const [componentId, setComponentId] = useState(0);
-
+const Actions = ({componentId, dropdownComponents, onComponentChange, onDropdownChange}) => {
   const handleAddDropdown = () => {
     const newComponent = {
       id: componentId,
@@ -20,15 +17,15 @@ const Actions = () => {
         />
       ),
     };
-    setDropdownComponents((prevComponents) => [
+    onDropdownChange((prevComponents) => [
       ...prevComponents,
       newComponent,
     ]);
-    setComponentId((prevId) => prevId + 1);
+    onComponentChange((prevId) => prevId + 1);
   };
 
   const handleRemoveDropdown = (id) => {
-    setDropdownComponents((prevComponents) =>
+    onDropdownChange((prevComponents) =>
       prevComponents.filter((comp) => comp.id !== id)
     );
   };
