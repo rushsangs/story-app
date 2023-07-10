@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "antd";
+import { CaretRightOutlined } from "@ant-design/icons";
 import TabsPanel from "../TabsPanel/TabsPanel";
 import StoryPanel from "../StoryPanel/StoryPanel";
 import { QuestionCircleFilled } from "@ant-design/icons";
@@ -8,6 +10,14 @@ const { Sider, Content } = Layout;
 
 const Home = () => {
   const [showHelpModal, setShowHelpModal] = useState(false);
+
+  const onTaskClick = async() => {
+    console.log("test")
+    // GlobalSingletonInstance.set("showRegenerateMsg", false);
+    // const storyData = await getStoryData();
+    // setStory(storyData);
+  };
+
   return (
     <Layout
       hasSider
@@ -16,7 +26,13 @@ const Home = () => {
       }}
     >
       <Content>
+      <div>
+      <Button onClick={onTaskClick}>
+            Task 1
+          </Button>
+      </div>
         <TabsPanel />
+          
       </Content>
       <Sider theme={"light"} width="25%">
         <StoryPanel />

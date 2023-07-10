@@ -4,17 +4,11 @@ import { sometimesAction } from './actions'
 
 
 export const getStoryData = async() => {
-    // APPROACH 1 NOT WORKING
-    // const response = fetch('weatherforecast')
-    // .then((response) => {response.json()})
-    // .then((actualData) => {console.log(actualData.body.)});
-    
-    // APPROACH 2 NOT WORKING
+    //Currently only full paths are working (with external path)
     const response = await fetch('https://localhost:7273/storygenerator');
     const data = await response.json();
     console.log(data);
     return data;
-    // return storyData
 }
 
 export const getConstraintsData = () => {
@@ -22,6 +16,7 @@ export const getConstraintsData = () => {
 }
 
 export const getNextDropdownData = () => {
+    
     return sometimesAction
 }
 // const response = await fetch('weatherforecast');
