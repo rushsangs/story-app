@@ -9,6 +9,7 @@ const Actions = ({componentId, dropdownComponents, onComponentChange, onDropdown
   const handleAddDropdown = () => {
     const newComponent = {
       id: componentId,
+      page: "actions",
       component: (
         <InputRow
           key={componentId}
@@ -34,7 +35,7 @@ const Actions = ({componentId, dropdownComponents, onComponentChange, onDropdown
     <>
       <Space direction="vertical" style={{ padding: "0 15px" }}>
         <Button onClick={handleAddDropdown}>Add Data</Button>
-        {dropdownComponents.map((obj) => obj.component)}
+        {dropdownComponents.filter((obj) => obj.page==="actions").map((obj) => obj.component)}
       </Space>
     </>
   );

@@ -5,16 +5,19 @@ import { List, Typography } from "antd";
 import constraintsData from "../../Data/constraints";
 import { getNextDropdownData } from "../../Data/apis";
 import InputRow from "../InputRow/InputRow";
-
+const { Title } = Typography;
 
 const Ending =({componentId, dropdownComponents, onComponentChange, onDropdownChange}) => {
   const handleAddDropdown = () => {
     const newComponent = {
       id: componentId,
+      page: "ending",
+      group: "world",
       component: (
         <InputRow
           key={componentId}
           id={componentId}
+          page="ending"
           onRemove={handleRemoveDropdown}
         />
       ),
@@ -36,7 +39,10 @@ const Ending =({componentId, dropdownComponents, onComponentChange, onDropdownCh
     <>
       <Space direction="vertical" style={{ padding: "0 15px" }}>
         <Button onClick={handleAddDropdown}>Add Data</Button>
-        {dropdownComponents.map((obj) => obj.component)}
+        <Title level={3}>World</Title>
+        {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="world").map((obj) => obj.component)}
+        <Title level={3}>Ted</Title>
+        {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="ted").map((obj) => obj.component)}
       </Space>
     </>
   );
