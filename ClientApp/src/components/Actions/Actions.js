@@ -12,8 +12,8 @@ const Actions = ({componentId, dropdownComponents, onComponentChange, onDropdown
       page: "actions",
       component: (
         <InputRow
+          id={componentId}  
           key={componentId}
-          id={componentId}
           onRemove={handleRemoveDropdown}
         />
       ),

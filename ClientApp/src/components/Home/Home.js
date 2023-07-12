@@ -5,6 +5,7 @@ import TabsPanel from "../TabsPanel/TabsPanel";
 import StoryPanel from "../StoryPanel/StoryPanel";
 import { QuestionCircleFilled } from "@ant-design/icons";
 import styles from "./Home.module.css";
+import InputRow from "../InputRow/InputRow";
 import { Layout, Modal } from "antd";
 const { Sider, Content } = Layout;
 
@@ -13,8 +14,24 @@ const Home = () => {
   const [dropdownComponents, setDropdownComponents] = useState([]);
   const [componentId, setComponentId] = useState(0);
 
-  const onTaskClick = async() => {
+  const onTaskClick = async(dropdownComponents, setDropdownComponents) => {
     console.log("test")
+    const newComponent = {
+      id: 1,
+      page: "beginning",
+      group: "world",
+      component: (
+        <InputRow
+          key={1}
+          id={1}
+          page="beginning"
+        />
+      ),
+    };
+    setDropdownComponents((prevComponents) => [
+      ...prevComponents,
+      newComponent,
+    ]);
     // GlobalSingletonInstance.set("showRegenerateMsg", false);
     // const storyData = await getStoryData();
     // setStory(storyData);
@@ -29,7 +46,7 @@ const Home = () => {
     >
       <Content>
       <div>
-      <Button onClick={onTaskClick}>
+      <Button onClick={() => onTaskClick(dropdownComponents, setDropdownComponents)}>
             Task 1
           </Button>
       </div>
