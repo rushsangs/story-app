@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Space, Select, Popover } from "antd";
 import { SettingFilled, CloseCircleTwoTone } from "@ant-design/icons";
 import constraintsData from "../../Data/constraints";
@@ -8,22 +8,13 @@ import { GlobalSingletonObject } from "../../utils/dataContext";
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
 const InputRow = (props) => {
-  const { id, key, onRemove, onDropdownChangeCallback, onChange } = props;
-  const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
+  const { id, key, onRemove } = props;
   const [nextActionsDropdowns, setNextActionsDropdowns] = useState([]);
+  const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
 
-  const selectedActionsValues = useRef([]);
-
-  const handleChange = (value) => {
-    selectedActionsValues.current.push(value);
-    onChange(id, selectedActionsValues.current);
+  const onChange = (value) => {
     GlobalSingletonInstance.set("showRegenerateMsg", true);
     setNextActionsDropdowns(getNextDropdownData("actions"));
-  };
-
-  const handleNextDropdownChange = (value, index) => {
-    selectedActionsValues.current.push(value);
-    onChange(id, selectedActionsValues.current);
   };
 
   const onSearch = (value) => {
@@ -36,7 +27,7 @@ const InputRow = (props) => {
         showSearch
         placeholder="Select a person"
         optionFilterProp="children"
-        onChange={handleChange}
+        onChange={onChange}
         onSearch={onSearch}
         filterOption={(input, option) =>
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
@@ -48,7 +39,7 @@ const InputRow = (props) => {
           showSearch
           placeholder="Select a person"
           optionFilterProp="children"
-          onChange={(value) => handleNextDropdownChange(value, index)}
+          onChange={onChange}
           onSearch={onSearch}
           filterOption={(input, option) =>
             (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
