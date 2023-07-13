@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Space, Button, Select } from "antd";
 import { PlusSquareOutlined, MinusSquareOutlined } from "@ant-design/icons";
 import { List, Typography } from "antd";
-import constraintsData from "../../Data/constraints";
+import constraints from "../../Data/constraints";
 import { getNextDropdownData } from "../../Data/apis";
 import InputRow from "../InputRow/InputRow";
 const { Title } = Typography;
@@ -15,10 +15,13 @@ const Beginning = ({componentId, dropdownComponents, onComponentChange, onDropdo
       group: "world",
       component: (
         <InputRow
-          key={componentId}
+          key ={componentId}
+          input_row_key={componentId}
           id={componentId}
           page="beginning"
           onRemove={handleRemoveDropdown}
+          args = {''}
+          mainDropdown = {JSON.stringify(constraints)}
         />
       ),
     };

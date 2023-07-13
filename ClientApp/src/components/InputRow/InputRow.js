@@ -1,51 +1,54 @@
 import React, { useState } from "react";
 import { Space, Select, Popover } from "antd";
 import { SettingFilled, CloseCircleTwoTone } from "@ant-design/icons";
-import constraintsData from "../../Data/constraints";
+import constraints from "../../Data/constraints";
 import { getNextDropdownData } from "../../Data/apis";
 import { GlobalSingletonObject } from "../../utils/dataContext";
+import { sampleDdArgs } from "../../Data/dropdowns";
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
 const InputRow = (props) => {
-  const { id, key, onRemove } = props;
-  const [nextActionsDropdowns, setNextActionsDropdowns] = useState([]);
+  const { id, input_row_key, onRemove, mainDropdown, args } = props;
+  const key = input_row_key
+  const md = (mainDropdown === undefined)?constraints:JSON.parse(mainDropdown);
+  const a = (args === undefined || args !== '')?args:'[]';
+  const [nextActionsDropdowns, setNextActionsDropdowns] = useState(JSON.parse(a));
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
-
   const onChange = (value) => {
     GlobalSingletonInstance.set("showRegenerateMsg", true);
-    setNextActionsDropdowns(getNextDropdownData("actions"));
+    setNextActionsDropdowns(sampleDdArgs);
   };
-
+  
   const onSearch = (value) => {
     console.log("search:", value);
   };
-
+  
   return (
     <Space direction="horizontal" key={key} id={id}>
       <Select
         showSearch
-        placeholder="Select a person"
+        placeholder={md[0].label}
         optionFilterProp="children"
         onChange={onChange}
         onSearch={onSearch}
         filterOption={(input, option) =>
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
         }
-        options={constraintsData}
+        options={md}
       />
       {nextActionsDropdowns.map((item, index) => (
         <Select
           showSearch
-          placeholder="Select a person"
+          placeholder={item[0].tooltip}
           optionFilterProp="children"
           onChange={onChange}
           onSearch={onSearch}
           filterOption={(input, option) =>
             (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
-          }
-          options={item.value}
-          key={index}
+          } 
+          options={item}
+          key={String(index)}
         />
       ))}
       <Popover

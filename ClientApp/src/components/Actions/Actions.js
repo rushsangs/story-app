@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Space, Button } from "antd";
 import InputRow from "../InputRow/InputRow";
 import { GlobalSingletonObject } from "../../utils/dataContext";
+import { getConstraintsData } from "../../Data/apis";
+import constraints from "../../Data/constraints";
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
@@ -12,9 +14,12 @@ const Actions = ({componentId, dropdownComponents, onComponentChange, onDropdown
       page: "actions",
       component: (
         <InputRow
+          key ={componentId}
           id={componentId}  
-          key={componentId}
+          input_row_key={componentId}
           onRemove={handleRemoveDropdown}
+          args = ''
+          mainDropdown = {JSON.stringify(constraints)}
         />
       ),
     };

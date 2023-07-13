@@ -22,6 +22,7 @@
 export const sometimesAction = [
     {
         'key': 'dropdown1',
+        'tooltip': 'fasdfaf',
         'value': [
             {
                 'label': 'Dolores picks up gun',
@@ -44,6 +45,7 @@ export const sometimesAction = [
     },
     {
         'key': 'dropdown2',
+        'tooltip': 'fasdfaf',
         'value': [
             {
                 'label': 'Dolores picks up gun',
