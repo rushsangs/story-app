@@ -14,27 +14,20 @@ const Home = () => {
   const [dropdownComponents, setDropdownComponents] = useState([]);
   const [componentId, setComponentId] = useState(0);
 
-  const onTaskClick = async(dropdownComponents, setDropdownComponents) => {
-    console.log("test")
-    const newComponent = {
-      id: 1,
-      page: "beginning",
-      group: "world",
-      component: (
-        <InputRow
-          key={1}
-          id={1}
-          page="beginning"
-        />
-      ),
-    };
-    setDropdownComponents((prevComponents) => [
-      ...prevComponents,
-      newComponent,
-    ]);
-    // GlobalSingletonInstance.set("showRegenerateMsg", false);
-    // const storyData = await getStoryData();
-    // setStory(storyData);
+  const [dropdownValues, setDropdownValues] = useState({});
+
+  // Update the dropdown values based on the dropdown component's onChange event
+  const handleDropdownChangeCallback = (tabId, dropdownValue) => {
+    setDropdownValues((prevValues) => ({
+      ...prevValues,
+      [tabId]: dropdownValue,
+    }));
+  };
+
+  // Callback function to handle button click
+  const handleGenerateButtonClick = () => {
+    // Perform actions with dropdownValues
+    console.log(dropdownValues);
   };
 
   return (
@@ -45,16 +38,23 @@ const Home = () => {
       }}
     >
       <Content>
-      <div>
-      <Button onClick={() => onTaskClick(dropdownComponents, setDropdownComponents)}>
+        {/* <div>
+          <Button
+            onClick={() =>
+              onTaskClick(dropdownComponents, setDropdownComponents)
+            }
+          >
             Task 1
           </Button>
-      </div>
-        <TabsPanel componentId = {componentId}  dropdownComponents = {dropdownComponents} onComponentChange={(x) => setComponentId(x)} onDropdownChange={(x) => setDropdownComponents(x)}/>
-          
+        </div> */}
+        {/* <TabsPanel componentId = {componentId}  dropdownComponents = {dropdownComponents} onComponentChange={(x) => setComponentId(x)} onDropdownChange={(x) => setDropdownComponents(x)}/> */}
+        <TabsPanel onDropdownChangeCallback={handleDropdownChangeCallback} />
       </Content>
       <Sider theme={"light"} width="25%">
-        <StoryPanel dropdownComponents = {dropdownComponents} />
+        <StoryPanel
+          dropdownComponents={dropdownComponents}
+          onGenerateButtonClick={handleGenerateButtonClick}
+        />
       </Sider>
 
       <div
