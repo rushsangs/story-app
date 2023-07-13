@@ -9,28 +9,29 @@ import { GlobalSingletonObject } from "../../utils/dataContext";
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
-const StoryPanel = ({dropdownComponents}) => {
+const StoryPanel = ({ dropdownComponents, onGenerateButtonClick }) => {
   const [story, setStory] = useState();
 
-const ExtractDataFromDropdowns = (components) => {
-  var response  = [];
-  for (let i = 0; i < components.length; i++){
-    const id = components[i].id;
-    const element = components[i].component; 
-    console.log(element);
-    // get all the options selected from inside element
-    // but element is a react element
-    // TODO: iterate through all elements and create the object shape needed for the API call
-  }
-};
+  const ExtractDataFromDropdowns = (components) => {
+    var response = [];
+    for (let i = 0; i < components.length; i++) {
+      const id = components[i].id;
+      const element = components[i].component;
+      console.log(element);
+      // get all the options selected from inside element
+      // but element is a react element
+      // TODO: iterate through all elements and create the object shape needed for the API call
+    }
+  };
 
-const onGenerateStoryClick = async() => {
-  GlobalSingletonInstance.set("showRegenerateMsg", false);
-  const allDropdownData = ExtractDataFromDropdowns(dropdownComponents);
-  // const storyData = await getStoryData();
-  const storyData = ["hello", "test", "list", "of", "strings"];
-  setStory(storyData);
-};
+  const onGenerateStoryClick = async () => {
+    onGenerateButtonClick();
+    GlobalSingletonInstance.set("showRegenerateMsg", false);
+    const allDropdownData = ExtractDataFromDropdowns(dropdownComponents);
+    // const storyData = await getStoryData();
+    const storyData = ["hello", "test", "list", "of", "strings"];
+    setStory(storyData);
+  };
 
   return (
     <div className={styles.storyContainer}>
