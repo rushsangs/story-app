@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Card, Space, Button, Select } from "antd";
 import { PlusSquareOutlined, MinusSquareOutlined } from "@ant-design/icons";
 import { List, Typography } from "antd";
@@ -7,7 +7,8 @@ import { getNextDropdownData } from "../../Data/apis";
 import InputRow from "../InputRow/InputRow";
 const { Title } = Typography;
 
-const Beginning = ({componentId, dropdownComponents, onComponentChange, onDropdownChange}) => {
+const Beginning = ({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange}) => {
+  const rowData = useRef({});
   const handleAddDropdown = () => {
     const newComponent = {
       id: componentId,
@@ -22,6 +23,14 @@ const Beginning = ({componentId, dropdownComponents, onComponentChange, onDropdo
           onRemove={handleRemoveDropdown}
           args = {''}
           mainDropdown = {JSON.stringify(constraints)}
+          onChange= {(id, data) => {
+            rowData.current = {
+              ...rowData.current,
+              [id]: data,
+            };
+            onDropdownChangeCallback("actions", rowData.current);
+            console.log(">>>> inside actions rowData", rowData.current);
+          }}
         />
       ),
     };

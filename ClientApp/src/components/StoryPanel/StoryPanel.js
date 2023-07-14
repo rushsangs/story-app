@@ -9,7 +9,7 @@ import { GlobalSingletonObject } from "../../utils/dataContext";
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
-const StoryPanel = ({dropdownComponents}) => {
+const StoryPanel = ({dropdownComponents, getDropdownComponents}) => {
   const [story, setStory] = useState();
 
 const ExtractDataFromDropdowns = (components) => {
@@ -27,6 +27,7 @@ const ExtractDataFromDropdowns = (components) => {
 const onGenerateStoryClick = async() => {
   GlobalSingletonInstance.set("showRegenerateMsg", false);
   const allDropdownData = ExtractDataFromDropdowns(dropdownComponents);
+  getDropdownComponents();
   // const storyData = await getStoryData();
   const storyData = ["hello", "test", "list", "of", "strings"];
   setStory(storyData);

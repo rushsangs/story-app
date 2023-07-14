@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Space, Select, Popover } from "antd";
 import { SettingFilled, CloseCircleTwoTone } from "@ant-design/icons";
 import constraints from "../../Data/constraints";
@@ -9,15 +9,23 @@ import { sampleDdArgs } from "../../Data/dropdowns";
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
 const InputRow = (props) => {
-  const { id, input_row_key, onRemove, mainDropdown, args } = props;
+  const { id, input_row_key, onRemove, mainDropdown, args, onChange } = props;
   const key = input_row_key
   const md = (mainDropdown === undefined)?constraints:JSON.parse(mainDropdown);
   const a = (args === undefined || args !== '')?args:'[]';
   const [nextActionsDropdowns, setNextActionsDropdowns] = useState(JSON.parse(a));
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
-  const onChange = (value) => {
+  const selectedActionsValues = useRef([]);
+  const handleChange = (value) => {
+    selectedActionsValues.current.push(value);
+    onChange(id, selectedActionsValues.current);
     GlobalSingletonInstance.set("showRegenerateMsg", true);
     setNextActionsDropdowns(sampleDdArgs);
+  };
+
+  const handleNextDropdownChange = (value, index) => {
+    selectedActionsValues.current.push(value);
+    onChange(id, selectedActionsValues.current);
   };
   
   const onSearch = (value) => {
@@ -30,7 +38,7 @@ const InputRow = (props) => {
         showSearch
         placeholder={md[0].label}
         optionFilterProp="children"
-        onChange={onChange}
+        onChange={handleChange}
         onSearch={onSearch}
         filterOption={(input, option) =>
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
@@ -42,7 +50,7 @@ const InputRow = (props) => {
           showSearch
           placeholder={item[0].tooltip}
           optionFilterProp="children"
-          onChange={onChange}
+          onChange={(value) => handleNextDropdownChange(value, index)}
           onSearch={onSearch}
           filterOption={(input, option) =>
             (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
