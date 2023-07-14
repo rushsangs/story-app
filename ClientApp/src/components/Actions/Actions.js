@@ -40,7 +40,7 @@ const Actions = ({componentId, dropdownComponents, onDropdownChangeCallback, onC
               ...rowData.current,
               [id]: data,
             };
-            onDropdownChangeCallback(dropdownRow.Page, dropdownRow.Group, rowData.current, componentId);
+            onDropdownChangeCallback(dropdownRow.Page, dropdownRow.Group, data, componentId);
             console.log(">>>> inside actions rowData", rowData.current);
           }}
         />

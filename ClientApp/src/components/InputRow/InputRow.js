@@ -22,7 +22,10 @@ const InputRow = (props) => {
       selectedActionsValues.current = array_replace(selectedActionsValues.current, 0, value);
     else
       selectedActionsValues.current.push(value);
-    // console.log(selectedActionsValues);
+    
+    console.log("should i push this?");
+    console.log(selectedActionsValues);
+    // console.log(selectedActionsValues.current[0]);
     onChange(id, selectedActionsValues.current);
     GlobalSingletonInstance.set("showRegenerateMsg", true);
     setNextActionsDropdowns(sampleDdArgs);
@@ -40,7 +43,9 @@ const InputRow = (props) => {
       selectedActionsValues.current = array_replace(selectedActionsValues.current, index+1, value);
     else
       selectedActionsValues.current.push(value);
-    // console.log(selectedActionsValues);
+    console.log("should i push this?");
+    // console.log(selectedActionsValues.current[index]);
+    console.log(selectedActionsValues);
     onChange(id, selectedActionsValues.current);
   };
   

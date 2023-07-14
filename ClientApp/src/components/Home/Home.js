@@ -21,6 +21,8 @@ const Home = () => {
   // }, [componentId]);
   // Update the dropdown values based on the dropdown component's onChange event
   const handleDropdownChangeCallback = (page, group, dropdownValue, some_id) => {
+    console.log("dropdown change request received");
+    console.log(dropdownValue);
     setDropdownValues((prevValues) => ({
       ...prevValues,
       [some_id]: {page: page, group: group, values: dropdownValue},
@@ -31,6 +33,8 @@ const Home = () => {
   const handleGenerateButtonClick = () => {
     // Perform actions with dropdownValues
     // return dropdownComponents;
+    console.log("about to reshape data");
+    console.log(dropdownValues);
     let shaped_vals = shape_into_dropdownrequestitems(dropdownValues);
     console.log(shaped_vals);
   };
@@ -70,7 +74,7 @@ const Home = () => {
                 ...rowData.current,
                 [id]: data,
               };
-              onDropdownChangeCallback(rows[i].Page, rows[i].Group, rowData.current, i);
+              onDropdownChangeCallback(rows[i].Page, rows[i].Group, data, i);
               console.log(">>>> default rowData", rowData.current);
               // console.log("id is ",id);
             }}
