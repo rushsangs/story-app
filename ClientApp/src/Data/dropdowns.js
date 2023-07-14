@@ -31,11 +31,11 @@ export const ddargs = (args) =>
 
 
 export const sampleDdArgs = ddargs([['true', 'false']]);
-const dropdownRow = (md, args) => 
+const dropdownRow = (page, md, args) => 
 {
     return {
     'Row_Id': 123,
-    'Page': 'beginning',
+    'Page': page,
     'Group': 'world',
     'Main_Dropdown': JSON.stringify(dropdownItem(md)),
     'Arguments': JSON.stringify(ddargs(args))
@@ -43,9 +43,10 @@ const dropdownRow = (md, args) =>
 };
 
 export const sampleInitialDropdowns = [
-    dropdownRow(['at Teddy L'],[['true', 'false']]),
-    dropdownRow(['at Teddy Q'],[['true', 'false']]),
-    dropdownRow(['alive Teddy'],[['true', 'false']])
+    dropdownRow("beginning", ['at Teddy L'], [['true', 'false']]),
+    dropdownRow("beginning", ['at Teddy Q'], [['true', 'false']]),
+    dropdownRow("ending", ['at Teddy L'], [['true', 'false']]),
+    dropdownRow("ending", ['at Teddy Q'], [['true', 'false']]),
 ];
 
 // export const sampleActionDropdowns = [

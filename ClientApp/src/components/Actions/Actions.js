@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Space, Button } from "antd";
 import InputRow from "../InputRow/InputRow";
 import { GlobalSingletonObject } from "../../utils/dataContext";
@@ -7,19 +7,42 @@ import constraints from "../../Data/constraints";
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
-const Actions = ({componentId, dropdownComponents, onComponentChange, onDropdownChange}) => {
+const Actions = ({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange}) => {
+  const rowData = useRef({});
   const handleAddDropdown = () => {
+    const dropdownRow = {
+      Row_Id: 123,
+      Page: 'actions',
+      Group: '',
+      Main_Dropdown: JSON.stringify(constraints),
+      Arguments: ''
+    }
     const newComponent = {
       id: componentId,
-      page: "actions",
+      page: dropdownRow.Page,
+      group: dropdownRow.Group,
       component: (
         <InputRow
           key ={componentId}
           id={componentId}  
           input_row_key={componentId}
-          onRemove={handleRemoveDropdown}
-          args = ''
-          mainDropdown = {JSON.stringify(constraints)}
+          page={dropdownRow.Page}
+          onRemove={(id)=> {
+            // console.log("id is", id);
+            handleRemoveDropdown(id);
+            delete rowData.current[id];
+            console.log(">>>> inside actions rowData", rowData.current);
+          }}
+          args = {dropdownRow.Arguments}
+          mainDropdown = {dropdownRow.Main_Dropdown}
+          onChange= {(id, data) => {
+            rowData.current = {
+              ...rowData.current,
+              [id]: data,
+            };
+            onDropdownChangeCallback(dropdownRow.Page, dropdownRow.Group, rowData.current, componentId);
+            console.log(">>>> inside actions rowData", rowData.current);
+          }}
         />
       ),
     };

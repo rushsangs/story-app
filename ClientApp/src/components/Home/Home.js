@@ -62,7 +62,7 @@ const Home = () => {
               // console.log("id is", id);
               handleRemoveDropdown(id);
               delete rowData.current[id];
-              console.log(">>>> inside actions rowData", rowData.current);
+              console.log(">>>> default rowData", rowData.current);
             }}
             args = {rows[i].Arguments}
             onChange= {(id, data) => {
@@ -71,7 +71,7 @@ const Home = () => {
                 [id]: data,
               };
               onDropdownChangeCallback(rows[i].Page, rows[i].Group, rowData.current, i);
-              console.log(">>>> inside actions rowData", rowData.current);
+              console.log(">>>> default rowData", rowData.current);
               // console.log("id is ",id);
             }}
           />
