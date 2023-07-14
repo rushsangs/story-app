@@ -16,6 +16,9 @@ const Home = () => {
   const [componentId, setComponentId] = useState(0);
   const [dropdownValues, setDropdownValues] = useState({});
   const rowData = useRef({});
+  // useEffect(() => {
+  //   console.log("Component id is now" + componentId);
+  // }, [componentId]);
   // Update the dropdown values based on the dropdown component's onChange event
   const handleDropdownChangeCallback = (tabId, dropdownValue) => {
     setDropdownValues((prevValues) => ({
@@ -37,21 +40,21 @@ const Home = () => {
     );
   };
 
-  const onTaskClick = async(componentId, setComponentId, dropdownComponents, setDropdownComponents, onDropdownChangeCallback) => {
+  const onTaskClick = async(onDropdownChangeCallback) => {
     //mocking data for now
     const rows = sampleInitialDropdowns;
     
     for(let i=0; i < rows.length; ++i)
     {
       const newComponent = {
-        id: componentId,
+        id: i,
         page: rows[i].Page,
         group: rows[i].Group,
         component: (
           <InputRow
             key ={String(componentId)+"-"+String(i)}
             input_row_key={String(componentId)+"-"+String(i)}
-            id={componentId}
+            id={i}
             page= {rows[i].Page}
             mainDropdown= {rows[i].Main_Dropdown}
             onRemove={handleRemoveDropdown}
@@ -61,17 +64,19 @@ const Home = () => {
                 ...rowData.current,
                 [id]: data,
               };
-              onDropdownChangeCallback("actions", rowData.current);
+              onDropdownChangeCallback(rows[i].Page, rowData.current);
               console.log(">>>> inside actions rowData", rowData.current);
+              // console.log("id is ",id);
             }}
           />
         ),
       };
-      setDropdownComponents((prevComponents) => [
+      await setDropdownComponents((prevComponents) => [
         ...prevComponents,
         newComponent,
       ]);
-      setComponentId((prevId) => prevId + 1);
+      // console.log(dropdownComponents);
+      await  setComponentId((prevId) => {return prevId + 1;});     
     }
     // GlobalSingletonInstance.set("showRegenerateMsg", false);
     // const storyData = await getStoryData();
@@ -87,7 +92,7 @@ const Home = () => {
     >
       <Content>
       <div>
-      <Button onClick={() => onTaskClick(componentId, setComponentId, dropdownComponents, setDropdownComponents, handleDropdownChangeCallback)}>
+      <Button onClick={() => onTaskClick(handleDropdownChangeCallback)}>
             Task 1
           </Button>
       </div>
