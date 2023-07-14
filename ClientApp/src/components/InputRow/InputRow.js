@@ -5,6 +5,7 @@ import constraints from "../../Data/constraints";
 import { getNextDropdownData } from "../../Data/apis";
 import { GlobalSingletonObject } from "../../utils/dataContext";
 import { sampleDdArgs } from "../../Data/dropdowns";
+import { array_replace } from "../../utils/array_replace";
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
@@ -17,14 +18,29 @@ const InputRow = (props) => {
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
   const selectedActionsValues = useRef([]);
   const handleChange = (value) => {
-    selectedActionsValues.current.push(value);
+    if(selectedActionsValues.current.length>=1)
+      selectedActionsValues.current = array_replace(selectedActionsValues.current, 0, value);
+    else
+      selectedActionsValues.current.push(value);
+    // console.log(selectedActionsValues);
     onChange(id, selectedActionsValues.current);
     GlobalSingletonInstance.set("showRegenerateMsg", true);
     setNextActionsDropdowns(sampleDdArgs);
   };
 
+  const handleRemove = (id) => {
+    selectedActionsValues.current = [];
+    // console.log('removed');
+    // console.log(selectedActionsValues);
+    onRemove(id);
+  };
   const handleNextDropdownChange = (value, index) => {
-    selectedActionsValues.current.push(value);
+    // selectedActionsValues.current.push(value);
+    if(selectedActionsValues.current.length-1>=index)
+      selectedActionsValues.current = array_replace(selectedActionsValues.current, index+1, value);
+    else
+      selectedActionsValues.current.push(value);
+    // console.log(selectedActionsValues);
     onChange(id, selectedActionsValues.current);
   };
   
@@ -84,7 +100,7 @@ const InputRow = (props) => {
           <SettingFilled style={{ fontSize: "16px", color: "#6E6E6E" }} />
         </div>
       </Popover>
-      <div onClick={() => onRemove(id)} style={{ cursor: "pointer" }}>
+      <div onClick={() => handleRemove(id)} style={{ cursor: "pointer" }}>
         <CloseCircleTwoTone
           style={{ fontSize: "16px", cursor: "pointer" }}
           twoToneColor="#E0190D"

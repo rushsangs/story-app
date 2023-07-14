@@ -9,26 +9,39 @@ const { Title } = Typography;
 
 const Beginning = ({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange}) => {
   const rowData = useRef({});
+  //TODO: Users should be unable to add rows to beginning tab 
   const handleAddDropdown = () => {
+    const dropdownRow = {
+      Row_Id: 123,
+      Page: 'beginning',
+      Group: 'world',
+      Main_Dropdown: JSON.stringify(constraints),
+      Arguments: ''
+    };
     const newComponent = {
       id: componentId,
-      page: "beginning",
-      group: "world",
+      page: dropdownRow.Page,
+      group: dropdownRow.Group,
       component: (
         <InputRow
           key ={componentId}
           input_row_key={componentId}
           id={componentId}
-          page="beginning"
-          onRemove={handleRemoveDropdown}
-          args = {''}
-          mainDropdown = {JSON.stringify(constraints)}
+          page={dropdownRow.Page}
+          onRemove={(id)=> {
+            // console.log("id is", id);
+            handleRemoveDropdown(id);
+            delete rowData.current[id];
+            console.log(">>>> inside actions rowData", rowData.current);
+          }}
+          args = {dropdownRow.Arguments}
+          mainDropdown = {dropdownRow.Main_Dropdown}
           onChange= {(id, data) => {
             rowData.current = {
               ...rowData.current,
               [id]: data,
             };
-            onDropdownChangeCallback("actions", rowData.current);
+            onDropdownChangeCallback(dropdownRow.Page, dropdownRow.Group, rowData.current, componentId);
             console.log(">>>> inside actions rowData", rowData.current);
           }}
         />
@@ -42,6 +55,7 @@ const Beginning = ({componentId, dropdownComponents, onDropdownChangeCallback, o
   };
 
   const handleRemoveDropdown = (id) => {
+    //TODO: should be unable to remove dropdowns in beginning tab
     onDropdownChange((prevComponents) =>
       prevComponents.filter((comp) => comp.id !== id)
     );

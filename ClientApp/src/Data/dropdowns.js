@@ -91,3 +91,20 @@ export const sometimesAction = [
         ]
     },
 ]
+export function shape_into_dropdownrequestitems(js_values){
+    const result = [];
+    // js_values = js_values.filter((v) => Object.keys(v.values).length > 0);
+    for(let i in js_values)
+    {
+        let element  = js_values[i];
+        for(const key in element.values)
+        {
+            result.push({
+                Page: element.page,
+                Group: element.group,
+                SelectedContent: element.values[key]
+            });
+        }
+    }
+    return result;
+}

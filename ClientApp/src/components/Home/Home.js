@@ -7,7 +7,7 @@ import { QuestionCircleFilled } from "@ant-design/icons";
 import styles from "./Home.module.css";
 import InputRow from "../InputRow/InputRow";
 import { Layout, Modal } from "antd";
-import { sampleInitialDropdowns } from "../../Data/dropdowns";
+import { sampleInitialDropdowns, shape_into_dropdownrequestitems } from "../../Data/dropdowns";
 const { Sider, Content } = Layout;
 
 const Home = () => {
@@ -20,10 +20,10 @@ const Home = () => {
   //   console.log("Component id is now" + componentId);
   // }, [componentId]);
   // Update the dropdown values based on the dropdown component's onChange event
-  const handleDropdownChangeCallback = (tabId, dropdownValue) => {
+  const handleDropdownChangeCallback = (page, group, dropdownValue, some_id) => {
     setDropdownValues((prevValues) => ({
       ...prevValues,
-      [tabId]: dropdownValue,
+      [some_id]: {page: page, group: group, values: dropdownValue},
     }));
   };
 
@@ -31,7 +31,8 @@ const Home = () => {
   const handleGenerateButtonClick = () => {
     // Perform actions with dropdownValues
     // return dropdownComponents;
-    console.log(dropdownValues);
+    let shaped_vals = shape_into_dropdownrequestitems(dropdownValues);
+    console.log(shaped_vals);
   };
   
   const handleRemoveDropdown = (id) => {
@@ -57,14 +58,19 @@ const Home = () => {
             id={i}
             page= {rows[i].Page}
             mainDropdown= {rows[i].Main_Dropdown}
-            onRemove={handleRemoveDropdown}
+            onRemove={(id) => {
+              // console.log("id is", id);
+              handleRemoveDropdown(id);
+              delete rowData.current[id];
+              console.log(">>>> inside actions rowData", rowData.current);
+            }}
             args = {rows[i].Arguments}
             onChange= {(id, data) => {
               rowData.current = {
                 ...rowData.current,
                 [id]: data,
               };
-              onDropdownChangeCallback(rows[i].Page, rowData.current);
+              onDropdownChangeCallback(rows[i].Page, rows[i].Group, rowData.current, i);
               console.log(">>>> inside actions rowData", rowData.current);
               // console.log("id is ",id);
             }}
