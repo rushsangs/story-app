@@ -111,7 +111,7 @@ public class DropdownRowSupport
         //parse all beginning dropdowns
         List<DropdownRow> beginnings = allrows.FindAll((row) => row.Page.Equals("beginning") && !row.Group.Equals("desires"));
         AddDropdownsToWorldState(domain.initial, beginnings);
-        AddDropdownsToDesires(domain, allrows.FindAll((row) => row.Page.Equals("beginning") && row.Group.Equals("desires")));
+        // AddDropdownsToDesires(domain, allrows.FindAll((row) => row.Page.Equals("beginning") && row.Group.Equals("desires")));
         AddDropdownsToWorldState(domain.goal, allrows.FindAll((row) => row.Page.Equals("ending")) );
     }
 

@@ -12,24 +12,12 @@ const GlobalSingletonInstance = new GlobalSingletonObject();
 const StoryPanel = ({dropdownComponents, getDropdownComponents}) => {
   const [story, setStory] = useState();
 
-const ExtractDataFromDropdowns = (components) => {
-  var response  = [];
-  for (let i = 0; i < components.length; i++){
-    const id = components[i].id;
-    const element = components[i].component; 
-    console.log(element);
-    // get all the options selected from inside element
-    // but element is a react element
-    // TODO: iterate through all elements and create the object shape needed for the API call
-  }
-};
-
 const onGenerateStoryClick = async() => {
   GlobalSingletonInstance.set("showRegenerateMsg", false);
-  const allDropdownData = ExtractDataFromDropdowns(dropdownComponents);
-  getDropdownComponents();
-  // const storyData = await getStoryData();
-  const storyData = ["hello", "test", "list", "of", "strings"];
+  // const allDropdownData = ExtractDataFromDropdowns(dropdownComponents);
+  let requestData=  getDropdownComponents();
+  const storyData = await getStoryData(requestData);
+  // const storyData = ["hello", "test", "list", "of", "strings"];
   setStory(storyData);
 };
 

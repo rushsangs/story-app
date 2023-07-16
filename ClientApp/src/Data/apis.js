@@ -3,12 +3,26 @@ import constraintsData from './constraints'
 import { sometimesAction } from './actions'
 
 
-export const getStoryData = async() => {
+export const getStoryData = async(requestData) => {
     //Currently only full paths are working (with external path)
-    const response = await fetch('https://localhost:7273/storygenerator');
-    const data = await response.json();
-    console.log(data);
-    return data;
+    try{
+        console.log(JSON.stringify(requestData));
+        const response = await fetch('https://localhost:7273/storygenerator',{
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+        });
+        const data = await response.json();
+        return data;
+    } catch(error)
+    {
+        console.log(error);
+        return;
+    }
+    // console.log(data);
+    
 }
 
 

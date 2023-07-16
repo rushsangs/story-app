@@ -30,7 +30,7 @@ export const ddargs = (args) =>
 }
 
 
-export const sampleDdArgs = ddargs([['true', 'false']]);
+export const sampleDdArgs = ddargs([['True', 'False']]);
 const dropdownRow = (page, md, args) => 
 {
     return {
@@ -43,10 +43,10 @@ const dropdownRow = (page, md, args) =>
 };
 
 export const sampleInitialDropdowns = [
-    dropdownRow("beginning", ['at Teddy L'], [['true', 'false']]),
-    dropdownRow("beginning", ['at Teddy Q'], [['true', 'false']]),
-    dropdownRow("ending", ['at Teddy L'], [['true', 'false']]),
-    dropdownRow("ending", ['at Teddy Q'], [['true', 'false']]),
+    dropdownRow("beginning", ['at Teddy L'], [['True', 'False']]),
+    dropdownRow("beginning", ['at Teddy Q'], [['True', 'False']]),
+    dropdownRow("ending", ['at Teddy L'], [['True', 'False']]),
+    dropdownRow("ending", ['at Teddy Q'], [['True', 'False']]),
 ];
 
 // export const sampleActionDropdowns = [
@@ -98,11 +98,26 @@ export function shape_into_dropdownrequestitems(js_values){
     for(let i in js_values)
     {
         let element  = js_values[i];
+        let main_dropdown = {
+            Text: element.values[0],
+            Tooltip: '',
+            Color: ''
+        };
+        let args = element.values.slice(1);
+        args = args.map((arg) => {
+            return {
+                Text: arg,
+                Tooltip: '',
+                Color: ''
+            };
+        })
         result.push({
-                Page: element.page,
-                Group: element.group,
-                SelectedContent: element.values
-        });
+                rowId: 123,
+                page: element.page,
+                group: element.group,
+                main_Dropdown: JSON.stringify(main_dropdown),
+                arguments: JSON.stringify(args)
+        }); 
     }
     return result;
 }

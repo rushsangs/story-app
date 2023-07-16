@@ -37,6 +37,7 @@ const Home = () => {
     console.log(dropdownValues);
     let shaped_vals = shape_into_dropdownrequestitems(dropdownValues);
     console.log(shaped_vals);
+    return shaped_vals;
   };
   
   const handleRemoveDropdown = (id) => {

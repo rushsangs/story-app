@@ -4,15 +4,15 @@ using story_app.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy.WithOrigins("https://localhost:7273",
-                                "https://localhost:5140",
-                                "https://localhost:44470");
-        });
-});
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin();
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyMethod();
+                    });
+            });
 builder.Services.AddDbContext<TodoDb>(opt => opt.UseInMemoryDatabase("TodoList"));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var app = builder.Build();
@@ -94,7 +94,7 @@ app.MapDelete("/todoitems/{id}", async (int id, TodoDb db) =>
 
     return Results.NotFound();
 });
-app.UseCors();
+app.UseCors("AllowAllOrigins");
 app.Run();
 
 public class Todo
