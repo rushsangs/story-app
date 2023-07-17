@@ -129,20 +129,20 @@ export function shape_into_dropdownrequestitems(js_values){
     for(let i in js_values)
     {
         let element  = js_values[i];
-        let main_dropdown = {
+        let main_dropdown = [{
             label: element.values[0],
             value: element.values[0],
             Tooltip: '',
             Color: ''
-        };
+        }];
         let args = element.values.slice(1);
         args = args.map((arg) => {
-            return {
+            return [{
                 value: arg,
                 label: arg,
                 Tooltip: '',
                 Color: ''
-            };
+            }];
         })
         result.push({
                 rowId: 123,

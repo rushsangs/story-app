@@ -18,6 +18,8 @@ const onGenerateStoryClick = async() => {
   let requestData=  getDropdownComponents();
   const storyData = await getStoryData(requestData);
   // const storyData = ["hello", "test", "list", "of", "strings"];
+  if (storyData.length == 0) 
+    storyData.push("No plan found.")
   setStory(storyData);
 };
 
