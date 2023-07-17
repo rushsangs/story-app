@@ -59,6 +59,7 @@ const Home = () => {
             key ={String(componentId)+"-"+String(i)}
             input_row_key={String(componentId)+"-"+String(i)}
             id={i}
+            removable={false}
             page= {rows[i].page}
             group= {rows[i].group}
             mainDropdown= {rows[i].main_Dropdown}
