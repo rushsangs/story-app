@@ -60,6 +60,7 @@ const Home = () => {
             input_row_key={String(componentId)+"-"+String(i)}
             id={i}
             removable={false}
+            enableSettings={false}
             page= {rows[i].page}
             group= {rows[i].group}
             mainDropdown= {rows[i].main_Dropdown}

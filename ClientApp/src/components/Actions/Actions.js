@@ -33,6 +33,7 @@ const Actions = ({componentId, dropdownComponents, onDropdownChangeCallback, onC
           key ={componentId}
           id={componentId}  
           removable={true}
+          enableSettings={true}
           input_row_key={componentId}
           page={dropdownRow.Page}
           group= {dropdownRow.Group}
