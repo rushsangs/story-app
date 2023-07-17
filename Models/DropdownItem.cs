@@ -12,14 +12,16 @@ public class DropdownItemRequest
 
 public class DropdownItemResponse
 {
-    public string Text {get; set;}
+    public string label {get; set;}
+    public string value {get; set;}
     public string Tooltip {get; set;}
     public string Color  {get; set;}
 
     public DropdownItemResponse(string text)
     {
-        this.Text = text;
-        this.Tooltip = "";
+        this.label = text;
+        this.value = text;
+        this.Tooltip = "Select one:";
         this.Color = "";
     }
 
@@ -32,12 +34,12 @@ public class StaticDropdownItems
     public static void Populate()
     {
         DropdownItemResponse r = new DropdownItemResponse();
-        r.Text = "Sometime";
+        r.label = "Sometime";
         r.Tooltip = "The specified action should occur at some point in the story.";
         r.Color = "";
         actionConstraintDropdowns.Add(r);
         r = new DropdownItemResponse();
-        r.Text = "Sometime after";
+        r.label = "Sometime after";
         r.Tooltip = "The specified first action should occur before the specified second action in the story.";
         r.Color = "";
         actionConstraintDropdowns.Add(r);
@@ -49,7 +51,7 @@ public class StaticDropdownItems
         foreach(string arg in args)
         {
             DropdownItemResponse r = new DropdownItemResponse();
-            r.Text = arg;
+            r.label = arg;
             r.Tooltip = "";
             if(arg.Contains("fail"))
                 r.Color = "red";

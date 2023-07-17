@@ -12,6 +12,7 @@ const GlobalSingletonInstance = new GlobalSingletonObject();
 const InputRow = (props) => {
   const { id, input_row_key, onRemove, mainDropdown, args, onChange } = props;
   const key = input_row_key
+  console.log(mainDropdown);
   const md = (mainDropdown === undefined)?constraints:JSON.parse(mainDropdown);
   const a = (args === undefined || args !== '')?args:'[]';
   const [nextActionsDropdowns, setNextActionsDropdowns] = useState(JSON.parse(a));
@@ -57,7 +58,7 @@ const InputRow = (props) => {
     <Space direction="horizontal" key={key} id={id}>
       <Select
         showSearch
-        placeholder={md[0].label}
+        placeholder={md[0].Tooltip}
         optionFilterProp="children"
         onChange={handleChange}
         onSearch={onSearch}
@@ -65,11 +66,12 @@ const InputRow = (props) => {
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
         }
         options={md}
+        optionLabelProp="Text"
       />
       {nextActionsDropdowns.map((item, index) => (
         <Select
           showSearch
-          placeholder={item[0].tooltip}
+          placeholder={item[0].Tooltip}
           optionFilterProp="children"
           onChange={(value) => handleNextDropdownChange(value, index)}
           onSearch={onSearch}
@@ -77,6 +79,7 @@ const InputRow = (props) => {
             (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
           } 
           options={item}
+          optionLabelProp="Text"
           key={String(index)}
         />
       ))}

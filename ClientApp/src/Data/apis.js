@@ -3,6 +3,14 @@ import constraintsData from './constraints'
 import { sometimesAction } from './actions'
 
 
+
+export const getInitialDropdownData = async() => {
+    const response = await fetch('https://localhost:7273/dropdowns');
+    const data = await response.json();
+    console.log(data);
+    return data;
+}
+
 export const getStoryData = async(requestData) => {
     //Currently only full paths are working (with external path)
     try{
@@ -22,9 +30,7 @@ export const getStoryData = async(requestData) => {
         return;
     }
     // console.log(data);
-    
 }
-
 
 export const getMockStoryData = async() => {
     return storyData

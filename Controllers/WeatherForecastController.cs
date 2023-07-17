@@ -39,15 +39,10 @@ public class WeatherForecastController : ControllerBase
     [HttpGet]
     public IEnumerable<string> Get()
     {
-        // String r = "ff";
-        // // List<string> r  =new List<string>();
-        // // r.Add("ff");
-        // return r;
         if(this.planningProblem == null)
             initialize();
         Plan p = this.planningProblem.HeadSpaceXSolution();
         return p.steps.Select( x => x.Item1).ToArray();
-        // .ToArray();
     }
     // public IEnumerable<WeatherForecast> Get()
     // {

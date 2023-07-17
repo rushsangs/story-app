@@ -7,7 +7,8 @@ import { QuestionCircleFilled } from "@ant-design/icons";
 import styles from "./Home.module.css";
 import InputRow from "../InputRow/InputRow";
 import { Layout, Modal } from "antd";
-import { sampleInitialDropdowns, shape_into_dropdownrequestitems } from "../../Data/dropdowns";
+import { mockInitialDropdowns, sampleInitialDropdowns, shape_into_dropdownrequestitems } from "../../Data/dropdowns";
+import { getInitialDropdownData } from "../../Data/apis";
 const { Sider, Content } = Layout;
 
 const Home = () => {
@@ -47,35 +48,38 @@ const Home = () => {
   };
 
   const onTaskClick = async(onDropdownChangeCallback) => {
-    //mocking data for now
-    const rows = sampleInitialDropdowns;
+    // mocking data
+    // const rows = mockInitialDropdowns;
     
+    // // api request
+    const rows = await getInitialDropdownData();
+    console.log(rows);
     for(let i=0; i < rows.length; ++i)
     {
       const newComponent = {
         id: i,
-        page: rows[i].Page,
-        group: rows[i].Group,
+        page: rows[i].page,
+        group: rows[i].group,
         component: (
           <InputRow
             key ={String(componentId)+"-"+String(i)}
             input_row_key={String(componentId)+"-"+String(i)}
             id={i}
-            page= {rows[i].Page}
-            mainDropdown= {rows[i].Main_Dropdown}
+            page= {rows[i].page}
+            mainDropdown= {rows[i].main_Dropdown}
             onRemove={(id) => {
               // console.log("id is", id);
               handleRemoveDropdown(id);
               delete rowData.current[id];
               console.log(">>>> default rowData", rowData.current);
             }}
-            args = {rows[i].Arguments}
+            args = {rows[i].arguments}
             onChange= {(id, data) => {
               rowData.current = {
                 ...rowData.current,
                 [id]: data,
               };
-              onDropdownChangeCallback(rows[i].Page, rows[i].Group, data, i);
+              onDropdownChangeCallback(rows[i].page, rows[i].group, data, i);
               console.log(">>>> default rowData", rowData.current);
               // console.log("id is ",id);
             }}

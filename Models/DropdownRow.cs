@@ -11,7 +11,7 @@ public class DropdownRow
     public long RowId { get; set; }
     public string Page {get; set;}
     public string Group {get; set;}
-    public string Main_DropDown {get; set;}
+    public string Main_Dropdown {get; set;}
     public string Arguments {get; set;} // arguments are separated with semicolon
 }
 
@@ -36,7 +36,7 @@ public class DropdownRowSupport
     private static void CreateBeginningDropdowns(JSONDomainBuilder domain, ref List<DropdownRow> allrows)
     {
         CombineLiteralsIntoDropdownRows(domain.initial, ref allrows, "beginning", "");
-        ConvertDesiresToDropdownRows(domain.desires, ref allrows, "beginning");
+        // ConvertDesiresToDropdownRows(domain.desires, ref allrows, "beginning");
     }
 
     // Desire dropdowns will be
@@ -44,9 +44,11 @@ public class DropdownRowSupport
     // second dropdown as Include, Don't Include
     private static void ConvertDesiresToDropdownRows(List<Desire> desires, ref List<DropdownRow> allrows, string page)
     {
-        var includeDropdownItem = new List<DropdownItemResponse>();
-        includeDropdownItem.Add(new DropdownItemResponse("Include"));
-        includeDropdownItem.Add(new DropdownItemResponse("Do Not Include"));
+        var includeDropdownItem = new List<List<DropdownItemResponse>>();
+        var includelistItem = new List<DropdownItemResponse>();
+        includelistItem.Add(new DropdownItemResponse("Include"));
+        includelistItem.Add(new DropdownItemResponse("Do Not Include"));
+        includeDropdownItem.Add(includelistItem);
         foreach(Desire desire in desires)
         {
             DropdownRow newRow = new DropdownRow();
@@ -55,7 +57,7 @@ public class DropdownRowSupport
             newRow.Group = "desires";
             var d = new DropdownItemResponse(desire.ToString());
             d.Tooltip = JsonConvert.SerializeObject(desire);
-            newRow.Main_DropDown = JsonConvert.SerializeObject(d);
+            newRow.Main_Dropdown = JsonConvert.SerializeObject(d);
             // lit_parts.RemoveAt(0);
             newRow.Arguments = JsonConvert.SerializeObject(includeDropdownItem);
             allrows.Add(newRow);
@@ -71,9 +73,12 @@ public class DropdownRowSupport
         foreach(string lit in state.fWorld.Keys)
             literals.Add(lit);    
         
-        var tfDropdownItem = new List<DropdownItemResponse>();
-        tfDropdownItem.Add(new DropdownItemResponse("True"));
-        tfDropdownItem.Add(new DropdownItemResponse("False"));
+        var tfDropdownItem = new List<List<DropdownItemResponse>>();
+        var tflistItem = new List<DropdownItemResponse>();
+
+        tflistItem.Add(new DropdownItemResponse("True"));
+        tflistItem.Add(new DropdownItemResponse("False"));
+        tfDropdownItem.Add(tflistItem);
         // add each literal 
         foreach(string lit in literals)
         {
@@ -82,24 +87,30 @@ public class DropdownRowSupport
             newRow.Page = page;
             newRow.Group = "world";
             // List<string> lit_parts = new List<string>(lit.Split(" "));
-            newRow.Main_DropDown = JsonConvert.SerializeObject(new DropdownItemResponse(lit));
+            var md = new List<DropdownItemResponse>();
+            md.Add(new DropdownItemResponse(lit));
+            newRow.Main_Dropdown = JsonConvert.SerializeObject(md);
             // lit_parts.RemoveAt(0);
             newRow.Arguments = JsonConvert.SerializeObject(tfDropdownItem);
             allrows.Add(newRow);
         }
         foreach(Character c in state.characters)
         {
-            var bDropDownItem = new List<DropdownItemResponse>();
-            bDropDownItem.Add(new DropdownItemResponse("bPlus"));
-            bDropDownItem.Add(new DropdownItemResponse("bMinus"));
-            bDropDownItem.Add(new DropdownItemResponse("unknown"));
+            var bDropDownItem = new List<List<DropdownItemResponse>>();
+            var bListItem = new List<DropdownItemResponse>();
+            bListItem.Add(new DropdownItemResponse("bPlus"));
+            bListItem.Add(new DropdownItemResponse("bMinus"));
+            bListItem.Add(new DropdownItemResponse("unknown"));
+            bDropDownItem.Add(bListItem);
             foreach(string lit in literals)
             {
                 DropdownRow newRow = new DropdownRow();
                 newRow.RowId = allrows.Count;
                 newRow.Page = page;
                 newRow.Group = c.name;
-                newRow.Main_DropDown = JsonConvert.SerializeObject(new DropdownItemResponse(lit));
+                var md = new List<DropdownItemResponse>();
+                md.Add(new DropdownItemResponse(lit));
+                newRow.Main_Dropdown = JsonConvert.SerializeObject(md);
                 newRow.Arguments = JsonConvert.SerializeObject(bDropDownItem);
                 allrows.Add(newRow);
             }
@@ -120,10 +131,10 @@ public class DropdownRowSupport
         domain.desires.Clear();
         foreach(DropdownRow row in dropdownRows)
         {
-            bool include = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Arguments).Select((a)=> a.Text).First().Equals("Include");
+            bool include = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Arguments).Select((a)=> a.label).First().Equals("Include");
             if(include)
             {
-                Desire desire = JsonConvert.DeserializeObject<Desire>(JsonConvert.DeserializeObject<DropdownItemResponse>(row.Main_DropDown).Tooltip);
+                Desire desire = JsonConvert.DeserializeObject<Desire>(JsonConvert.DeserializeObject<DropdownItemResponse>(row.Main_Dropdown).Tooltip);
                 domain.desires.Add(desire);
             }
         }
@@ -133,16 +144,16 @@ public class DropdownRowSupport
     {
         foreach(DropdownRow row in rows.FindAll((r)=> r.Group.Equals("world")))
         {
-            string arg = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Arguments).Select((a)=> a.Text).First();
+            string arg = JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments).First().Select((a)=> a.label).First();
             if(arg.Equals("True"))
             {
-                string lit = JsonConvert.DeserializeObject<DropdownItemResponse>(row.Main_DropDown).Text;
+                string lit = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Main_Dropdown).First().label;
                 worldstate.tWorld.TryAdd(lit, 1);
                 worldstate.fWorld.Remove(lit);
             }
             else if(arg.Equals("False"))
             {
-                string lit = JsonConvert.DeserializeObject<DropdownItemResponse>(row.Main_DropDown).Text;
+                string lit = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Main_Dropdown).First().label;
                 worldstate.fWorld.TryAdd(lit, 1);
                 worldstate.tWorld.Remove(lit);
             }
@@ -165,8 +176,8 @@ public class DropdownRowSupport
             // if the dropdowns have any options for the character beliefs add them here
             foreach(DropdownRow row in rows.FindAll((r)=> r.Group.Equals(c.name)))
             {
-                string lit = JsonConvert.DeserializeObject<DropdownItemResponse>(row.Main_DropDown).Text;
-                string arg = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Arguments).Select((a)=> a.Text).First();
+                string lit = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Main_Dropdown).First().label;
+                string arg = JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments).First().Select((a)=> a.label).First();
                 if(arg.Equals("bPlus"))
                 {
                     c.bPlus.TryAdd(lit, 1);
