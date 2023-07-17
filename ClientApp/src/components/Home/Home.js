@@ -21,9 +21,7 @@ const Home = () => {
   //   console.log("Component id is now" + componentId);
   // }, [componentId]);
   // Update the dropdown values based on the dropdown component's onChange event
-  const handleDropdownChangeCallback = (page, group, dropdownValue, some_id) => {
-    console.log("dropdown change request received");
-    console.log(dropdownValue);
+  const handleDropdownChangeCallback = async(page, group, dropdownValue, some_id) => {
     setDropdownValues((prevValues) => ({
       ...prevValues,
       [some_id]: {page: page, group: group, values: dropdownValue},
@@ -34,10 +32,7 @@ const Home = () => {
   const handleGenerateButtonClick = () => {
     // Perform actions with dropdownValues
     // return dropdownComponents;
-    console.log("about to reshape data");
-    console.log(dropdownValues);
     let shaped_vals = shape_into_dropdownrequestitems(dropdownValues);
-    console.log(shaped_vals);
     return shaped_vals;
   };
   
@@ -53,7 +48,6 @@ const Home = () => {
     
     // // api request
     const rows = await getInitialDropdownData();
-    console.log(rows);
     for(let i=0; i < rows.length; ++i)
     {
       const newComponent = {
@@ -66,6 +60,7 @@ const Home = () => {
             input_row_key={String(componentId)+"-"+String(i)}
             id={i}
             page= {rows[i].page}
+            group= {rows[i].group}
             mainDropdown= {rows[i].main_Dropdown}
             onRemove={(id) => {
               // console.log("id is", id);
@@ -74,12 +69,12 @@ const Home = () => {
               console.log(">>>> default rowData", rowData.current);
             }}
             args = {rows[i].arguments}
-            onChange= {(id, data) => {
+            onChange= {async(id, data) => {
               rowData.current = {
                 ...rowData.current,
                 [id]: data,
               };
-              onDropdownChangeCallback(rows[i].page, rows[i].group, data, i);
+              await onDropdownChangeCallback(rows[i].page, rows[i].group, data, i);
               console.log(">>>> default rowData", rowData.current);
               // console.log("id is ",id);
             }}
@@ -90,7 +85,6 @@ const Home = () => {
         ...prevComponents,
         newComponent,
       ]);
-      // console.log(dropdownComponents);
       await  setComponentId((prevId) => {return prevId + 1;});     
     }
     // GlobalSingletonInstance.set("showRegenerateMsg", false);

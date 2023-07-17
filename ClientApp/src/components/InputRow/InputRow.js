@@ -4,49 +4,42 @@ import { SettingFilled, CloseCircleTwoTone } from "@ant-design/icons";
 import constraints from "../../Data/constraints";
 import { getNextDropdownData } from "../../Data/apis";
 import { GlobalSingletonObject } from "../../utils/dataContext";
-import { sampleDdArgs } from "../../Data/dropdowns";
+import { sampleDdArgs, shape_into_dropdownrequestitem } from "../../Data/dropdowns";
 import { array_replace } from "../../utils/array_replace";
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
 const InputRow = (props) => {
-  const { id, input_row_key, onRemove, mainDropdown, args, onChange } = props;
+  const { id, input_row_key, page, group, onRemove, mainDropdown, args, onChange } = props;
   const key = input_row_key
-  console.log(mainDropdown);
   const md = (mainDropdown === undefined)?constraints:JSON.parse(mainDropdown);
   const a = (args === undefined || args !== '')?args:'[]';
   const [nextActionsDropdowns, setNextActionsDropdowns] = useState(JSON.parse(a));
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
   const selectedActionsValues = useRef([]);
-  const handleChange = (value) => {
+  const handleChange = async(value) => {
     if(selectedActionsValues.current.length>=1)
       selectedActionsValues.current = array_replace(selectedActionsValues.current, 0, value);
     else
       selectedActionsValues.current.push(value);
-    
-    console.log("should i push this?");
-    console.log(selectedActionsValues);
-    // console.log(selectedActionsValues.current[0]);
     onChange(id, selectedActionsValues.current);
     GlobalSingletonInstance.set("showRegenerateMsg", true);
-    setNextActionsDropdowns(sampleDdArgs);
+    var requestDDitem = shape_into_dropdownrequestitem(selectedActionsValues, page, group);
+    var argsResponse = await getNextDropdownData(requestDDitem);
+    setNextActionsDropdowns([argsResponse]);
   };
 
   const handleRemove = (id) => {
     selectedActionsValues.current = [];
-    // console.log('removed');
-    // console.log(selectedActionsValues);
     onRemove(id);
   };
-  const handleNextDropdownChange = (value, index) => {
-    // selectedActionsValues.current.push(value);
+  const handleNextDropdownChange = async(value, index) => {
     if(selectedActionsValues.current.length-1>=index)
       selectedActionsValues.current = array_replace(selectedActionsValues.current, index+1, value);
     else
       selectedActionsValues.current.push(value);
-    console.log("should i push this?");
-    // console.log(selectedActionsValues.current[index]);
-    console.log(selectedActionsValues);
+    var requestDDitem = shape_into_dropdownrequestitem(selectedActionsValues, page, group);
+    var argsResponse = await getNextDropdownData(requestDDitem);
     onChange(id, selectedActionsValues.current);
   };
   
@@ -58,7 +51,7 @@ const InputRow = (props) => {
     <Space direction="horizontal" key={key} id={id}>
       <Select
         showSearch
-        placeholder={md[0].Tooltip}
+        placeholder={md[0].tooltip}
         optionFilterProp="children"
         onChange={handleChange}
         onSearch={onSearch}
@@ -68,12 +61,12 @@ const InputRow = (props) => {
         options={md}
         optionLabelProp="Text"
       />
-      {nextActionsDropdowns.map((item, index) => (
-        <Select
+      {nextActionsDropdowns.map((item, index) => {
+        return <Select
           showSearch
-          placeholder={item[0].Tooltip}
+          placeholder={item[0].tooltip}
           optionFilterProp="children"
-          onChange={(value) => handleNextDropdownChange(value, index)}
+          onChange={async(value) => await handleNextDropdownChange(value, index)}
           onSearch={onSearch}
           filterOption={(input, option) =>
             (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
@@ -81,8 +74,8 @@ const InputRow = (props) => {
           options={item}
           optionLabelProp="Text"
           key={String(index)}
-        />
-      ))}
+        />;
+        })}
       <Popover
         content={
           <ul style={{ listStyleType: "none", margin: 0, padding: 0 }}>

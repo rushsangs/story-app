@@ -56,7 +56,7 @@ public class DropdownRowSupport
             newRow.Page = page;
             newRow.Group = "desires";
             var d = new DropdownItemResponse(desire.ToString());
-            d.Tooltip = JsonConvert.SerializeObject(desire);
+            d.tooltip = JsonConvert.SerializeObject(desire);
             newRow.Main_Dropdown = JsonConvert.SerializeObject(d);
             // lit_parts.RemoveAt(0);
             newRow.Arguments = JsonConvert.SerializeObject(includeDropdownItem);
@@ -134,7 +134,7 @@ public class DropdownRowSupport
             bool include = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Arguments).Select((a)=> a.label).First().Equals("Include");
             if(include)
             {
-                Desire desire = JsonConvert.DeserializeObject<Desire>(JsonConvert.DeserializeObject<DropdownItemResponse>(row.Main_Dropdown).Tooltip);
+                Desire desire = JsonConvert.DeserializeObject<Desire>(JsonConvert.DeserializeObject<DropdownItemResponse>(row.Main_Dropdown).tooltip);
                 domain.desires.Add(desire);
             }
         }

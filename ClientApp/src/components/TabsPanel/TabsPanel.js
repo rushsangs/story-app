@@ -8,7 +8,7 @@ const TabsPanel = ({componentId, dropdownComponents, onDropdownChangeCallback, o
  
   const tabs = ["Beginning", "Actions", "Ending"];
   const onChange = (key) => {
-    console.log(key);
+    // console.log(key);
   };
 
   return (

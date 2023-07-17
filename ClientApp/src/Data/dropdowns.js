@@ -54,29 +54,29 @@ export const mockInitialDropdowns =[
         "rowId": 0,
         "page": "beginning",
         "group": "world",
-        "main_Dropdown": "[{\"label\":\"at Teddy L\",\"value\":\"at Teddy L\",\"Tooltip\":\"Select one:\",\"Color\":\"\"}]",
-        "arguments": "[[{\"label\":\"True\",\"value\":\"True\",\"Tooltip\":\"Select one:\",\"Color\":\"\"},{\"label\":\"False\",\"value\":\"False\",\"Tooltip\":\"Select one:\",\"Color\":\"\"}]]"
+        "main_Dropdown": "[{\"label\":\"at Teddy L\",\"value\":\"at Teddy L\",\"tooltip\":\"Select one:\",\"color\":\"\"}]",
+        "arguments": "[[{\"label\":\"True\",\"value\":\"True\",\"tooltip\":\"Select one:\",\"color\":\"\"},{\"label\":\"False\",\"value\":\"False\",\"tooltip\":\"Select one:\",\"color\":\"\"}]]"
     },
     {
         "rowId": 1,
         "page": "beginning",
         "group": "Teddy",
-        "main_Dropdown": "[{\"label\":\"at Teddy L\",\"value\":\"at Teddy L\",\"Tooltip\":\"Select one:\",\"Color\":\"\"}]",
-        "arguments": "[[{\"label\":\"bPlus\",\"value\":\"bPlus\",\"Tooltip\":\"Select one:\",\"Color\":\"\"},{\"label\":\"bMinus\",\"value\":\"bMinus\",\"Tooltip\":\"Select one:\",\"Color\":\"\"},{\"label\":\"unknown\",\"value\":\"unknown\",\"Tooltip\":\"Select one:\",\"Color\":\"\"}]]"
+        "main_Dropdown": "[{\"label\":\"at Teddy L\",\"value\":\"at Teddy L\",\"tooltip\":\"Select one:\",\"color\":\"\"}]",
+        "arguments": "[[{\"label\":\"bPlus\",\"value\":\"bPlus\",\"tooltip\":\"Select one:\",\"color\":\"\"},{\"label\":\"bMinus\",\"value\":\"bMinus\",\"tooltip\":\"Select one:\",\"color\":\"\"},{\"label\":\"unknown\",\"value\":\"unknown\",\"tooltip\":\"Select one:\",\"color\":\"\"}]]"
     },
     {
         "rowId": 3,
         "page": "ending",
         "group": "world",
-        "main_Dropdown": "[{\"label\":\"at Teddy L\",\"value\":\"at Teddy L\",\"Tooltip\":\"Select one:\",\"Color\":\"\"}]",
-        "arguments": "[[{\"label\":\"True\",\"value\":\"True\",\"Tooltip\":\"Select one:\",\"Color\":\"\"},{\"label\":\"False\",\"value\":\"False\",\"Tooltip\":\"Select one:\",\"Color\":\"\"}]]"
+        "main_Dropdown": "[{\"label\":\"at Teddy L\",\"value\":\"at Teddy L\",\"tooltip\":\"Select one:\",\"color\":\"\"}]",
+        "arguments": "[[{\"label\":\"True\",\"value\":\"True\",\"tooltip\":\"Select one:\",\"color\":\"\"},{\"label\":\"False\",\"value\":\"False\",\"tooltip\":\"Select one:\",\"color\":\"\"}]]"
     },
     {
         "rowId": 4,
         "page": "ending",
         "group": "Teddy",
-        "main_Dropdown": "[{\"label\":\"at Teddy L\",\"value\":\"at Teddy L\",\"Tooltip\":\"Select one:\",\"Color\":\"\"}]",
-        "arguments": "[[{\"label\":\"bPlus\",\"value\":\"bPlus\",\"Tooltip\":\"Select one:\",\"Color\":\"\"},{\"label\":\"bMinus\",\"value\":\"bMinus\",\"Tooltip\":\"Select one:\",\"Color\":\"\"},{\"label\":\"unknown\",\"value\":\"unknown\",\"Tooltip\":\"Select one:\",\"Color\":\"\"}]]"
+        "main_Dropdown": "[{\"label\":\"at Teddy L\",\"value\":\"at Teddy L\",\"tooltip\":\"Select one:\",\"color\":\"\"}]",
+        "arguments": "[[{\"label\":\"bPlus\",\"value\":\"bPlus\",\"tooltip\":\"Select one:\",\"color\":\"\"},{\"label\":\"bMinus\",\"value\":\"bMinus\",\"tooltip\":\"Select one:\",\"color\":\"\"},{\"label\":\"unknown\",\"value\":\"unknown\",\"tooltip\":\"Select one:\",\"color\":\"\"}]]"
     }
 ]
 
@@ -132,16 +132,16 @@ export function shape_into_dropdownrequestitems(js_values){
         let main_dropdown = [{
             label: element.values[0],
             value: element.values[0],
-            Tooltip: '',
-            Color: ''
+            tooltip: '',
+            color: ''
         }];
         let args = element.values.slice(1);
         args = args.map((arg) => {
             return [{
                 value: arg,
                 label: arg,
-                Tooltip: '',
-                Color: ''
+                tooltip: '',
+                color: ''
             }];
         })
         result.push({
@@ -153,4 +153,29 @@ export function shape_into_dropdownrequestitems(js_values){
         }); 
     }
     return result;
+}
+
+export function shape_into_dropdownrequestitem(js_values, page, group){
+    let md_val = js_values.current[0];
+    var md = {
+        label: md_val,
+        value: md_val,
+        tooltip: "",
+        color: ""
+    };
+    let args = js_values.current.slice(1).map((x) => {
+        return {
+            label: x,
+            value: x,
+            tooltip: "",
+            color: ""
+        };
+    });
+    var requestData = {
+        Page: page,
+        Group: group, 
+        Main_DropDown: JSON.stringify(md),
+        Arguments: JSON.stringify(args)
+    }
+    return requestData
 }

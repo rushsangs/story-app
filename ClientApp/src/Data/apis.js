@@ -7,14 +7,12 @@ import { sometimesAction } from './actions'
 export const getInitialDropdownData = async() => {
     const response = await fetch('https://localhost:7273/dropdowns');
     const data = await response.json();
-    console.log(data);
     return data;
 }
 
 export const getStoryData = async(requestData) => {
     //Currently only full paths are working (with external path)
     try{
-        console.log(JSON.stringify(requestData));
         const response = await fetch('https://localhost:7273/storygenerator',{
             method: "POST",
             headers: {
@@ -26,10 +24,21 @@ export const getStoryData = async(requestData) => {
         return data;
     } catch(error)
     {
-        console.log(error);
         return;
     }
-    // console.log(data);
+}
+
+
+export const getNextDropdownData = async(requestData) => {
+    const response = await fetch('https://localhost:7273/dropdowns',{
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+        });
+    const data = await response.json();
+    return data;
 }
 
 export const getMockStoryData = async() => {
@@ -39,10 +48,3 @@ export const getMockStoryData = async() => {
 export const getConstraintsData = () => {
     return constraintsData
 }
-
-export const getNextDropdownData = () => {
-    
-    return sometimesAction
-}
-// const response = await fetch('weatherforecast');
-//     const data = await response.json();
