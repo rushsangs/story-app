@@ -48,6 +48,11 @@ const Home = () => {
     
     // // api request
     const rows = await getInitialDropdownData();
+    
+    //clear all previous dropdowns
+    await setDropdownComponents([]);
+    await setComponentId(0);
+    
     for(let i=0; i < rows.length; ++i)
     {
       const newComponent = {
