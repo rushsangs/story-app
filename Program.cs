@@ -20,6 +20,7 @@ var app = builder.Build();
 
 string path = Directory.GetCurrentDirectory();    
 NarrativePlanning.DomainBuilder.JSONDomainBuilder domain = new NarrativePlanning.DomainBuilder.JSONDomainBuilder(path + "/HeadSpace2/Tests/TestData/domain2.json");
+HeadSpace.TextMaker.TextMaker textmaker = new HeadSpace.TextMaker.TextMaker(path + "/HeadSpace2/HeadSpace/JSON Files/action_texts.json");
 StaticDropdownItems.Populate();
 
 app.MapGet("/storygenerator", async() =>
@@ -30,7 +31,7 @@ app.MapGet("/storygenerator", async() =>
     if (plan == null)
         return Results.Created("/storygenerator/1", new List<string>());
     else
-        return Results.Created("/storygenerator/1", plan.steps.Select(s=>s.Item1).ToArray());
+        return Results.Created("/storygenerator/1", textmaker.convertPlan(plan.steps.Select(s=>s.Item1)).ToArray());
 });
 
 app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
@@ -42,18 +43,18 @@ app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
     if (plan == null)
         return Results.Created("/storygenerator/1", new List<string>());
     else
-        return Results.Created("/storygenerator/1", plan.steps.Select(s=>s.Item1).ToArray());
+        return Results.Created("/storygenerator/1", textmaker.convertPlan(plan.steps.Select(s=>s.Item1)).ToArray());
 });
 
 app.MapGet("/dropdowns", async () =>
     {
-        List<DropdownRow> rows = DropdownRowSupport.CreateStartupDropdowns(domain);
+        List<DropdownRow> rows = DropdownRowSupport.CreateStartupDropdowns(domain, textmaker);
         return Results.Ok(rows);
     }); 
 
 app.MapPost("/dropdowns", async (DropdownItemRequest dItemRequest) =>
 {
-    List<DropdownItemResponse> responses = StaticDropdownItems.GetNextDropdownItem(dItemRequest, domain);
+    List<DropdownItemResponse> responses = StaticDropdownItems.GetNextDropdownItem(dItemRequest, domain, textmaker);
     return Results.Created("/dropdowns/1", responses);   
 });
 

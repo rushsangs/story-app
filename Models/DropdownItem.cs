@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using HeadSpace.TextMaker;
 using Newtonsoft.Json;
 
 namespace story_app.Models;
@@ -18,13 +19,15 @@ public class DropdownItemResponse
     public string tooltip {get; set;}
     public string color  {get; set;}
 
-    public DropdownItemResponse(string text)
+    public DropdownItemResponse(string text, string label)
     {
-        this.label = text;
+        this.label = label;
         this.value = text;
         this.tooltip = "Select one:";
         this.color = "";
     }
+
+    public DropdownItemResponse(string text): this(text, text) {}
 
     public DropdownItemResponse(): this("") {}
 }
@@ -81,7 +84,7 @@ public class StaticDropdownItems
         return responses;
     }
 
-    public static List<DropdownItemResponse> GetNextDropdownItem(DropdownItemRequest dropdownItemRequest, NarrativePlanning.DomainBuilder.JSONDomainBuilder domain)
+    public static List<DropdownItemResponse> GetNextDropdownItem(DropdownItemRequest dropdownItemRequest, NarrativePlanning.DomainBuilder.JSONDomainBuilder domain, TextMaker textMaker)
     {
         List<DropdownItemResponse> response = new List<DropdownItemResponse>();
         if(dropdownItemRequest.Page.Equals("beginning") || dropdownItemRequest.Page.Equals("ending"))
@@ -107,7 +110,7 @@ public class StaticDropdownItems
             if(dropdownItemRequest.Main_DropDown.Length > 0)
             {
                 // populate with actions
-                response = StaticDropdownItems.getItems(domain.operators.Select(op => op.text));
+                response = StaticDropdownItems.getItems(domain.operators.Select(op => textMaker.getString(op.text)));
             }
             else
             {
