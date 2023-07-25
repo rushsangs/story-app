@@ -125,7 +125,7 @@ public class StaticDropdownItems
             if(dropdownItemRequest.Main_DropDown.Length > 0)
             {
                 // populate with actions
-                response = StaticDropdownItems.getItems(domain.operators.Select(op => new Tuple<string, string>(op.text, textMaker.getString(op.text))));
+                response = StaticDropdownItems.getItems(domain.operators.Select(op => new Tuple<string, string>(textMaker.getString(op.text), op.text)));
             }
             else
             {
