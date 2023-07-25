@@ -133,21 +133,47 @@ public class DropdownRowSupport
         AddDropdownsToWorldState(domain.initial, beginnings);
         // AddDropdownsToDesires(domain, allrows.FindAll((row) => row.Page.Equals("beginning") && row.Group.Equals("desires")));
         AddDropdownsToWorldState(domain.goal, allrows.FindAll((row) => row.Page.Equals("ending")) );
+        AddDropdownsToMiddle(domain, allrows.FindAll((row) => row.Page.Equals("actions")));
     }
 
-    private static void AddDropdownsToDesires(JSONDomainBuilder domain, List<DropdownRow> dropdownRows)
+    private static void AddDropdownsToMiddle(JSONDomainBuilder domain, List<DropdownRow> dropdownRows)
     {
-        domain.desires.Clear();
+        domain.middle.Clear();
         foreach(DropdownRow row in dropdownRows)
         {
-            bool include = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Arguments).Select((a)=> a.label).First().Equals("Include");
-            if(include)
+            string constraint = (JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Main_Dropdown).First().value);
+            if (constraint.Equals("Sometime"))
             {
-                Desire desire = JsonConvert.DeserializeObject<Desire>(JsonConvert.DeserializeObject<DropdownItemResponse>(row.Main_Dropdown).tooltip);
-                domain.desires.Add(desire);
+                String actionliteral = (JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments).First()).First().value;
+                HardConstraint c = new Sometime(new DataStructures.ActionLiteral(actionliteral, false));
+                domain.middle.Add(c);
+            }
+            if (constraint.Equals("Sometime After"))
+            {
+                List<List<DropdownItemResponse>> args = (JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments));
+                String actionliteral1 = args.First().First().value;
+                String actionliteral2 = args[1].First().value;
+                HardConstraint c = new SometimeAfter(new DataStructures.ActionLiteral(actionliteral1, false),
+                                                    new DataStructures.ActionLiteral(actionliteral2, false));
+                domain.middle.Add(c);
             }
         }
     }
+
+    //obsolete
+    // private static void AddDropdownsToDesires(JSONDomainBuilder domain, List<DropdownRow> dropdownRows)
+    // {
+    //     domain.desires.Clear();
+    //     foreach(DropdownRow row in dropdownRows)
+    //     {
+    //         bool include = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Arguments).Select((a)=> a.label).First().Equals("Include");
+    //         if(include)
+    //         {
+    //             Desire desire = JsonConvert.DeserializeObject<Desire>(JsonConvert.DeserializeObject<DropdownItemResponse>(row.Main_Dropdown).tooltip);
+    //             domain.desires.Add(desire);
+    //         }
+    //     }
+    // }
 
     private static void AddDropdownsToWorldState(WorldState worldstate, List<DropdownRow> rows)
     {

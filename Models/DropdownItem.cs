@@ -19,13 +19,15 @@ public class DropdownItemResponse
     public string tooltip {get; set;}
     public string color  {get; set;}
 
-    public DropdownItemResponse(string text, string label)
+    public DropdownItemResponse(string text, string label, string tooltip)
     {
         this.label = label;
         this.value = text;
-        this.tooltip = "Select one:";
+        this.tooltip = tooltip;
         this.color = "";
     }
+
+    public DropdownItemResponse(string text, string label): this(text, label, "Select one:") {}
 
     public DropdownItemResponse(string text): this(text, text) {}
 
@@ -84,6 +86,19 @@ public class StaticDropdownItems
         return responses;
     }
 
+    public static List<DropdownItemResponse> getItems(IEnumerable<Tuple<string, string>> tuples_text_tooltip)
+    {
+        List<DropdownItemResponse> responses = new List<DropdownItemResponse>();
+        foreach(Tuple<string, string> arg in tuples_text_tooltip)
+        {
+            DropdownItemResponse r = new DropdownItemResponse(arg.Item1, arg.Item1, arg.Item2 );
+            if(arg.Item2.Contains("fail"))
+                r.color = "red";
+            responses.Add(r);
+        }
+        return responses;
+    }
+
     public static List<DropdownItemResponse> GetNextDropdownItem(DropdownItemRequest dropdownItemRequest, NarrativePlanning.DomainBuilder.JSONDomainBuilder domain, TextMaker textMaker)
     {
         List<DropdownItemResponse> response = new List<DropdownItemResponse>();
@@ -110,7 +125,7 @@ public class StaticDropdownItems
             if(dropdownItemRequest.Main_DropDown.Length > 0)
             {
                 // populate with actions
-                response = StaticDropdownItems.getItems(domain.operators.Select(op => textMaker.getString(op.text)));
+                response = StaticDropdownItems.getItems(domain.operators.Select(op => new Tuple<string, string>(op.text, textMaker.getString(op.text))));
             }
             else
             {

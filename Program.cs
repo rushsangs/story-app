@@ -19,7 +19,7 @@ var app = builder.Build();
 
 
 string path = Directory.GetCurrentDirectory();    
-NarrativePlanning.DomainBuilder.JSONDomainBuilder domain = new NarrativePlanning.DomainBuilder.JSONDomainBuilder(path + "/HeadSpace2/Tests/TestData/domain2.json");
+NarrativePlanning.DomainBuilder.JSONDomainBuilder domain = new NarrativePlanning.DomainBuilder.JSONDomainBuilder(path + "/HeadSpace2/Tests/TestData/domain5.json");
 NarrativePlanning.PlanningProblem problem = null;
 HeadSpace.TextMaker.TextMaker textmaker = new HeadSpace.TextMaker.TextMaker(path + "/HeadSpace2/HeadSpace/JSON Files/action_texts.json");
 StaticDropdownItems.Populate();
@@ -39,13 +39,12 @@ app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
 {
     var old_domain = domain.cloneForTrackingChanges();
     DropdownRowSupport.parseDropdownsIntoDomain(allrows, domain);
-    if(!domain.hasChanged(old_domain) && problem != null)
-        problem.otherPlans.Clear();
-    else
+    if(problem == null || domain.hasChanged(old_domain))
     {
         Tuple<NarrativePlanning.WorldState, NarrativePlanning.WorldState, List<NarrativePlanning.Operator>> compiled_tuple = NarrativePlanning.PAC.PAC_C(domain.initial.clone(), domain.goal.clone(), domain.operators, domain.middle);
         problem = new NarrativePlanning.PlanningProblem(compiled_tuple.Item1, compiled_tuple.Item2, compiled_tuple.Item3, domain.desires, domain.counterActions, domain.middle);
     }
+
     NarrativePlanning.Plan plan = problem.HeadSpaceXSolution();
     if (plan == null)
         return Results.Created("/storygenerator/1", new List<string>());
