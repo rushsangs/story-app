@@ -23,7 +23,7 @@ const Beginning = ({componentId, dropdownComponents, onDropdownChangeCallback, o
         <Title level={3}>World</Title>
         {dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="world").map((obj) => obj.component)}
         <Title level={3}>Ted</Title>
-        {dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="ted").map((obj) => obj.component)}
+        {dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Teddy").map((obj) => obj.component)}
       </Space>
     </>
   );

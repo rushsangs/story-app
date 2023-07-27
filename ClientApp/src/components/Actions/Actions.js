@@ -76,7 +76,7 @@ const Actions = ({componentId, dropdownComponents, onDropdownChangeCallback, onC
   return (
     <>
       <Space direction="vertical" style={{ padding: "0 15px" }}>
-        <Button onClick={handleAddDropdown}>Add Data</Button>
+        <Button onClick={handleAddDropdown}>Add Action Constraint</Button>
         {dropdownComponents.filter((obj) => obj.page==="actions").map((obj) => obj.component)}
       </Space>
     </>
