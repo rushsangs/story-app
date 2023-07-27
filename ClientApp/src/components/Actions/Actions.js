@@ -38,8 +38,9 @@ const Actions = ({componentId, dropdownComponents, onDropdownChangeCallback, onC
           page={dropdownRow.Page}
           group= {dropdownRow.Group}
           onRemove={(id)=> {
-            // console.log("id is", id);
+            console.log("id is", id);
             handleRemoveDropdown(id);
+            onDropdownChangeCallback('', '', '', componentId);
             delete rowData.current[id];
             console.log(">>>> inside actions rowData", rowData.current);
           }}
@@ -64,9 +65,12 @@ const Actions = ({componentId, dropdownComponents, onDropdownChangeCallback, onC
   };
 
   const handleRemoveDropdown = (id) => {
-    onDropdownChange((prevComponents) =>
-      prevComponents.filter((comp) => comp.id !== id)
-    );
+    console.log("components are");
+    console.log(dropdownComponents);
+    onDropdownChange((prevComponents) => {
+      let x = prevComponents.filter((comp) => comp.id !== id);
+      return x;
+    });
   };
 
   return (

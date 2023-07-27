@@ -22,21 +22,38 @@ const Home = () => {
   // }, [componentId]);
   // Update the dropdown values based on the dropdown component's onChange event
   const handleDropdownChangeCallback = async(page, group, dropdownValue, some_id) => {
-    setDropdownValues((prevValues) => ({
-      ...prevValues,
-      [some_id]: {page: page, group: group, values: dropdownValue},
-    }));
+    console.log("callback received");
+    if(page === ""){
+      console.log("received empty page, delete request");
+      console.log("component id is", some_id);
+      setDropdownValues((prevValues) => {
+        delete prevValues[some_id];
+        return prevValues;
+      });
+    }
+    else{
+      setDropdownValues((prevValues) => ({
+        ...prevValues,
+        [some_id]: {page: page, group: group, values: dropdownValue},
+      }));
+    }
   };
 
   // Callback function to handle button click
   const handleGenerateButtonClick = () => {
     // Perform actions with dropdownValues
     // return dropdownComponents;
+    console.log('sending vals');
+    console.log(dropdownValues);
     let shaped_vals = shape_into_dropdownrequestitems(dropdownValues);
     return shaped_vals;
   };
   
   const handleRemoveDropdown = (id) => {
+    console.log("values");
+    console.log(dropdownValues);
+    console.log("COMPONENTS");
+    console.log(dropdownComponents);
     setDropdownComponents((prevComponents) =>
       prevComponents.filter((comp) => comp.id !== id)
     );
