@@ -16,16 +16,14 @@ export const ddargs = (args) =>
         return element_list.map( element =>
             {
                 return {
-                    'name': element,
                     'label': element,
                     'value': element,
-                    'tooltip': 'Select one:',
+                    'tooltip': element,
                     'color': ''
                 }
             }
 
-        )
-        
+        )    
     });   
 }
 
@@ -48,6 +46,13 @@ export const sampleInitialDropdowns = [
     dropdownRow("ending", ['at Teddy L'], [['True', 'False']]),
     dropdownRow("ending", ['at Teddy Q'], [['True', 'False']]),
 ];
+
+export const IntentDropdowns = ddargs([[
+    'Default Intent',
+    'Persistent Intent',
+    'Flexible Intent',
+    'Drop Intent'
+]]);
 
 export const mockInitialDropdowns =[
     {

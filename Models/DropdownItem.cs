@@ -19,17 +19,17 @@ public class DropdownItemResponse
     public string tooltip {get; set;}
     public string color  {get; set;}
 
-    public DropdownItemResponse(string text, string label, string tooltip)
+    public DropdownItemResponse(string value, string label, string tooltip)
     {
         this.label = label;
-        this.value = text;
+        this.value = value;
         this.tooltip = tooltip;
         this.color = "";
     }
 
-    public DropdownItemResponse(string text, string label): this(text, label, "Select one:") {}
+    public DropdownItemResponse(string value, string label): this(value, label, "Select one:") {}
 
-    public DropdownItemResponse(string text): this(text, text) {}
+    public DropdownItemResponse(string value): this(value, value) {}
 
     public DropdownItemResponse(): this("") {}
 }
@@ -86,12 +86,12 @@ public class StaticDropdownItems
         return responses;
     }
 
-    public static List<DropdownItemResponse> getItems(IEnumerable<Tuple<string, string>> tuples_text_tooltip)
+    public static List<DropdownItemResponse> getItems(IEnumerable<Tuple<string, string>> tuples_label_value)
     {
         List<DropdownItemResponse> responses = new List<DropdownItemResponse>();
-        foreach(Tuple<string, string> arg in tuples_text_tooltip)
+        foreach(Tuple<string, string> arg in tuples_label_value)
         {
-            DropdownItemResponse r = new DropdownItemResponse(arg.Item1, arg.Item1, arg.Item2 );
+            DropdownItemResponse r = new DropdownItemResponse(arg.Item2, arg.Item1, arg.Item2 );
             if(arg.Item2.Contains("fail"))
                 r.color = "red";
             responses.Add(r);

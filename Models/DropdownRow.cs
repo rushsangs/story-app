@@ -18,8 +18,6 @@ public class DropdownRow
 
 public class DropdownRowSupport
 {
-
-    
     // public static List<DropdownRow> CreateStartupDropdowns(JSONDomainBuilder domain)
     // {
     //     List<DropdownRow> allrows = new List<DropdownRow>();
@@ -142,21 +140,48 @@ public class DropdownRowSupport
         foreach(DropdownRow row in dropdownRows)
         {
             string constraint = (JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Main_Dropdown).First().value);
+            List<List<DropdownItemResponse>> args = (JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments));
+            HardConstraint c = null;
             if (constraint.Equals("Sometime"))
             {
-                String actionliteral = (JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments).First()).First().value;
-                HardConstraint c = new Sometime(new DataStructures.ActionLiteral(actionliteral, false));
-                domain.middle.Add(c);
+                String actionliteral = args.First().First().value;
+                List<string> intents = new List<string>();
+                bool failed = false;
+                if(args.Last().First().value.Contains("Intent"))
+                {
+                    // intent constraint present
+                    string intent = args.Last().First().value;
+                    string intent_mode = (intent.Contains("Flexible"))?IntentionConstraints.SUB:(intent.Contains("Drop"))?IntentionConstraints.DROP:IntentionConstraints.PERSIST;
+                    intents.Add(intent_mode);
+                }
+                if(actionliteral.Contains("fail"))
+                    failed = true;
+                DataStructures.ActionLiteral al = new DataStructures.ActionLiteral(actionliteral, false, failed, intents);
+                c = new Sometime(al);
             }
-            if (constraint.Equals("Sometime After"))
+            else if (constraint.Equals("Sometime After"))
             {
-                List<List<DropdownItemResponse>> args = (JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments));
                 String actionliteral1 = args.First().First().value;
                 String actionliteral2 = args[1].First().value;
-                HardConstraint c = new SometimeAfter(new DataStructures.ActionLiteral(actionliteral1, false),
-                                                    new DataStructures.ActionLiteral(actionliteral2, false));
-                domain.middle.Add(c);
+                List<string> intents = new List<string>();
+                bool failed1 = false;
+                bool failed2 = false;
+                if(args.Last().First().value.Contains("Intent"))
+                {
+                    // intent constraint present
+                    string intent = args.Last().First().value;
+                    string intent_mode = (intent.Contains("Flexible"))?IntentionConstraints.SUB:(intent.Contains("Drop"))?IntentionConstraints.DROP:IntentionConstraints.PERSIST;
+                    intents.Add(intent_mode);
+                }
+                if(actionliteral1.Contains("fail"))
+                    failed1 = true;
+                if(actionliteral2.Contains("fail"))
+                    failed2 = true;
+                DataStructures.ActionLiteral al1 = new DataStructures.ActionLiteral(actionliteral1, false, failed1, intents);
+                DataStructures.ActionLiteral al2 = new DataStructures.ActionLiteral(actionliteral2, false, failed2, intents);
+                c = new SometimeAfter(al1, al2);
             }
+            domain.middle.Add(c);
         }
     }
 
