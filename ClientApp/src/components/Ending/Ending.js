@@ -56,7 +56,7 @@ const Ending =({componentId, dropdownComponents, onDropdownChangeCallback, onCom
         <Title level={3}>World</Title>
         {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="world").map((obj) => obj.component)}
         <Title level={3}>Ted</Title>
-        {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="ted").map((obj) => obj.component)}
+        {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="Teddy").map((obj) => obj.component)}
       </Space>
     </>
   );

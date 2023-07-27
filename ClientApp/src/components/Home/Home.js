@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button } from "antd";
+import { Button, Space } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import TabsPanel from "../TabsPanel/TabsPanel";
 import StoryPanel from "../StoryPanel/StoryPanel";
@@ -10,6 +10,7 @@ import { Layout, Modal } from "antd";
 import { mockInitialDropdowns, sampleInitialDropdowns, shape_into_dropdownrequestitems } from "../../Data/dropdowns";
 import { getInitialDropdownData } from "../../Data/apis";
 import { task1 } from "../../Data/story";
+import Title from "antd/es/typography/Title";
 const { Sider, Content } = Layout;
 
 const Home = () => {
@@ -71,6 +72,7 @@ const Home = () => {
     //clear all previous dropdowns
     await setDropdownComponents([]);
     await setComponentId(0);
+    await setDropdownValues({});
     await setStoryTaskComponents(task1);
     
     for(let i=0; i < rows.length; ++i)
@@ -127,11 +129,16 @@ const Home = () => {
       }}
     >
       <Content>
-      <div>
-      <Button onClick={() => onTaskClick(handleDropdownChangeCallback)}>
+      <Space>
+          <Title level={2}>Plot Generation Tool Version 3.0</Title>
+          <Button onClick={() => onTaskClick(handleDropdownChangeCallback)}>
             Task 1
           </Button>
-      </div>
+          <Button onClick={() => onTaskClick(handleDropdownChangeCallback)}>
+            Task 2
+          </Button>
+      </Space>
+      
         <TabsPanel componentId = {componentId} onDropdownChangeCallback={handleDropdownChangeCallback} dropdownComponents = {dropdownComponents} onComponentChange={(x) => setComponentId(x)} onDropdownChange={(x) => setDropdownComponents(x)}/>
           
       </Content>
