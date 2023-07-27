@@ -9,6 +9,7 @@ import InputRow from "../InputRow/InputRow";
 import { Layout, Modal } from "antd";
 import { mockInitialDropdowns, sampleInitialDropdowns, shape_into_dropdownrequestitems } from "../../Data/dropdowns";
 import { getInitialDropdownData } from "../../Data/apis";
+import { task1 } from "../../Data/story";
 const { Sider, Content } = Layout;
 
 const Home = () => {
@@ -16,6 +17,7 @@ const Home = () => {
   const [dropdownComponents, setDropdownComponents] = useState([]);
   const [componentId, setComponentId] = useState(0);
   const [dropdownValues, setDropdownValues] = useState({});
+  const [storyTaskComponents, setStoryTaskComponents] = useState([]);
   const rowData = useRef({});
   // useEffect(() => {
   //   console.log("Component id is now" + componentId);
@@ -69,6 +71,7 @@ const Home = () => {
     //clear all previous dropdowns
     await setDropdownComponents([]);
     await setComponentId(0);
+    await setStoryTaskComponents(task1);
     
     for(let i=0; i < rows.length; ++i)
     {
@@ -133,7 +136,7 @@ const Home = () => {
           
       </Content>
       <Sider theme={"light"} width="25%">
-        <StoryPanel dropdownComponents = {dropdownComponents} getDropdownComponents={handleGenerateButtonClick} />
+        <StoryPanel dropdownComponents = {dropdownComponents} getDropdownComponents={handleGenerateButtonClick} storyTaskComponents={storyTaskComponents}/>
       </Sider>
 
       <div

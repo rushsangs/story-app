@@ -2,15 +2,20 @@ import React, { useEffect, useState } from "react";
 
 import { Card, Space, Button } from "antd";
 import { List, Typography } from "antd";
-import { CaretRightOutlined } from "@ant-design/icons";
+import { CaretRightOutlined,CheckCircleTwoTone, CloseCircleTwoTone} from "@ant-design/icons";
 import { getStoryData, getMockStoryData } from "../../Data/apis";
 import styles from "./StoryPanel.module.css";
 import { GlobalSingletonObject } from "../../utils/dataContext";
+const { Title } = Typography;
+
+
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
-const StoryPanel = ({dropdownComponents, getDropdownComponents}) => {
+const StoryPanel = ({dropdownComponents, getDropdownComponents, storyTaskComponents}) => {
   const [story, setStory] = useState();
+  // const [tasks, setTasks] = useState(task1);
+
 
 const onGenerateStoryClick = async() => {
   GlobalSingletonInstance.set("showRegenerateMsg", false);
@@ -18,14 +23,41 @@ const onGenerateStoryClick = async() => {
   let requestData=  getDropdownComponents();
   const storyData = await getStoryData(requestData);
   // const storyData = ["hello", "test", "list", "of", "strings"];
-  if (storyData.length == 0) 
+  if (storyData.length === 0) 
     storyData.push("No plan found.")
   setStory(storyData);
 };
 
+const TaskHTML = <div><Title level={3}>Task Details</Title><div>
+  Create a story where the following are true:
+{storyTaskComponents.map((item, index) => {
+  if(item.test(story))
+  {
+     return (<Space
+     key={index}>
+    <CheckCircleTwoTone />
+    <div>{item.text}</div>
+    </Space>
+    )
+  }
+  else
+  {
+    return (<Space
+    key={index}>
+      <CloseCircleTwoTone />
+      <div>{item.text}</div>
+      </Space>
+      )
+  }})}
+</div>
+</div>;
+  
   return (
     <div className={styles.storyContainer}>
-      <div className={styles.storyTitle}>Generate story</div>
+       {
+          (storyTaskComponents.length>0)?TaskHTML:<></>
+       }
+      <Title level={3}>Generate story</Title>
       <Button block onClick={() => onGenerateStoryClick()}>
         Generate
         <CaretRightOutlined />
@@ -35,7 +67,6 @@ const onGenerateStoryClick = async() => {
           You have updated the settings! Press Regenerate to see new story.{" "}
         </div>
       )}
-
       <div
         className={styles.storyBody}
         style={{
