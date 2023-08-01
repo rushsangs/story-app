@@ -42,6 +42,10 @@ const Home = () => {
     }
   };
 
+  const setDefaultDropdowns = async() =>
+  {
+
+  }
   // Callback function to handle button click
   const handleGenerateButtonClick = () => {
     // Perform actions with dropdownValues
@@ -115,6 +119,7 @@ const Home = () => {
         newComponent,
       ]);
       await  setComponentId((prevId) => {return prevId + 1;});     
+      // await setDropdownValues((prevValues)=> {});
     }
     // GlobalSingletonInstance.set("showRegenerateMsg", false);
     // const storyData = await getStoryData();

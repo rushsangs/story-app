@@ -58,7 +58,7 @@ const TaskHTML = <div><Title level={3}>Task Details</Title><div>
           (storyTaskComponents.length>0)?TaskHTML:<></>
        }
       <Title level={3}>Generate story</Title>
-      <Button block onClick={() => onGenerateStoryClick()}>
+      <Button type="primary" block onClick={() => onGenerateStoryClick()}>
         Generate
         <CaretRightOutlined />
       </Button>
