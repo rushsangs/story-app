@@ -16,7 +16,9 @@ const InputRow = (props) => {
   const a = (args === undefined || args !== '')?args:'[]';
   const [nextActionsDropdowns, setNextActionsDropdowns] = useState(JSON.parse(a));
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
-  const selectedActionsValues = useRef([]);
+  const selectedActionsValues = useRef(nextActionsDropdowns.length>0?
+                                  [md[0].value, nextActionsDropdowns[0][0].value]:
+                                  [md[0].value]);
   
   const handleChange = async(value) => {
     console.log("handleChange", value);
@@ -142,10 +144,10 @@ const InputRow = (props) => {
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
         }
         options={md}
-        // defaultValue={()=>{
-        //   // handleChange(md[0]);
-        //   // return md[0];
-        //   }}
+        defaultValue={()=>{
+          // handleChange(md[0]);
+          return md[0];
+          }}
         optionLabelProp="label"
       />
       {nextActionsDropdowns.map((item, index) => {
@@ -160,6 +162,10 @@ const InputRow = (props) => {
           } 
           options={item}
           optionLabelProp="label"
+          defaultValue={()=>{
+            // handleChange(md[0]);
+            return item[0];
+            }}
           key={String(index)}
         />;
         })}

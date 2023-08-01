@@ -50,9 +50,13 @@ const Home = () => {
   const handleGenerateButtonClick = () => {
     // Perform actions with dropdownValues
     // return dropdownComponents;
-    console.log('sending vals');
+    console.log("values");
     console.log(dropdownValues);
+    console.log("COMPONENTS");
+    console.log(dropdownComponents);
     let shaped_vals = shape_into_dropdownrequestitems(dropdownValues);
+    console.log("shaped vals");
+    console.log(shaped_vals);
     return shaped_vals;
   };
   
@@ -119,7 +123,14 @@ const Home = () => {
         newComponent,
       ]);
       await  setComponentId((prevId) => {return prevId + 1;});     
-      // await setDropdownValues((prevValues)=> {});
+      setDropdownValues((prevValues) => ({
+        ...prevValues,
+        [i]: {page: rows[i].page, group: rows[i].group, values: [JSON.parse(rows[i].main_Dropdown)[0].value, JSON.parse(rows[i].arguments)[0][0].value]},
+      }));
+      rowData.current = {
+        ...rowData.current,
+        [i]: [JSON.parse(rows[i].main_Dropdown)[0].value, JSON.parse(rows[i].arguments)[0][0].value ],
+      };
     }
     // GlobalSingletonInstance.set("showRegenerateMsg", false);
     // const storyData = await getStoryData();
