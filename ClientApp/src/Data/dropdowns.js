@@ -1,11 +1,10 @@
 const dropdownItem = (md) => {
-    return md.map( mdItem => {
+    return md.map( element => {
     return {
-    'name': mdItem,
-    'tooltip': 'Select one:',
-    'color': '',
-    'label': mdItem,
-    'value': mdItem
+        'label': element,
+        'value': element,
+        'tooltip': element,
+        'color': ''
         };
     });
 };
@@ -13,38 +12,28 @@ const dropdownItem = (md) => {
 export const ddargs = (args) =>
 {
     return args.map(element_list => {
-        return element_list.map( element =>
-            {
-                return {
-                    'label': element,
-                    'value': element,
-                    'tooltip': element,
-                    'color': ''
-                }
-            }
-
-        )    
+        return dropdownItem(element_list);    
     });   
 }
 
 
 export const sampleDdArgs = ddargs([['True', 'False']]);
-const dropdownRow = (page, md, args) => 
+const dropdownRow = (page, group, md, args) => 
 {
     return {
-    'Row_Id': 123,
-    'Page': page,
-    'Group': 'world',
-    'Main_Dropdown': JSON.stringify(dropdownItem(md)),
-    'Arguments': JSON.stringify(ddargs(args))
+    'rowId': 123,
+    'page': page,
+    'group': group,
+    'main_Dropdown': JSON.stringify(dropdownItem(md)),
+    'arguments': JSON.stringify(ddargs(args))
     }
 };
 
 export const sampleInitialDropdowns = [
-    dropdownRow("beginning", ['at Teddy L'], [['True', 'False']]),
-    dropdownRow("beginning", ['at Teddy Q'], [['True', 'False']]),
-    dropdownRow("ending", ['at Teddy L'], [['True', 'False']]),
-    dropdownRow("ending", ['at Teddy Q'], [['True', 'False']]),
+    dropdownRow("beginning", "world", ['at Teddy L'], [['True', 'False']]),
+    dropdownRow("beginning", "world", ['at Teddy Q'], [['True', 'False']]),
+    dropdownRow("ending", "world", ['at Teddy L'], [['True', 'False']]),
+    dropdownRow("ending", "world", ['at Teddy Q'], [['True', 'False']]),
 ];
 
 export const IntentDropdowns = ddargs([[
@@ -184,3 +173,33 @@ export function shape_into_dropdownrequestitem(js_values, page, group){
     }
     return requestData
 }
+
+export function compress_dropdowns(dropdowns) {
+    let reduced_dropdowns = dropdowns.filter((d)=> (
+                !d.main_Dropdown.includes("at Teddy") &&
+                !d.main_Dropdown.includes("at Poppy") &&
+                !d.main_Dropdown.includes("contained-in ") &&
+                !d.main_Dropdown.includes("plugged") &&
+                !d.main_Dropdown.includes("outlet-empty")
+                ));
+    reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['The outlet is powering '], [['the Microwave', 'the Toaster', 'nothing']]));
+    reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['The outlet is powering '], [['the Microwave', 'the Toaster', 'nothing']]));
+    reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['The soup is in '], [['a bowl', 'a pot']]));
+    reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['The soup is in '], [['a bowl', 'a pot']]));
+    reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['Poppy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
+    reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['Poppy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
+    reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['Teddy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
+    reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['Teddy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
+    
+    return reduced_dropdowns;        
+}
+
+// export function expand_dropdowns(dropdowns){
+//     let x = dropdowns.map(d=> {
+//         if(d.main_Dropdown.includes("The outlet is powering"))
+//         {
+//             d.
+//         }
+//     });
+// }
+

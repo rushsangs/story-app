@@ -7,7 +7,7 @@ import { QuestionCircleFilled } from "@ant-design/icons";
 import styles from "./Home.module.css";
 import InputRow from "../InputRow/InputRow";
 import { Layout, Modal } from "antd";
-import { mockInitialDropdowns, sampleInitialDropdowns, shape_into_dropdownrequestitems } from "../../Data/dropdowns";
+import { shape_into_dropdownrequestitems } from "../../Data/dropdowns";
 import { getInitialDropdownData } from "../../Data/apis";
 import { task1 } from "../../Data/story";
 import Title from "antd/es/typography/Title";

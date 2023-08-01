@@ -1,13 +1,14 @@
 import storyData from './story'
 import constraintsData from './constraints'
 import { sometimesAction } from './actions'
+import { compress_dropdowns } from './dropdowns';
 
 
 
 export const getInitialDropdownData = async() => {
     const response = await fetch('https://localhost:7273/dropdowns');
     const data = await response.json();
-    return data;
+    return compress_dropdowns(data);
 }
 
 export const getStoryData = async(requestData) => {
