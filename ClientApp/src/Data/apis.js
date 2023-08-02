@@ -8,7 +8,7 @@ import { compress_dropdowns } from './dropdowns';
 export const getInitialDropdownData = async() => {
     const response = await fetch('https://localhost:7273/dropdowns');
     const data = await response.json();
-    return compress_dropdowns(data);
+    return data;
 }
 
 export const getStoryData = async(requestData) => {

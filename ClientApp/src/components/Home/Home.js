@@ -7,7 +7,7 @@ import { QuestionCircleFilled } from "@ant-design/icons";
 import styles from "./Home.module.css";
 import InputRow from "../InputRow/InputRow";
 import { Layout, Modal } from "antd";
-import { shape_into_dropdownrequestitems } from "../../Data/dropdowns";
+import { compress_dropdowns, expand_dropdownValues, shape_into_dropdownrequestitems } from "../../Data/dropdowns";
 import { getInitialDropdownData } from "../../Data/apis";
 import { task1 } from "../../Data/story";
 import Title from "antd/es/typography/Title";
@@ -54,7 +54,7 @@ const Home = () => {
     console.log(dropdownValues);
     console.log("COMPONENTS");
     console.log(dropdownComponents);
-    let shaped_vals = shape_into_dropdownrequestitems(dropdownValues);
+    let shaped_vals = shape_into_dropdownrequestitems(expand_dropdownValues(dropdownValues));
     console.log("shaped vals");
     console.log(shaped_vals);
     return shaped_vals;
@@ -75,7 +75,8 @@ const Home = () => {
     // const rows = mockInitialDropdowns;
     
     // // api request
-    const rows = await getInitialDropdownData();
+    let rows = await getInitialDropdownData();
+    rows = compress_dropdowns(rows);
     
     //clear all previous dropdowns
     await setDropdownComponents([]);

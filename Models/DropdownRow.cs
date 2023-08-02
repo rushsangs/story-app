@@ -105,9 +105,9 @@ public class DropdownRowSupport
         {
             var bDropDownItem = new List<List<DropdownItemResponse>>();
             var bListItem = new List<DropdownItemResponse>();
-            bListItem.Add(new DropdownItemResponse("bPlus"));
-            bListItem.Add(new DropdownItemResponse("bMinus"));
-            bListItem.Add(new DropdownItemResponse("unknown"));
+            bListItem.Add(new DropdownItemResponse("True"));
+            bListItem.Add(new DropdownItemResponse("False"));
+            // bListItem.Add(new DropdownItemResponse("unknown"));
             bDropDownItem.Add(bListItem);
             foreach(string lit in literals)
             {
@@ -238,13 +238,13 @@ public class DropdownRowSupport
             {
                 string lit = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Main_Dropdown).First().value;
                 string arg = JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments).First().Select((a)=> a.value).First();
-                if(arg.Equals("bPlus"))
+                if(arg.Equals("bPlus") || arg.Equals("True"))
                 {
                     c.bPlus.TryAdd(lit, 1);
                     c.bMinus.Remove(lit);
                     c.unsure.Remove(lit);
                 }
-                if(arg.Equals("bMinus"))
+                if(arg.Equals("bMinus") || arg.Equals("False"))
                 {
                     c.bMinus.TryAdd(lit, 1);
                     c.bPlus.Remove(lit);
