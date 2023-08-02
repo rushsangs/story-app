@@ -19,7 +19,7 @@ var app = builder.Build();
 
 
 string path = Directory.GetCurrentDirectory();    
-NarrativePlanning.DomainBuilder.JSONDomainBuilder domain = new NarrativePlanning.DomainBuilder.JSONDomainBuilder(path + "/HeadSpace2/HeadSpace/JSON Files/microwave1.json");
+NarrativePlanning.DomainBuilder.JSONDomainBuilder domain = new NarrativePlanning.DomainBuilder.JSONDomainBuilder(path + "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json");
 NarrativePlanning.PlanningProblem problem = null;
 HeadSpace.TextMaker.TextMaker textmaker = new HeadSpace.TextMaker.TextMaker(path + "/HeadSpace2/HeadSpace/JSON Files/action_texts.json");
 StaticDropdownItems.Populate();

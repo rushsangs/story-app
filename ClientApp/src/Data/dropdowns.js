@@ -186,8 +186,11 @@ export function compress_dropdowns(dropdowns) {
     reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['The outlet is powering '], [['the Microwave', 'the Toaster', 'nothing']]));
     reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['The soup is in '], [['a Bowl', 'a Pot']]));
     reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['The soup is in '], [['a Bowl', 'a Pot']]));
-    reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['Poppy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
-    reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['Poppy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
+    if(dropdowns.filter((d)=>d.main_Dropdown.includes("at Poppy")).length>0)
+    {
+        reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['Poppy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
+        reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['Poppy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
+    }
     reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['Teddy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
     reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['Teddy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
     

@@ -42,7 +42,7 @@ public class StaticDropdownItems
     public static List<DropdownItemResponse> emptyDropdowns = new List<DropdownItemResponse>();
     public static void Populate()
     {
-        DropdownItemResponse r = new DropdownItemResponse( "Sometime");
+        DropdownItemResponse r = new DropdownItemResponse( "At some point");
         r.tooltip = "The specified action should occur at some point in the story.";
         r.color = "";
         actionConstraintDropdowns.Add(r);

@@ -142,7 +142,7 @@ public class DropdownRowSupport
             string constraint = (JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Main_Dropdown).First().value);
             List<List<DropdownItemResponse>> args = (JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments));
             HardConstraint c = null;
-            if (constraint.Equals("Sometime"))
+            if (constraint.Equals("At some point"))
             {
                 String actionliteral = args.First().First().value;
                 List<string> intents = new List<string>();
@@ -159,7 +159,7 @@ public class DropdownRowSupport
                 DataStructures.ActionLiteral al = new DataStructures.ActionLiteral(actionliteral, false, failed, intents);
                 c = new Sometime(al);
             }
-            else if (constraint.Equals("Sometime After"))
+            else if (constraint.Equals("Sometime after"))
             {
                 String actionliteral1 = args.First().First().value;
                 String actionliteral2 = args[1].First().value;

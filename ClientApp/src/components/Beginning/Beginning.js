@@ -22,7 +22,7 @@ const Beginning = ({componentId, dropdownComponents, onDropdownChangeCallback, o
       <Space direction="vertical" style={{ padding: "0 15px" }}>
         <Title level={3}>World</Title>
         {dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="world").map((obj) => obj.component)}
-        <Title level={3}>Ted</Title>
+        <Title level={3}>Teddy's Beliefs</Title>
         {dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Teddy").map((obj) => obj.component)}
       </Space>
     </>
