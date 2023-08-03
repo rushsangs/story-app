@@ -104,16 +104,28 @@ public class StaticDropdownItems
         List<DropdownItemResponse> response = new List<DropdownItemResponse>();
         if(dropdownItemRequest.Page.Equals("beginning") || dropdownItemRequest.Page.Equals("ending"))
         {
+            if(dropdownItemRequest.Main_DropDown.Length==0)
+            {
+                //need to send main dropdowns as all possible literals
+                HashSet<string> literals = new HashSet<string>(domain.initial.tWorld.Keys);
+                literals.UnionWith(domain.initial.fWorld.Keys);
+                response = StaticDropdownItems.getItems(literals.Select(lit => new Tuple<string, string>(textMaker.getString(lit), lit)));
+                return response;
+            }
             if(dropdownItemRequest.Group.Equals("world"))
             {
-                if(JsonConvert.DeserializeObject<List<DropdownItemResponse>>(dropdownItemRequest.Arguments).Count == 0)
+                if(dropdownItemRequest.Arguments.Length==0)
+                    return StaticDropdownItems.tfDropdowns;
+                else if(JsonConvert.DeserializeObject<List<DropdownItemResponse>>(dropdownItemRequest.Arguments).Count == 0)
                     return StaticDropdownItems.tfDropdowns;
                 else
                     return emptyDropdowns;
             }
             else
             {
-                if(JsonConvert.DeserializeObject<List<DropdownItemResponse>>(dropdownItemRequest.Arguments).Count == 0)
+                if(dropdownItemRequest.Arguments.Length==0)
+                    return StaticDropdownItems.beliefDropdowns;
+                else if(JsonConvert.DeserializeObject<List<DropdownItemResponse>>(dropdownItemRequest.Arguments).Count == 0)
                     return StaticDropdownItems.beliefDropdowns;
                 else
                     return emptyDropdowns;

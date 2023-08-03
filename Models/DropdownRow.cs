@@ -13,7 +13,30 @@ public class DropdownRow
     public string Page {get; set;}
     public string Group {get; set;}
     public string Main_Dropdown {get; set;}
-    public string Arguments {get; set;} // arguments are separated with semicolon
+    public string Arguments {get; set;}
+
+    public static DropdownRow createRow(int id, string Page, string Group, string[] Main_DropDown, string[] Arguments)
+    {
+        var r = new DropdownRow();
+        r.RowId = id;
+        r.Page = Page;
+        r.Group = Group;
+        var md = new List<DropdownItemResponse>();
+        foreach (string item in Main_DropDown)
+        {
+            md.Add(new DropdownItemResponse(item));
+        }
+        r.Main_Dropdown = JsonConvert.SerializeObject(md);
+        var args = new List<DropdownItemResponse>();
+        foreach (string item in Arguments)
+        {
+            args.Add(new DropdownItemResponse(item));
+        }
+        var args_dl = new List<List<DropdownItemResponse>>();
+        args_dl.Add(args);
+        r.Arguments = JsonConvert.SerializeObject(args_dl);
+        return r;
+    }
 }
 
 public class DropdownRowSupport
@@ -258,5 +281,220 @@ public class DropdownRowSupport
                 }
             }
         }
+    }
+    public static List<DropdownRow> CompressDropdowns(List<DropdownRow> dropdowns)
+    {
+        List<DropdownRow> reducedDropdowns = dropdowns
+            .Where(d => !d.Main_Dropdown.Contains("at Teddy") &&
+                        !d.Main_Dropdown.Contains("at Poppy") &&
+                        !d.Main_Dropdown.Contains("contained-in") &&
+                        !d.Main_Dropdown.Contains("plugged") &&
+                        !d.Main_Dropdown.Contains("outlet-empty"))
+            .ToList();
+        
+        
+        reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count, "beginning", "world", 
+                        new string[]{"The outlet is powering "},
+                        new string[]{"the Microwave", "the Toaster", "nothing"} ));
+
+        reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count, "beginning", "Teddy", 
+                        new string[]{"The outlet is powering "},
+                        new string[]{"the Microwave", "the Toaster", "nothing"} ));
+
+        reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "world", 
+                        new string[]{"The soup is in "},
+                        new string[]{"a Bowl", "a Pot"} ));
+        
+        reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
+                        new string[]{"The soup is in "},
+                        new string[]{"a Bowl", "a Pot"} ));
+        
+        
+        if (dropdowns.Any(d => d.Main_Dropdown.Contains("at Poppy")))
+        {
+            reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "world", 
+                        new string[]{"Poppy is in the "},
+                        new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
+
+            reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
+                        new string[]{"Poppy is in the "},
+                        new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
+        }
+
+        reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "world", 
+                        new string[]{"Teddy is in the "},
+                        new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
+
+        reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
+                        new string[]{"Teddy is in the "},
+                        new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
+        
+        return reducedDropdowns;
+    }
+
+    public static List<DropdownRow> ExpandDropdowns(List<DropdownRow> dropdowns)
+    {
+        List<DropdownRow> expandedDropdowns = new List<DropdownRow>();
+        int i = 0;
+
+        foreach (var dropdownRow in dropdowns)
+        {
+            if (dropdownRow.Main_Dropdown.Contains("The outlet is powering "))
+            {
+                //expand to plugged and outlet-empty
+                if (dropdownRow.Arguments.Contains("the Microwave"))
+                {
+                    expandedDropdowns.Add(DropdownRow.createRow(i++, dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"plugged Microwave"},
+                        new string[]{"True"} ));
+                    
+                    expandedDropdowns.Add(DropdownRow.createRow(i++, dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"plugged Toaster"},
+                        new string[]{"False"} ));
+                    
+                    expandedDropdowns.Add(DropdownRow.createRow(i++, dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"outlet-empty"},
+                        new string[]{"False"} ));
+                }
+                else if (dropdownRow.Arguments.Contains("the Toaster"))
+                {
+                    expandedDropdowns.Add(DropdownRow.createRow(i++, dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"plugged Microwave"},
+                        new string[]{"False"} ));
+                    
+                    expandedDropdowns.Add(DropdownRow.createRow(i++, dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"plugged Toaster"},
+                        new string[]{"True"} ));
+                    
+                    expandedDropdowns.Add(DropdownRow.createRow(i++, dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"outlet-empty"},
+                        new string[]{"False"} ));
+                }
+                else if (dropdownRow.Arguments.Contains("nothing"))
+                {
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"plugged Microwave"},
+                        new string[]{"False"} ));
+                    
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"plugged Toaster"},
+                        new string[]{"False"} ));
+                    
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"outlet-empty"},
+                        new string[]{"True"} ));
+                }
+            }
+            else if (dropdownRow.Main_Dropdown.Contains("The soup is in "))
+            {
+                //expand to contained-in
+                if (dropdownRow.Arguments.Contains("a Bowl"))
+                {
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"contained-in Soup Bowl"},
+                        new string[]{"True"} ));
+                    
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"contained-in Soup Pot"},
+                        new string[]{"False"} ));
+                }
+                if (dropdownRow.Arguments.Contains("a Pot"))
+                {
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"contained-in Soup Bowl"},
+                        new string[]{"False"} ));
+                    
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"contained-in Soup Pot"},
+                        new string[]{"True"} ));
+                }
+            }
+            else if (dropdownRow.Main_Dropdown.Contains("Poppy is in the "))
+            {
+                //expand to at Poppy
+                if (dropdownRow.Arguments.Contains("Kitchen"))
+                {
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Poppy Kitchen"},
+                        new string[]{"True"} ));
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Poppy PoppysRoom"},
+                        new string[]{"False"} ));
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Poppy TeddysRoom"},
+                        new string[]{"False"} ));
+                }
+                else if (dropdownRow.Arguments.Contains("TeddysRoom"))
+                {
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Poppy Kitchen"},
+                        new string[]{"False"} ));
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Poppy PoppysRoom"},
+                        new string[]{"False"} ));
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Poppy TeddysRoom"},
+                        new string[]{"True"} ));
+                    
+                }
+                else if (dropdownRow.Arguments.Contains("PoppysRoom"))
+                {
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Poppy Kitchen"},
+                        new string[]{"False"} ));
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Poppy PoppysRoom"},
+                        new string[]{"True"} ));
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Poppy TeddysRoom"},
+                        new string[]{"False"} ));   
+                }
+            }
+            else if (dropdownRow.Main_Dropdown.Contains("Teddy is in the "))
+            {
+                //expand to at Teddy
+                if (dropdownRow.Arguments.Contains("Kitchen"))
+                {
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Teddy Kitchen"},
+                        new string[]{"True"} ));
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Teddy PoppysRoom"},
+                        new string[]{"False"} ));
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Teddy TeddysRoom"},
+                        new string[]{"False"} ));
+                }
+                else if (dropdownRow.Arguments.Contains("TeddysRoom"))
+                {
+                     expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Teddy Kitchen"},
+                        new string[]{"False"} ));
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Teddy PoppysRoom"},
+                        new string[]{"False"} ));
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Teddy TeddysRoom"},
+                        new string[]{"True"} ));
+                }
+                else if (dropdownRow.Arguments.Contains("PoppysRoom"))
+                {
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Teddy Kitchen"},
+                        new string[]{"False"} ));
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Teddy PoppysRoom"},
+                        new string[]{"True"} ));
+                    expandedDropdowns.Add(DropdownRow.createRow(i++,dropdownRow.Page, dropdownRow.Group, 
+                        new string[]{"at Teddy TeddysRoom"},
+                        new string[]{"False"} ));
+                }
+            }
+            else
+            {
+                expandedDropdowns.Add(dropdownRow);
+            }
+        }
+        return expandedDropdowns;
     }
 }

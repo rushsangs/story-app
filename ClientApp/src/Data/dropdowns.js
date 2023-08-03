@@ -1,3 +1,5 @@
+
+
 const dropdownItem = (md) => {
     return md.map( element => {
     return {
@@ -174,123 +176,139 @@ export function shape_into_dropdownrequestitem(js_values, page, group){
     return requestData
 }
 
-export function compress_dropdowns(dropdowns) {
-    let reduced_dropdowns = dropdowns.filter((d)=> (
-                !d.main_Dropdown.includes("at Teddy") &&
-                !d.main_Dropdown.includes("at Poppy") &&
-                !d.main_Dropdown.includes("contained-in ") &&
-                !d.main_Dropdown.includes("plugged") &&
-                !d.main_Dropdown.includes("outlet-empty")
-                ));
-    reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['The outlet is powering '], [['the Microwave', 'the Toaster', 'nothing']]));
-    reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['The outlet is powering '], [['the Microwave', 'the Toaster', 'nothing']]));
-    reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['The soup is in '], [['a Bowl', 'a Pot']]));
-    reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['The soup is in '], [['a Bowl', 'a Pot']]));
-    if(dropdowns.filter((d)=>d.main_Dropdown.includes("at Poppy")).length>0)
-    {
-        reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['Poppy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
-        reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['Poppy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
-    }
-    reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['Teddy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
-    reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['Teddy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
+export function compress_addDropdown(dropdowns){
+    let reduced_dropdowns = dropdowns.filter(d=> (
+        !d.value.includes("at Teddy") &&
+        !d.value.includes("at Poppy") &&
+        !d.value.includes("contained-in") &&
+        !d.value.includes("plugged") &&
+        !d.value.includes("outlet-empty")
+    )).map(x=>x.label);
+    reduced_dropdowns.unshift('The outlet is powering ');
+    reduced_dropdowns.unshift('The soup is in ');
+    if(dropdowns.filter(d=> d.value.includes("at Poppy")).length>0)
+        reduced_dropdowns.unshift("Poppy is in the ");
+    reduced_dropdowns.unshift('Teddy is in the ');
+    return dropdownItem(reduced_dropdowns);
+}
+// export function compress_dropdowns(dropdowns) {
+//     let reduced_dropdowns = dropdowns.filter((d)=> (
+//                 !d.main_Dropdown.includes("at Teddy") &&
+//                 !d.main_Dropdown.includes("at Poppy") &&
+//                 !d.main_Dropdown.includes("contained-in ") &&
+//                 !d.main_Dropdown.includes("plugged") &&
+//                 !d.main_Dropdown.includes("outlet-empty")
+//                 ));
+//     reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['The outlet is powering '], [['the Microwave', 'the Toaster', 'nothing']]));
+//     reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['The outlet is powering '], [['the Microwave', 'the Toaster', 'nothing']]));
+//     reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['The soup is in '], [['a Bowl', 'a Pot']]));
+//     reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['The soup is in '], [['a Bowl', 'a Pot']]));
+//     if(dropdowns.filter((d)=>d.main_Dropdown.includes("at Poppy")).length>0)
+//     {
+//         reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['Poppy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
+//         reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['Poppy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
+//     }
+//     reduced_dropdowns.unshift(dropdownRow("beginning", "world", ['Teddy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
+//     reduced_dropdowns.unshift(dropdownRow("beginning", "Teddy", ['Teddy is in the '], [['Kitchen', 'TeddysRoom', 'PoppysRoom']]));
     
-    return reduced_dropdowns;        
-}
+//     return reduced_dropdowns;        
+// }
 
-export function expand_dropdownValues(dropdownValues){
-    let expanded_dropdowns = {}
-    let i = 0;
-    for(let key in dropdownValues)
-    {
-        let row = dropdownValues[key]
-        //row: {page: str, group: str, values: list of str}
-        if(row.values.includes("The outlet is powering "))
-        {
-            //expand to plugged and outlet-empty
-            if(row.values.includes("the Microwave"))
-            {
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["plugged Microwave", "True"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["plugged Toaster", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["outlet-empty", "False"]};
-            }
-            else if(row.values.includes("the Toaster"))
-            {
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["plugged Microwave", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["plugged Toaster", "True"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["outlet-empty", "False"]};
-            }
-            else if(row.values.includes("nothing"))
-            {
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["plugged Microwave", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["plugged Toaster", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["outlet-empty", "True"]};
-            }             
-        }
-        else if(row.values.includes("The soup is in "))
-        {
-            //expand to contained-in
-            if(row.values.includes("a Bowl"))
-            {
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["contained-in Soup Bowl", "True"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["contained-in Soup Pot", "False"]};
-            }
-            if(row.values.includes("a Pot"))
-            {
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["contained-in Soup Bowl", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["contained-in Soup Pot", "True"]};
-            }
-        }
-        else if(row.values.includes("Poppy is in the "))
-        {
-            //expand to at Poppy
-            if(row.values.includes("Kitchen"))
-            {
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy Kitchen", "True"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy PoppysRoom", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy TeddysRoom", "False"]};
-            }
-            else if(row.values.includes("TeddysRoom"))
-            {
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy Kitchen", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy PoppysRoom", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy TeddysRoom", "True"]};
-            }
-            else if(row.values.includes("PoppysRoom"))
-            {
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy Kitchen", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy PoppysRoom", "True"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy TeddysRoom", "False"]};
-            }
-        }
-        else if(row.values.includes("Teddy is in the "))
-        {
-            //expand to at Teddy
-            if(row.values.includes("Kitchen"))
-            {
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy Kitchen", "True"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy PoppysRoom", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy TeddysRoom", "False"]};
-            }
-            else if(row.values.includes("TeddysRoom"))
-            {
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy Kitchen", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy PoppysRoom", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy TeddysRoom", "True"]};
-            }
-            else if(row.values.includes("PoppysRoom"))
-            {
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy Kitchen", "False"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy PoppysRoom", "True"]};
-                expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy TeddysRoom", "False"]};
-            }
-        }
-        else
-        {
-            expanded_dropdowns[i++] = row;
-        }
-    }
-    return expanded_dropdowns;
-}
+// export function expand_dropdownValues(dropdownValues){
+//     // console.log(dropdownValues)
+//     let expanded_dropdowns = {}
+//     let i = 0;
+//     for(let key in dropdownValues)
+//     {
+//         let row = dropdownValues[key]
+//         //row: {page: str, group: str, values: list of str}
+//         if(row.values.includes("The outlet is powering "))
+//         {
+//             //expand to plugged and outlet-empty
+//             if(row.values.includes("the Microwave"))
+//             {
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["plugged Microwave", "True"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["plugged Toaster", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["outlet-empty", "False"]};
+//             }
+//             else if(row.values.includes("the Toaster"))
+//             {
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["plugged Microwave", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["plugged Toaster", "True"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["outlet-empty", "False"]};
+//             }
+//             else if(row.values.includes("nothing"))
+//             {
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["plugged Microwave", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["plugged Toaster", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["outlet-empty", "True"]};
+//             }             
+//         }
+//         else if(row.values.includes("The soup is in "))
+//         {
+//             //expand to contained-in
+//             if(row.values.includes("a Bowl"))
+//             {
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["contained-in Soup Bowl", "True"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["contained-in Soup Pot", "False"]};
+//             }
+//             if(row.values.includes("a Pot"))
+//             {
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["contained-in Soup Bowl", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["contained-in Soup Pot", "True"]};
+//             }
+//         }
+//         else if(row.values.includes("Poppy is in the "))
+//         {
+//             //expand to at Poppy
+//             if(row.values.includes("Kitchen"))
+//             {
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy Kitchen", "True"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy PoppysRoom", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy TeddysRoom", "False"]};
+//             }
+//             else if(row.values.includes("TeddysRoom"))
+//             {
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy Kitchen", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy PoppysRoom", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy TeddysRoom", "True"]};
+//             }
+//             else if(row.values.includes("PoppysRoom"))
+//             {
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy Kitchen", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy PoppysRoom", "True"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Poppy TeddysRoom", "False"]};
+//             }
+//         }
+//         else if(row.values.includes("Teddy is in the "))
+//         {
+//             //expand to at Teddy
+//             if(row.values.includes("Kitchen"))
+//             {
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy Kitchen", "True"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy PoppysRoom", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy TeddysRoom", "False"]};
+//             }
+//             else if(row.values.includes("TeddysRoom"))
+//             {
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy Kitchen", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy PoppysRoom", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy TeddysRoom", "True"]};
+//             }
+//             else if(row.values.includes("PoppysRoom"))
+//             {
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy Kitchen", "False"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy PoppysRoom", "True"]};
+//                 expanded_dropdowns[i++] = {page: row.page, group: row.group, values: ["at Teddy TeddysRoom", "False"]};
+//             }
+//         }
+//         else
+//         {
+//             expanded_dropdowns[i++] = row;
+//         }
+//     }
+//     return expanded_dropdowns;
+// }
 
 // function remove_combined_and_add_expanded_dropdowns(dropdown)
 // {

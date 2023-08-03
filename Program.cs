@@ -37,6 +37,7 @@ app.MapGet("/storygenerator", async() =>
 
 app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
 {
+    allrows = DropdownRowSupport.ExpandDropdowns(allrows);
     var old_domain = domain.cloneForTrackingChanges();
     DropdownRowSupport.parseDropdownsIntoDomain(allrows, domain);
     if(problem == null || domain.hasChanged(old_domain))
@@ -55,6 +56,7 @@ app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
 app.MapGet("/dropdowns", async () =>
     {
         List<DropdownRow> rows = DropdownRowSupport.CreateStartupDropdowns(domain, textmaker);
+        rows = DropdownRowSupport.CompressDropdowns(rows);
         return Results.Ok(rows);
     }); 
 

@@ -28,6 +28,8 @@ const InputRow = (props) => {
       selectedActionsValues.current.push(value);
     onChange(id, selectedActionsValues.current);
     GlobalSingletonInstance.set("showRegenerateMsg", true);
+    //TODO: if value is "The soup is in..., Teddy is in the..." then don't send to back end
+    //TODO: handle it here itself
     var requestDDitem = shape_into_dropdownrequestitem(selectedActionsValues, page, group);
     var argsResponse = await getNextDropdownData(requestDDitem);
     setNextActionsDropdowns([argsResponse]);
