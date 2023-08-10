@@ -5,7 +5,6 @@ import { List, Typography } from "antd";
 import constraints from "../../Data/constraints";
 import { getNextDropdownData } from "../../Data/apis";
 import InputRow from "../InputRow/InputRow";
-import { compress_addDropdown as compress_MainDropdown_Literals } from "../../Data/dropdowns";
 const { Title } = Typography;
 
 const Ending =({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange}) => {
@@ -20,7 +19,6 @@ const Ending =({componentId, dropdownComponents, onDropdownChangeCallback, onCom
       Arguments: ''
     };
     let main_dropdown = await getNextDropdownData(requestDdItem);
-    main_dropdown = compress_MainDropdown_Literals(main_dropdown);
     const dropdownRow = {
       Row_Id: 123,
       Page: 'ending',

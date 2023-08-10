@@ -16,14 +16,14 @@ const InputRow = (props) => {
   const a = (args === undefined || args !== '')?args:'[]';
   const [nextActionsDropdowns, setNextActionsDropdowns] = useState(JSON.parse(a));
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
-  const selectedActionsValues = useRef(nextActionsDropdowns.length>0?
+  const selectedActionsValues = useRef(nextActionsDropdowns.length>0 && nextActionsDropdowns[0].length>0?
                                   [md[0].value, nextActionsDropdowns[0][0].value]:
                                   [md[0].value]);
   
   const handleChange = async(value) => {
     console.log("handleChange", value);
     if(selectedActionsValues.current.length>=1)
-      selectedActionsValues.current = array_replace(selectedActionsValues.current, 0, value);
+      selectedActionsValues.current = [value];
     else
       selectedActionsValues.current.push(value);
     onChange(id, selectedActionsValues.current);
@@ -31,7 +31,9 @@ const InputRow = (props) => {
     //TODO: if value is "The soup is in..., Teddy is in the..." then don't send to back end
     //TODO: handle it here itself
     var requestDDitem = shape_into_dropdownrequestitem(selectedActionsValues, page, group);
+    console.log("requesting next DDitem: ", requestDDitem)
     var argsResponse = await getNextDropdownData(requestDDitem);
+    console.log("response: ", argsResponse);
     setNextActionsDropdowns([argsResponse]);
     if(value === "Sometime after")
       setNextActionsDropdowns([argsResponse,argsResponse])
@@ -155,7 +157,10 @@ const InputRow = (props) => {
       {nextActionsDropdowns.map((item, index) => {
         return <Select
           showSearch
-          placeholder={item[0].tooltip}
+          placeholder={() => {
+            console.log(item);
+            return item[0].tooltip;
+          }}
           optionFilterProp="children"
           onChange={async(value) => await handleNextDropdownChange(value, index, item)}
           onSearch={onSearch}

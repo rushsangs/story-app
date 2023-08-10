@@ -134,6 +134,8 @@ public class DropdownRowSupport
             bDropDownItem.Add(bListItem);
             foreach(string lit in literals)
             {
+                if(!lit.Contains("plugged") && !lit.Contains("outlet-empty"))
+                    continue;
                 DropdownRow newRow = new DropdownRow();
                 newRow.RowId = allrows.Count;
                 newRow.Page = page;
@@ -305,9 +307,9 @@ public class DropdownRowSupport
                         new string[]{"The soup is in "},
                         new string[]{"a Bowl", "a Pot"} ));
         
-        reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
-                        new string[]{"The soup is in "},
-                        new string[]{"a Bowl", "a Pot"} ));
+        // reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
+        //                 new string[]{"The soup is in "},
+        //                 new string[]{"a Bowl", "a Pot"} ));
         
         
         if (dropdowns.Any(d => d.Main_Dropdown.Contains("at Poppy")))
@@ -316,18 +318,18 @@ public class DropdownRowSupport
                         new string[]{"Poppy is in the "},
                         new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
 
-            reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
-                        new string[]{"Poppy is in the "},
-                        new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
+            // reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
+            //             new string[]{"Poppy is in the "},
+            //             new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
         }
 
         reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "world", 
                         new string[]{"Teddy is in the "},
                         new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
 
-        reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
-                        new string[]{"Teddy is in the "},
-                        new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
+        // reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
+        //                 new string[]{"Teddy is in the "},
+        //                 new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
         
         return reducedDropdowns;
     }

@@ -33,20 +33,21 @@ const TaskHTML = <div><Title level={3}>Task Details</Title><div>
 {storyTaskComponents.map((item, index) => {
   if(item.test(story))
   {
-     return (<Space
+     return (<div style={{display: "flex"}}
+     key={index}><Space
      key={index}>
     <CheckCircleTwoTone />
     <div>{item.text}</div>
-    </Space>
+    </Space></div>
     )
   }
   else
   {
-    return (<Space
+    return (<div style={{display: "flex"}} key={index}><Space
     key={index}>
       <CloseCircleTwoTone />
       <div>{item.text}</div>
-      </Space>
+      </Space></div>
       )
   }})}
 </div>
@@ -78,7 +79,7 @@ const TaskHTML = <div><Title level={3}>Task Details</Title><div>
         <List
           dataSource={story}
           renderItem={(item, index) => {
-            return <List.Item>{item}</List.Item>;
+            return <List.Item style={{display: "flex"}}>{item}</List.Item>;
           }}
         />
       </div>
