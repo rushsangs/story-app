@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-import { Card, Space, Button } from "antd";
+import { Card, Space, Button, Divider } from "antd";
 import { List, Typography } from "antd";
 import { CaretRightOutlined,CheckCircleTwoTone, CloseCircleTwoTone} from "@ant-design/icons";
 import { getStoryData, getMockStoryData } from "../../Data/apis";
 import styles from "./StoryPanel.module.css";
 import { GlobalSingletonObject } from "../../utils/dataContext";
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 
 
@@ -28,12 +28,13 @@ const onGenerateStoryClick = async() => {
   setStory(storyData);
 };
 
-const TaskHTML = <div><Title level={3}>Task Details</Title><div>
-  Create a story where the following are true:
-{storyTaskComponents.map((item, index) => {
+const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Title><div>
+  <div style={{textAlign: "left"}}>{storyTaskComponents.taskInfo}</div>
+  <Divider>Tasks</Divider>
+{storyTaskComponents.tasks.map((item, index) => {
   if(item.test(story))
   {
-     return (<div style={{display: "flex"}}
+     return (<div style={{textAlign: "left"}}
      key={index}><Space
      key={index}>
     <CheckCircleTwoTone />
@@ -43,7 +44,7 @@ const TaskHTML = <div><Title level={3}>Task Details</Title><div>
   }
   else
   {
-    return (<div style={{display: "flex"}} key={index}><Space
+    return (<div style={{textAlign: "left"}} key={index}><Space
     key={index}>
       <CloseCircleTwoTone />
       <div>{item.text}</div>
@@ -56,7 +57,7 @@ const TaskHTML = <div><Title level={3}>Task Details</Title><div>
   return (
     <div className={styles.storyContainer}>
        {
-          (storyTaskComponents.length>0)?TaskHTML:<></>
+          (storyTaskComponents.taskNumber!=0)?TaskHTML:<></>
        }
       <Title level={3}>Generate story</Title>
       <Button type="primary" block onClick={() => onGenerateStoryClick()}>
@@ -79,7 +80,7 @@ const TaskHTML = <div><Title level={3}>Task Details</Title><div>
         <List
           dataSource={story}
           renderItem={(item, index) => {
-            return <List.Item style={{display: "flex"}}>{item}</List.Item>;
+            return <List.Item style={{textAlign: "left"}}>{item}</List.Item>;
           }}
         />
       </div>

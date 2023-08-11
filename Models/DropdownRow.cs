@@ -155,6 +155,8 @@ public class DropdownRowSupport
         List<DropdownRow> beginnings = allrows.FindAll((row) => row.Page.Equals("beginning") && !row.Group.Equals("desires"));
         AddDropdownsToWorldState(domain.initial, beginnings);
         // AddDropdownsToDesires(domain, allrows.FindAll((row) => row.Page.Equals("beginning") && row.Group.Equals("desires")));
+        //for ending dropdowns, reset the domain goals first
+        domain.goal.empty();
         AddDropdownsToWorldState(domain.goal, allrows.FindAll((row) => row.Page.Equals("ending")) );
         AddDropdownsToMiddle(domain, allrows.FindAll((row) => row.Page.Equals("actions")));
     }

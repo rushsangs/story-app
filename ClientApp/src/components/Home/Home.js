@@ -9,7 +9,7 @@ import InputRow from "../InputRow/InputRow";
 import { Layout, Modal } from "antd";
 import { shape_into_dropdownrequestitems } from "../../Data/dropdowns";
 import { getInitialDropdownData } from "../../Data/apis";
-import { task1 } from "../../Data/story";
+import { taskData } from "../../Data/story";
 import Title from "antd/es/typography/Title";
 const { Sider, Content } = Layout;
 
@@ -18,7 +18,7 @@ const Home = () => {
   const [dropdownComponents, setDropdownComponents] = useState([]);
   const [componentId, setComponentId] = useState(0);
   const [dropdownValues, setDropdownValues] = useState({});
-  const [storyTaskComponents, setStoryTaskComponents] = useState([]);
+  const [storyTaskComponents, setStoryTaskComponents] = useState({tasks: [], taskNumber: 0, taskInfo: ''});
   const [taskNumber, setTaskNumber] = useState(0);
   const rowData = useRef({});
   // useEffect(() => {
@@ -69,6 +69,10 @@ const Home = () => {
     setDropdownComponents((prevComponents) =>
       prevComponents.filter((comp) => comp.id !== id)
     );
+    setDropdownValues((prevValues) => {
+      delete prevValues[id];
+      return prevValues;
+    });
   };
 
   const onTaskClick = async(onDropdownChangeCallback, task_num) => {
@@ -83,7 +87,7 @@ const Home = () => {
     await setDropdownComponents([]);
     await setComponentId(0);
     await setDropdownValues({});
-    await setStoryTaskComponents(task1);
+    await setStoryTaskComponents(taskData[task_num-1]);
     await setTaskNumber(task_num);
     
     for(let i=0; i < rows.length; ++i)
@@ -97,7 +101,7 @@ const Home = () => {
             key ={String(componentId)+"-"+String(i)}
             input_row_key={String(componentId)+"-"+String(i)}
             id={i}
-            removable={false}
+            removable={(rows[i].page==="ending")?true:false}
             enableSettings={false}
             page= {rows[i].page}
             group= {rows[i].group}
@@ -156,6 +160,9 @@ const Home = () => {
           <Button onClick={() => onTaskClick(handleDropdownChangeCallback, 2)}>
             Task 2
           </Button>
+          <Button onClick={() => onTaskClick(handleDropdownChangeCallback, 3)}>
+            Task 3
+          </Button>
       </Space>
       
         <TabsPanel componentId = {componentId} onDropdownChangeCallback={handleDropdownChangeCallback} dropdownComponents = {dropdownComponents} onComponentChange={(x) => setComponentId(x)} onDropdownChange={(x) => setDropdownComponents(x)} taskNumber={taskNumber}/>
@@ -181,9 +188,31 @@ const Home = () => {
         }}
         footer={null}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <p>Find out more about this story world here!</p>
+        <p>The kitchen has a refridgerator and a stovetop.</p>
+        <p>The kitchen also has a single power outlet that can power one of two appliances at a time: the Microwave or the Toaster.</p>
+        <p>Food must be heated before it can be eaten.</p>
+        <p>If food is to be heated over stovetop, it must be in a pot.</p>
+        <p>If food is to be heated using a microwave, it must be in a bowl.</p>
+        <p>The bread can only be heated in the Toaster, and vice versa.</p>
+        <Title level={3}>Characters</Title>
+        <p>Teddy's only desire is to eat soup.</p>
+        <p>Poppy's only desire is to eat Bread.</p>
+        <Title level={3}>Locations</Title>
+        <p>Teddy's Room</p>
+        <p>Poppy's Room</p>
+        <p>Kitchen</p>
+        <Title level={3}>Actions</Title>
+        <p>Connect</p>
+        <p>Walk</p>
+        <p>Disconnect</p>
+        <p>Check power outlet</p>
+        <p>Toast</p>
+        <p>Heat over microwave</p>
+        <p>Heat over stovetop</p>
+        <p>Transfer container</p>
+        <p>Remove from fridge</p>
+        <p>Eat</p>
       </Modal>
     </Layout>
   );
