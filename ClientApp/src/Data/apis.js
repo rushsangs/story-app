@@ -3,8 +3,8 @@ import constraintsData from './constraints'
 
 
 
-export const getInitialDropdownData = async() => {
-    const response = await fetch('https://localhost:7273/dropdowns');
+export const getInitialDropdownData = async(task_num) => {
+    const response = await fetch('https://localhost:7273/dropdowns/'+task_num);
     const data = await response.json();
     return data;
 }

@@ -70,12 +70,12 @@ const Home = () => {
     );
   };
 
-  const onTaskClick = async(onDropdownChangeCallback) => {
+  const onTaskClick = async(onDropdownChangeCallback, task_num) => {
     // mocking data
     // const rows = mockInitialDropdowns;
     
     // // api request
-    let rows = await getInitialDropdownData();
+    let rows = await getInitialDropdownData(task_num);
     
     //clear all previous dropdowns
     await setDropdownComponents([]);
@@ -147,10 +147,10 @@ const Home = () => {
       <Content>
       <Space>
           <Title level={2}>Plot Generation Tool Version 3.0</Title>
-          <Button onClick={() => onTaskClick(handleDropdownChangeCallback)}>
+          <Button onClick={() => onTaskClick(handleDropdownChangeCallback, 1)}>
             Task 1
           </Button>
-          <Button onClick={() => onTaskClick(handleDropdownChangeCallback)}>
+          <Button onClick={() => onTaskClick(handleDropdownChangeCallback, 2)}>
             Task 2
           </Button>
       </Space>
