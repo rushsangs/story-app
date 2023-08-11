@@ -314,9 +314,14 @@ public class DropdownRowSupport
         
         if (dropdowns.Any(d => d.Main_Dropdown.Contains("at Poppy")))
         {
+            // Poppy exists in this problem.
             reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "world", 
                         new string[]{"Poppy is in the "},
                         new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
+
+            reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count, "beginning", "Poppy", 
+                        new string[]{"The outlet is powering "},
+                        new string[]{"the Microwave", "the Toaster", "nothing"} ));
 
             // reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
             //             new string[]{"Poppy is in the "},

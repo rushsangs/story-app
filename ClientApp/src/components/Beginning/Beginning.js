@@ -7,7 +7,7 @@ import { getNextDropdownData } from "../../Data/apis";
 import InputRow from "../InputRow/InputRow";
 const { Title } = Typography;
 
-const Beginning = ({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange}) => {
+const Beginning = ({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange, taskNumber}) => {
   const rowData = useRef({});
  
   const handleRemoveDropdown = (id) => {
@@ -17,6 +17,9 @@ const Beginning = ({componentId, dropdownComponents, onDropdownChangeCallback, o
     // );
   };
 
+  let poppysbeliefs = <div><Title level={3}>Poppy's Beliefs</Title>
+  {dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Poppy").map((obj) => obj.component)}</div>;
+
   return (
     <>
       <Space direction="vertical" style={{ padding: "0 15px" }}>
@@ -24,6 +27,7 @@ const Beginning = ({componentId, dropdownComponents, onDropdownChangeCallback, o
         {dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="world").map((obj) => obj.component)}
         <Title level={3}>Teddy's Beliefs</Title>
         {dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Teddy").map((obj) => obj.component)}
+        {(taskNumber==2)?poppysbeliefs:''}
       </Space>
     </>
   );

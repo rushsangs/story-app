@@ -7,7 +7,7 @@ import { getNextDropdownData } from "../../Data/apis";
 import InputRow from "../InputRow/InputRow";
 const { Title } = Typography;
 
-const Ending =({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange}) => {
+const Ending =({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange, taskNumber}) => {
   const rowData = useRef({});
   // Users should be unable to add rows to ending tab
 
@@ -103,17 +103,25 @@ const Ending =({componentId, dropdownComponents, onDropdownChangeCallback, onCom
     );
   };
 
+  let poppyBeliefButton = <Button onClick={()=>handleAddDropdown('Poppy')}>Add Poppy's Belief Goal</Button>;
+
+  let poppysBeliefs = <div>
+    <Title level={3}>Poppy's Beliefs</Title>
+        {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="Poppy").map((obj) => obj.component)}
+  </div>;
   return (
     <>
       <Space direction="vertical" style={{ padding: "0 15px" }}>
         <Space>
           <Button onClick={()=>handleAddDropdown('world')}>Add World Goal</Button>
           <Button onClick={()=>handleAddDropdown('Teddy')}>Add Teddy's Belief Goal</Button>
+          {(taskNumber==2)?poppyBeliefButton:''}
         </Space>
         <Title level={3}>World</Title>
         {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="world").map((obj) => obj.component)}
         <Title level={3}>Teddy's Beliefs</Title>
         {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="Teddy").map((obj) => obj.component)}
+        {(taskNumber==2)?poppysBeliefs:''}
       </Space>
     </>
   );

@@ -6,6 +6,8 @@ import constraintsData from './constraints'
 export const getInitialDropdownData = async(task_num) => {
     const response = await fetch('https://localhost:7273/dropdowns/'+task_num);
     const data = await response.json();
+    console.log("API Response:");
+    console.log(data);
     return data;
 }
 

@@ -19,6 +19,7 @@ const Home = () => {
   const [componentId, setComponentId] = useState(0);
   const [dropdownValues, setDropdownValues] = useState({});
   const [storyTaskComponents, setStoryTaskComponents] = useState([]);
+  const [taskNumber, setTaskNumber] = useState(0);
   const rowData = useRef({});
   // useEffect(() => {
   //   console.log("Component id is now" + componentId);
@@ -77,11 +78,13 @@ const Home = () => {
     // // api request
     let rows = await getInitialDropdownData(task_num);
     
+    
     //clear all previous dropdowns
     await setDropdownComponents([]);
     await setComponentId(0);
     await setDropdownValues({});
     await setStoryTaskComponents(task1);
+    await setTaskNumber(task_num);
     
     for(let i=0; i < rows.length; ++i)
     {
@@ -155,7 +158,7 @@ const Home = () => {
           </Button>
       </Space>
       
-        <TabsPanel componentId = {componentId} onDropdownChangeCallback={handleDropdownChangeCallback} dropdownComponents = {dropdownComponents} onComponentChange={(x) => setComponentId(x)} onDropdownChange={(x) => setDropdownComponents(x)}/>
+        <TabsPanel componentId = {componentId} onDropdownChangeCallback={handleDropdownChangeCallback} dropdownComponents = {dropdownComponents} onComponentChange={(x) => setComponentId(x)} onDropdownChange={(x) => setDropdownComponents(x)} taskNumber={taskNumber}/>
           
       </Content>
       <Sider theme={"light"} width="25%">
