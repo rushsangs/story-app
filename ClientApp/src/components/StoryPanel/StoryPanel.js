@@ -12,7 +12,7 @@ const { Title, Text } = Typography;
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
-const StoryPanel = ({dropdownComponents, getDropdownComponents, storyTaskComponents}) => {
+const StoryPanel = ({dropdownComponents, getDropdownComponents, storyTaskComponents, dropdownValues}) => {
   const [story, setStory] = useState();
   // const [tasks, setTasks] = useState(task1);
 
@@ -32,7 +32,7 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
   <div style={{textAlign: "left"}}>{storyTaskComponents.taskInfo}</div>
   <Divider>Tasks</Divider>
 {storyTaskComponents.tasks.map((item, index) => {
-  if(item.test(story))
+  if(item.test(story, dropdownValues))
   {
      return (<div style={{textAlign: "left"}}
      key={index}><Space

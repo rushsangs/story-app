@@ -1,3 +1,4 @@
+using HeadSpace.TextMaker;
 using Microsoft.EntityFrameworkCore;
 using NarrativePlanning.DomainBuilder;
 using story_app.Models;
@@ -54,35 +55,38 @@ app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
 });
 
 app.MapGet("/dropdowns/1", async () =>
-    {
-        NarrativePlanning.DomainBuilder.JSONDomainBuilder domain2 = new NarrativePlanning.DomainBuilder.JSONDomainBuilder(path + "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json");
-        domain.desires = domain2.desires;
-        domain.initial = domain2.initial;
-        domain.goal = domain2.goal;
-        List<DropdownRow> rows = DropdownRowSupport.CreateStartupDropdowns(domain, textmaker);
-        rows = DropdownRowSupport.CompressDropdowns(rows);
-        return Results.Ok(rows);
-    });
+{
+    List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +   "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
+    return Results.Ok(rows);
+});
 
 app.MapGet("/dropdowns/2", async () =>
     {
-        NarrativePlanning.DomainBuilder.JSONDomainBuilder domain2 = new NarrativePlanning.DomainBuilder.JSONDomainBuilder(path + "/HeadSpace2/HeadSpace/JSON Files/microwave-task2.json");
-        domain.desires = domain2.desires;
-        domain.initial = domain2.initial;
-        domain.goal = domain2.goal;
-        List<DropdownRow> rows = DropdownRowSupport.CreateStartupDropdowns(domain, textmaker);
-        rows = DropdownRowSupport.CompressDropdowns(rows);
+        List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-task2.json", domain, textmaker);
         return Results.Ok(rows);
     }); 
 
 app.MapGet("/dropdowns/3", async () =>
     {
-        NarrativePlanning.DomainBuilder.JSONDomainBuilder domain2 = new NarrativePlanning.DomainBuilder.JSONDomainBuilder(path + "/HeadSpace2/HeadSpace/JSON Files/microwave-task2.json");
-        domain.desires = domain2.desires;
-        domain.initial = domain2.initial;
-        domain.goal = domain2.goal;
-        List<DropdownRow> rows = DropdownRowSupport.CreateStartupDropdowns(domain, textmaker);
-        rows = DropdownRowSupport.CompressDropdowns(rows);
+        List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-task2.json", domain, textmaker);
+        return Results.Ok(rows);
+    }); 
+
+app.MapGet("/dropdowns/4", async () =>
+    {
+        List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-task2.json", domain, textmaker);
+        return Results.Ok(rows);
+    }); 
+
+app.MapGet("/dropdowns/5", async () =>
+    {
+        List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-task2.json", domain, textmaker);
+        return Results.Ok(rows);
+    }); 
+
+app.MapGet("/dropdowns/6", async () =>
+    {
+        List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-task2.json", domain, textmaker);
         return Results.Ok(rows);
     }); 
 
@@ -158,3 +162,4 @@ class TodoDb : DbContext
 
     public DbSet<Todo> Todos => Set<Todo>();
 }
+

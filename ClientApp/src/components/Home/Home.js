@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Space } from "antd";
+import { Button, Space, Radio, Select } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import TabsPanel from "../TabsPanel/TabsPanel";
 import StoryPanel from "../StoryPanel/StoryPanel";
@@ -9,7 +9,7 @@ import InputRow from "../InputRow/InputRow";
 import { Layout, Modal } from "antd";
 import { shape_into_dropdownrequestitems } from "../../Data/dropdowns";
 import { getInitialDropdownData } from "../../Data/apis";
-import { taskData } from "../../Data/story";
+import { taskData, tasks } from "../../Data/story";
 import Title from "antd/es/typography/Title";
 const { Sider, Content } = Layout;
 
@@ -154,22 +154,15 @@ const Home = () => {
       <Content>
       <Space>
           <Title level={2}>Plot Generation Tool Version 3.0</Title>
-          <Button onClick={() => onTaskClick(handleDropdownChangeCallback, 1)}>
-            Task 1
-          </Button>
-          <Button onClick={() => onTaskClick(handleDropdownChangeCallback, 2)}>
-            Task 2
-          </Button>
-          <Button onClick={() => onTaskClick(handleDropdownChangeCallback, 3)}>
-            Task 3
-          </Button>
+          <Select style={{width: 150,}} options={tasks} placeholder="Select a Task" onChange={(v)=>onTaskClick(handleDropdownChangeCallback, v)}>
+          </Select>
       </Space>
       
         <TabsPanel componentId = {componentId} onDropdownChangeCallback={handleDropdownChangeCallback} dropdownComponents = {dropdownComponents} onComponentChange={(x) => setComponentId(x)} onDropdownChange={(x) => setDropdownComponents(x)} taskNumber={taskNumber}/>
           
       </Content>
       <Sider theme={"light"} width="25%">
-        <StoryPanel dropdownComponents = {dropdownComponents} getDropdownComponents={handleGenerateButtonClick} storyTaskComponents={storyTaskComponents}/>
+        <StoryPanel dropdownComponents = {dropdownComponents} getDropdownComponents={handleGenerateButtonClick} storyTaskComponents={storyTaskComponents} dropdownValues={dropdownValues}/>
       </Sider>
 
       <div
@@ -181,14 +174,13 @@ const Home = () => {
         <QuestionCircleFilled style={{ fontSize: "32px", color: "#1b79ff" }} />
       </div>
       <Modal
-        title="Basic Modal"
+        title="Find out more about the story world here!"
         open={showHelpModal}
         onCancel={() => {
           setShowHelpModal(false);
         }}
         footer={null}
       >
-        <p>Find out more about this story world here!</p>
         <p>The kitchen has a refridgerator and a stovetop.</p>
         <p>The kitchen also has a single power outlet that can power one of two appliances at a time: the Microwave or the Toaster.</p>
         <p>Food must be heated before it can be eaten.</p>
