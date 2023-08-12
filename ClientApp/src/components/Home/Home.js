@@ -11,6 +11,7 @@ import { shape_into_dropdownrequestitems } from "../../Data/dropdowns";
 import { getInitialDropdownData } from "../../Data/apis";
 import { taskData, tasks } from "../../Data/story";
 import Title from "antd/es/typography/Title";
+import { studygroups } from "../../Data/study_groups";
 const { Sider, Content } = Layout;
 
 const Home = () => {
@@ -20,6 +21,7 @@ const Home = () => {
   const [dropdownValues, setDropdownValues] = useState({});
   const [storyTaskComponents, setStoryTaskComponents] = useState({tasks: [], taskNumber: 0, taskInfo: ''});
   const [taskNumber, setTaskNumber] = useState(0);
+  const [groupNumber, setGroupNumber] = useState(1);
   const rowData = useRef({});
   // useEffect(() => {
   //   console.log("Component id is now" + componentId);
@@ -154,11 +156,11 @@ const Home = () => {
       <Content>
       <Space>
           <Title level={2}>Plot Generation Tool Version 3.0</Title>
-          <Select style={{width: 150,}} options={tasks} placeholder="Select a Task" onChange={(v)=>onTaskClick(handleDropdownChangeCallback, v)}>
-          </Select>
+          <Select style={{width: 150,}} options={studygroups} placeholder="Study Group" onChange={(v)=>setGroupNumber(v)}/>
+          <Select style={{width: 120,}} options={tasks} placeholder="Task" onChange={(v)=>onTaskClick(handleDropdownChangeCallback, v)}/>
       </Space>
       
-        <TabsPanel componentId = {componentId} onDropdownChangeCallback={handleDropdownChangeCallback} dropdownComponents = {dropdownComponents} onComponentChange={(x) => setComponentId(x)} onDropdownChange={(x) => setDropdownComponents(x)} taskNumber={taskNumber}/>
+        <TabsPanel componentId = {componentId} onDropdownChangeCallback={handleDropdownChangeCallback} dropdownComponents = {dropdownComponents} onComponentChange={(x) => setComponentId(x)} onDropdownChange={(x) => setDropdownComponents(x)} taskNumber={taskNumber} groupNumber={groupNumber}/>
           
       </Content>
       <Sider theme={"light"} width="25%">
