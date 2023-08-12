@@ -37,7 +37,7 @@ const TabsPanel = ({componentId, dropdownComponents, onDropdownChangeCallback, o
           return {
             label: tabs[i],
             key: id,
-            children: <Component componentId={componentId} onDropdownChangeCallback={onDropdownChangeCallback} dropdownComponents={dropdownComponents} onComponentChange={(x) => onComponentChange(x)} onDropdownChange={(x) => onDropdownChange(x)} taskNumber={taskNumber}/>,
+            children: <Component componentId={componentId} onDropdownChangeCallback={onDropdownChangeCallback} dropdownComponents={dropdownComponents} onComponentChange={(x) => onComponentChange(x)} onDropdownChange={(x) => onDropdownChange(x)} taskNumber={taskNumber} groupNumber={groupNumber}/>,
           };
         })}
       />

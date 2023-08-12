@@ -10,7 +10,7 @@ import { array_replace } from "../../utils/array_replace";
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
 const InputRow = (props) => {
-  const { id, input_row_key, page,removable, enableSettings, group, onRemove, mainDropdown, args, onChange } = props;
+  const { id, input_row_key, page,removable, enableSettings, group, onRemove, mainDropdown, args, onChange, groupNumber } = props;
   const key = input_row_key
   const md = (mainDropdown === undefined)?constraints:JSON.parse(mainDropdown);
   const a = (args === undefined || args !== '')?args:'[]';
@@ -28,12 +28,12 @@ const InputRow = (props) => {
       selectedActionsValues.current.push(value);
     onChange(id, selectedActionsValues.current);
     GlobalSingletonInstance.set("showRegenerateMsg", true);
-    //TODO: if value is "The soup is in..., Teddy is in the..." then don't send to back end
-    //TODO: handle it here itself
     var requestDDitem = shape_into_dropdownrequestitem(selectedActionsValues, page, group);
     console.log("requesting next DDitem: ", requestDDitem)
     var argsResponse = await getNextDropdownData(requestDDitem);
     console.log("response: ", argsResponse);
+    if(groupNumber==2)
+      argsResponse = argsResponse.filter(x=>!x.value.includes("false"));
     setNextActionsDropdowns([argsResponse]);
     if(value === "Sometime after")
       setNextActionsDropdowns([argsResponse,argsResponse])

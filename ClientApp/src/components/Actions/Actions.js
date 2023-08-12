@@ -7,7 +7,7 @@ import constraints from "../../Data/constraints";
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
-const Actions = ({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange}) => {
+const Actions = ({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange, groupNumber}) => {
   const rowData = useRef({});
   const handleAddDropdown = async() => {
     let requestDdItem = {
@@ -33,10 +33,11 @@ const Actions = ({componentId, dropdownComponents, onDropdownChangeCallback, onC
           key ={componentId}
           id={componentId}  
           removable={true}
-          enableSettings={true}
+          enableSettings={(groupNumber==3)?true:false}
           input_row_key={componentId}
           page={dropdownRow.Page}
           group= {dropdownRow.Group}
+          groupNumber={groupNumber}
           onRemove={(id)=> {
             console.log("id is", id);
             handleRemoveDropdown(id);
