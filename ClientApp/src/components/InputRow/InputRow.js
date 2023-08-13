@@ -141,6 +141,7 @@ const InputRow = (props) => {
       <Select
         showSearch
         placeholder={md[0].tooltip}
+        style={{width: 230,}} 
         optionFilterProp="children"
         onChange={handleChange}
         onSearch={onSearch}
@@ -148,10 +149,7 @@ const InputRow = (props) => {
           (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
         }
         options={md}
-        defaultValue={()=>{
-          // handleChange(md[0]);
-          return md[0];
-          }}
+        defaultValue={(page==='beginning')?()=>md[0]:undefined}
         optionLabelProp="label"
       />
       {nextActionsDropdowns.map((item, index) => {

@@ -143,6 +143,7 @@ public class StaticDropdownItems
             }
             else
             {
+                // belief-based dropdowns
                 if(dropdownItemRequest.Arguments.Length==0 ||
                     JsonConvert.DeserializeObject<List<DropdownItemResponse>>(dropdownItemRequest.Arguments).Count == 0)
                 {
@@ -161,8 +162,13 @@ public class StaticDropdownItems
             // check the main dropdown
             if(dropdownItemRequest.Main_DropDown.Length > 0)
             {
-                // populate with actions
-                response = StaticDropdownItems.getItems(domain.operators.Select(op => new Tuple<string, string>(textMaker.getString(op.text), op.text)));
+                // populate with actions, filtering to only Poppy's or Teddy's actions if needed
+                if(domain.initial.characters.Where(c=>c.name.Equals("Poppy")).First().bMinus.Count==0)
+                    response = StaticDropdownItems.getItems(domain.operators.Where(op => op.character.Equals("Teddy")).Select(op => new Tuple<string, string>(textMaker.getString(op.text), op.text)));
+                else if(domain.initial.characters.Where(c=>c.name.Equals("Teddy")).First().bMinus.Count==0)
+                    response = StaticDropdownItems.getItems(domain.operators.Where(op => op.character.Equals("Poppy")).Select(op => new Tuple<string, string>(textMaker.getString(op.text), op.text)));
+                else
+                    response = StaticDropdownItems.getItems(domain.operators.Select(op => new Tuple<string, string>(textMaker.getString(op.text), op.text)));
             }
             else
             {
