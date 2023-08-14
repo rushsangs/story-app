@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 
-import { Card, Space, Button, Divider } from "antd";
+import { Card, Space, Button, Divider, Alert } from "antd";
 import { List, Typography } from "antd";
 import { CaretRightOutlined,CheckCircleTwoTone, CloseCircleTwoTone} from "@ant-design/icons";
 import { getStoryData, getMockStoryData } from "../../Data/apis";
 import styles from "./StoryPanel.module.css";
 import { GlobalSingletonObject } from "../../utils/dataContext";
 const { Title, Text } = Typography;
-
+const {ErrorBoundary} = Alert;
 
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
 const StoryPanel = ({dropdownComponents, getDropdownComponents, storyTaskComponents, dropdownValues}) => {
   const [story, setStory] = useState();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
   // const [tasks, setTasks] = useState(task1);
 
 
@@ -21,12 +23,21 @@ const onGenerateStoryClick = async() => {
   GlobalSingletonInstance.set("showRegenerateMsg", false);
   // const allDropdownData = ExtractDataFromDropdowns(dropdownComponents);
   let requestData=  getDropdownComponents();
-  const storyData = await getStoryData(requestData);
+  const storyData = await getStoryData(requestData, setErrorMessage, setErrorMessageVisible);
+  
   // const storyData = ["hello", "test", "list", "of", "strings"];
   if (storyData.length === 0) 
     storyData.push("No plan found.")
   setStory(storyData);
 };
+
+const errorHTML = <Alert
+message="Error"
+description={errorMessage}
+type="error"
+closable
+afterClose={()=>setErrorMessageVisible(false)}
+/>;
 
 const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Title><div>
   <div style={{textAlign: "left"}}>{storyTaskComponents.taskInfo}</div>
@@ -60,10 +71,11 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
           (storyTaskComponents.taskNumber!=0)?TaskHTML:<></>
        }
       <Title level={3}>Generate story</Title>
+
       <Button type="primary" block onClick={() => onGenerateStoryClick()}>
         Generate
         <CaretRightOutlined />
-      </Button>
+      </Button>     
       {GlobalSingletonInstance.get("showRegenerateMsg") && (
         <div className={styles.regenerateMsg}>
           You have updated the settings! Press Regenerate to see new story.{" "}
@@ -77,6 +89,7 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
             : "",
         }}
       >
+        {(errorMessage.length>0)?errorMessageVisible && errorHTML:""}
         <List
           dataSource={story}
           renderItem={(item, index) => {
