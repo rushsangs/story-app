@@ -154,11 +154,68 @@ public class DropdownRowSupport
         //parse all beginning dropdowns
         List<DropdownRow> beginnings = allrows.FindAll((row) => row.Page.Equals("beginning") && !row.Group.Equals("desires"));
         AddDropdownsToWorldState(domain.initial, beginnings);
+        CopyWorldStateToBeliefs(domain.initial);
+        AddDropdownsToBeliefs(domain.initial, beginnings);
         // AddDropdownsToDesires(domain, allrows.FindAll((row) => row.Page.Equals("beginning") && row.Group.Equals("desires")));
+        
         //for ending dropdowns, reset the domain goals first
         domain.goal.empty();
-        AddDropdownsToWorldState(domain.goal, allrows.FindAll((row) => row.Page.Equals("ending")) );
+        List<DropdownRow> endings = allrows.FindAll((row) => row.Page.Equals("ending"));
+        AddDropdownsToWorldState(domain.goal, endings);
+        AddDropdownsToBeliefs(domain.goal, endings);
+
         AddDropdownsToMiddle(domain, allrows.FindAll((row) => row.Page.Equals("actions")));
+    }
+
+    private static void AddDropdownsToBeliefs(WorldState worldstate, List<DropdownRow> rows)
+    {
+        foreach(Character c in worldstate.characters)
+        {
+            // if the dropdowns have any options for the character beliefs add them here
+            foreach(DropdownRow row in rows.FindAll((r)=> r.Group.Equals(c.name)))
+            {
+                string lit = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Main_Dropdown).First().value;
+                string arg = JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments).First().Select((a)=> a.value).First();
+                if(arg.Equals("bPlus") || arg.Equals("True"))
+                {
+                    c.bPlus.TryAdd(lit, 1);
+                    c.bMinus.Remove(lit);
+                    c.unsure.Remove(lit);
+                }
+                if(arg.Equals("bMinus") || arg.Equals("False"))
+                {
+                    c.bMinus.TryAdd(lit, 1);
+                    c.bPlus.Remove(lit);
+                    c.unsure.Remove(lit);
+                }
+                if(arg.Equals("unknown"))
+                {
+                    c.unsure.TryAdd(lit, 1);
+                    c.bMinus.Remove(lit);
+                    c.bPlus.Remove(lit);
+                }
+            }
+        }
+    }
+
+    private static void CopyWorldStateToBeliefs(WorldState worldstate)
+    {
+        // copy characters' bplus and bminus as the worldstate by default
+        foreach(Character c in worldstate.characters)
+        {
+            foreach(string lit in worldstate.tWorld.Keys)
+            {
+                c.bPlus.TryAdd(lit, 1);
+                c.bMinus.Remove(lit);
+                c.unsure.Remove(lit);
+            }
+            foreach(string lit in worldstate.fWorld.Keys)
+            {
+                c.bMinus.TryAdd(lit, 1);
+                c.bPlus.Remove(lit);
+                c.unsure.Remove(lit);
+            }
+        }
     }
 
     private static void AddDropdownsToMiddle(JSONDomainBuilder domain, List<DropdownRow> dropdownRows)
@@ -245,46 +302,6 @@ public class DropdownRowSupport
                 worldstate.tWorld.Remove(lit);
             }
         }
-        // copy characters' bplus and bminus as the worldstate by default
-        foreach(Character c in worldstate.characters)
-        {
-            foreach(string lit in worldstate.tWorld.Keys)
-            {
-                c.bPlus.TryAdd(lit, 1);
-                c.bMinus.Remove(lit);
-                c.unsure.Remove(lit);
-            }
-            foreach(string lit in worldstate.fWorld.Keys)
-            {
-                c.bMinus.TryAdd(lit, 1);
-                c.bPlus.Remove(lit);
-                c.unsure.Remove(lit);
-            }
-            // if the dropdowns have any options for the character beliefs add them here
-            foreach(DropdownRow row in rows.FindAll((r)=> r.Group.Equals(c.name)))
-            {
-                string lit = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Main_Dropdown).First().value;
-                string arg = JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments).First().Select((a)=> a.value).First();
-                if(arg.Equals("bPlus") || arg.Equals("True"))
-                {
-                    c.bPlus.TryAdd(lit, 1);
-                    c.bMinus.Remove(lit);
-                    c.unsure.Remove(lit);
-                }
-                if(arg.Equals("bMinus") || arg.Equals("False"))
-                {
-                    c.bMinus.TryAdd(lit, 1);
-                    c.bPlus.Remove(lit);
-                    c.unsure.Remove(lit);
-                }
-                if(arg.Equals("unknown"))
-                {
-                    c.unsure.TryAdd(lit, 1);
-                    c.bMinus.Remove(lit);
-                    c.bPlus.Remove(lit);
-                }
-            }
-        }
     }
     public static List<DropdownRow> CompressDropdowns(List<DropdownRow> dropdowns)
     {
@@ -301,13 +318,12 @@ public class DropdownRowSupport
                         new string[]{"The outlet is powering "},
                         new string[]{"the Microwave", "the Toaster", "nothing"} ));
 
-        reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count, "beginning", "Teddy", 
-                        new string[]{"The outlet is powering "},
-                        new string[]{"the Microwave", "the Toaster", "nothing"} ));
-
-        reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "world", 
+        if (dropdowns.Any(d=> d.Main_Dropdown.Contains("contained-in")))
+        {
+            reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "world", 
                         new string[]{"The soup is in "},
                         new string[]{"a Bowl", "a Pot"} ));
+        }
         
         // reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
         //                 new string[]{"The soup is in "},
@@ -330,9 +346,17 @@ public class DropdownRowSupport
             //             new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
         }
 
-        reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "world", 
+        if (dropdowns.Any(d => d.Main_Dropdown.Contains("at Teddy")))
+        {
+            reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "world", 
                         new string[]{"Teddy is in the "},
                         new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"} ));
+            
+            reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count, "beginning", "Teddy", 
+                        new string[]{"The outlet is powering "},
+                        new string[]{"the Microwave", "the Toaster", "nothing"} ));
+        }
+        
 
         // reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
         //                 new string[]{"Teddy is in the "},

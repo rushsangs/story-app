@@ -155,10 +155,7 @@ const InputRow = (props) => {
       {nextActionsDropdowns.map((item, index) => {
         return <Select
           showSearch
-          placeholder={() => {
-            console.log(item);
-            return item[0].tooltip;
-          }}
+          placeholder={item[0].tooltip}
           optionFilterProp="children"
           onChange={async(value) => await handleNextDropdownChange(value, index, item)}
           onSearch={onSearch}
@@ -167,10 +164,12 @@ const InputRow = (props) => {
           } 
           options={item}
           optionLabelProp="label"
-          defaultValue={()=>{
-            // handleChange(md[0]);
-            return item[0];
-            }}
+          defaultValue={()=> {
+            if(page==='beginning')
+              return item[0];
+            else
+              return undefined;
+          }}
           key={String(index)}
         />;
         })}

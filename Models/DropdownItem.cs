@@ -42,10 +42,13 @@ public class DropdownItemResponse
                         !d.value.Contains("plugged") &&
                         !d.value.Contains("outlet-empty")).ToList();
         reducedDropdowns.Insert(0, new DropdownItemResponse("The outlet is powering "));
-        reducedDropdowns.Insert(0, new DropdownItemResponse("The soup is in "));
+        if(dropdownItems.Any(d => d.value.Contains("at Teddy")))
+            reducedDropdowns.Insert(0, new DropdownItemResponse("Teddy is in the "));
+        if(dropdownItems.Any(d => d.value.Contains("contained-in")))
+            reducedDropdowns.Insert(0, new DropdownItemResponse("The soup is in "));
         if (dropdownItems.Any(d => d.value.Contains("at Poppy")))
             reducedDropdowns.Insert(0, new DropdownItemResponse("Poppy is in the "));
-        reducedDropdowns.Insert(0, new DropdownItemResponse("Teddy is in the "));
+        
         return reducedDropdowns;
     }
 }
@@ -59,7 +62,7 @@ public class StaticDropdownItems
     public static void Populate()
     {
         DropdownItemResponse r = new DropdownItemResponse( "At some point");
-        r.tooltip = "The specified action should occur at some point in the story.";
+        r.tooltip = "Select one:";
         r.color = "";
         actionConstraintDropdowns.Add(r);
         r = new DropdownItemResponse("Sometime after");
@@ -94,7 +97,7 @@ public class StaticDropdownItems
         foreach(string arg in args)
         {
             DropdownItemResponse r = new DropdownItemResponse(arg);
-            r.tooltip = "";
+            r.tooltip = "Select one:";
             if(arg.Contains("fail"))
                 r.color = "red";
             responses.Add(r);
