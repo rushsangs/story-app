@@ -12,17 +12,33 @@ const {ErrorBoundary} = Alert;
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
-const StoryPanel = ({dropdownComponents, getDropdownComponents, storyTaskComponents, dropdownValues}) => {
-  const [story, setStory] = useState();
+const StoryPanel = ({dropdownComponents, getDropdownComponents, storyTaskComponents, dropdownValues, story, setStory}) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
   // const [tasks, setTasks] = useState(task1);
 
+const checkIfGoalSpecified = (dropdownValues,setErrorMessage, setErrorMessageVisible) =>
+{
+    let goalConds=0;
+    for(let k in dropdownValues)
+    {
+      if(dropdownValues[k].page==='ending' && dropdownValues[k].group==='world')
+        goalConds++;
+    }
+    if(goalConds===0){
+      setErrorMessage("You have not specified any World goals in the Ending tab. There will be no story generated unless atleast one fact is specified for the Ending goal.");
+      setErrorMessageVisible(true);
+      return true;
+    }
+    return false;
+}
 
 const onGenerateStoryClick = async() => {
   GlobalSingletonInstance.set("showRegenerateMsg", false);
   // const allDropdownData = ExtractDataFromDropdowns(dropdownComponents);
   let requestData=  getDropdownComponents();
+  if(checkIfGoalSpecified(dropdownValues, setErrorMessage, setErrorMessageVisible))
+    return;
   const storyData = await getStoryData(requestData, setErrorMessage, setErrorMessageVisible);
   
   // const storyData = ["hello", "test", "list", "of", "strings"];
@@ -43,12 +59,13 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
   <div style={{textAlign: "left"}}>{storyTaskComponents.taskInfo}</div>
   <Divider>Tasks</Divider>
 {storyTaskComponents.tasks.map((item, index) => {
+  console.log(dropdownValues);
   if(item.test(story, dropdownValues))
   {
      return (<div style={{textAlign: "left"}}
      key={index}><Space
      key={index}>
-    <CheckCircleTwoTone />
+    <CheckCircleTwoTone twoToneColor="#52c41a"/>
     <div>{item.text}</div>
     </Space></div>
     )
@@ -57,7 +74,7 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
   {
     return (<div style={{textAlign: "left"}} key={index}><Space
     key={index}>
-      <CloseCircleTwoTone />
+      <CloseCircleTwoTone twoToneColor="#ff4500" />
       <div>{item.text}</div>
       </Space></div>
       )
@@ -68,7 +85,7 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
   return (
     <div className={styles.storyContainer}>
        {
-          (storyTaskComponents.taskNumber!=0)?TaskHTML:<></>
+          (storyTaskComponents.taskNumber!==0)?TaskHTML:<></>
        }
       <Title level={3}>Generate story</Title>
 

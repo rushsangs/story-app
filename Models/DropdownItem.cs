@@ -152,10 +152,10 @@ public class StaticDropdownItems
                 {
                     if(getContextualDropdownItems(dropdownItemRequest)!=null)
                         return getContextualDropdownItems(dropdownItemRequest);
-                    return StaticDropdownItems.beliefDropdowns;
+                    return StaticDropdownItems.tfDropdowns;
                 }
                 else if(JsonConvert.DeserializeObject<List<DropdownItemResponse>>(dropdownItemRequest.Arguments).Count == 0)
-                    return StaticDropdownItems.beliefDropdowns;
+                    return StaticDropdownItems.tfDropdowns;
                 else
                     return emptyDropdowns;
             }

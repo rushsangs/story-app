@@ -22,6 +22,7 @@ const Home = () => {
   const [storyTaskComponents, setStoryTaskComponents] = useState({tasks: [], taskNumber: 0, taskInfo: ''});
   const [taskNumber, setTaskNumber] = useState(0);
   const [groupNumber, setGroupNumber] = useState(1);
+  const [story, setStory] = useState();
   const rowData = useRef({});
   // useEffect(() => {
   //   console.log("Component id is now" + componentId);
@@ -91,6 +92,7 @@ const Home = () => {
     await setDropdownValues({});
     await setStoryTaskComponents(taskData[task_num-1]);
     await setTaskNumber(task_num);
+    await setStory();
     
     for(let i=0; i < rows.length; ++i)
     {
@@ -164,7 +166,7 @@ const Home = () => {
           
       </Content>
       <Sider theme={"light"} width="25%">
-        <StoryPanel dropdownComponents = {dropdownComponents} getDropdownComponents={handleGenerateButtonClick} storyTaskComponents={storyTaskComponents} dropdownValues={dropdownValues}/>
+        <StoryPanel dropdownComponents = {dropdownComponents} getDropdownComponents={handleGenerateButtonClick} storyTaskComponents={storyTaskComponents} dropdownValues={dropdownValues} story={story} setStory={setStory}/>
       </Sider>
 
       <div
