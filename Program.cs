@@ -88,7 +88,37 @@ app.MapGet("/dropdowns/6", async () =>
     {
         List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
         return Results.Ok(rows);
-    }); 
+    });
+
+app.MapGet("/dropdowns/7", async () =>
+    {
+        List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
+        return Results.Ok(rows);
+    });
+
+app.MapGet("/dropdowns/8", async () =>
+    {
+        List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
+        return Results.Ok(rows);
+    });
+
+app.MapGet("/dropdowns/9", async () =>
+    {
+        List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
+        return Results.Ok(rows);
+    });
+
+app.MapGet("/dropdowns/10", async () =>
+    {
+        List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
+        return Results.Ok(rows);
+    });
+
+app.MapGet("/dropdowns/11", async () =>
+    {
+        List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-both.json", domain, textmaker);
+        return Results.Ok(rows);
+    });
 
 app.MapPost("/dropdowns", async (DropdownItemRequest dItemRequest) =>
 {

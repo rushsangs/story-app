@@ -17,17 +17,19 @@ const Beginning = ({componentId, dropdownComponents, onDropdownChangeCallback, o
     // );
   };
 
-  let poppysbeliefs = <div><Title level={3}>Poppy's Beliefs</Title>
-  {dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Poppy").map((obj) => obj.component)}</div>;
+  let teddysbeliefdropdowns = dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Teddy").map((obj) => obj.component);
+  let poppysbeliefdropdowns = dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Poppy").map((obj) => obj.component);
+  let poppysbeliefs = <div><Title level={3}>Poppy's Beliefs</Title>{poppysbeliefdropdowns}</div>;
+  let teddysbeliefs = <div><Title level={3}>Teddy's Beliefs</Title>{teddysbeliefdropdowns}</div>;
+  
 
   return (
     <>
       <Space direction="vertical" style={{ padding: "0 15px" }}>
         <Title level={3}>World</Title>
         {dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="world").map((obj) => obj.component)}
-        <Title level={3}>Teddy's Beliefs</Title>
-        {dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Teddy").map((obj) => obj.component)}
-        {(taskNumber==2)?poppysbeliefs:''}
+        {(teddysbeliefdropdowns.length>0)?teddysbeliefs:''}
+        {(poppysbeliefdropdowns.length>0)?poppysbeliefs:''}
       </Space>
     </>
   );

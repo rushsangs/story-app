@@ -115,6 +115,31 @@ export const taskData = [
         taskNumber: 6,
         taskInfo: "Upon failing, characters can choose an alternate plan, or repair the initial plan. Try creating a story where Teddy fails to use the Microwave initially, but then sticks to using the Microwave to heat up the Soup.",
         tasks: task6
+    },
+    {
+        taskNumber: 7,
+        taskInfo: "Task not set yet.",
+        tasks: task6
+    },
+    {
+        taskNumber: 8,
+        taskInfo: "Task not set yet.",
+        tasks: task6
+    },
+    {
+        taskNumber: 9,
+        taskInfo: "Task not set yet.",
+        tasks: task6
+    },
+    {
+        taskNumber: 10,
+        taskInfo: "Task not set yet.",
+        tasks: task6
+    },
+    {
+        taskNumber: 11,
+        taskInfo: "Task not set yet.",
+        tasks: task6
     }
 ]
 
@@ -143,4 +168,24 @@ export const tasks = [
         label: "Task 6",
         value: 6
     },
+    {
+        label: "Task 7",
+        value: 7
+    },
+    {
+        label: "Task 8",
+        value: 8
+    },
+    {
+        label: "Task 9",
+        value: 9
+    },
+    {
+        label: "Task 10",
+        value: 10
+    },
+    {
+        label: "Task 11",
+        value: 11
+    }
 ]

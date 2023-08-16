@@ -7,7 +7,7 @@ import Ending from "../Ending/Ending";
 const TabsPanel = ({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange, taskNumber, groupNumber}) => {
  
   //Group 1 does not see an actions tab at all
-  const tabs = (groupNumber==1)?["Beginning", "Ending"]:["Beginning", "Actions", "Ending"];
+  const tabs = (groupNumber===1)?["Beginning", "Ending"]:["Beginning", "Actions", "Ending"];
   const onChange = (key) => {
     // console.log(key);
   };
@@ -25,7 +25,7 @@ const TabsPanel = ({componentId, dropdownComponents, onDropdownChangeCallback, o
               Component = Beginning;
               break;
             case "2":
-              if(tabs.length==2)
+              if(tabs.length===2)
                 Component = Ending;
               else
                 Component = Actions;

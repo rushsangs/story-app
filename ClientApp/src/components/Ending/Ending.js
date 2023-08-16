@@ -104,6 +104,14 @@ const Ending =({componentId, dropdownComponents, onDropdownChangeCallback, onCom
   };
 
   let poppyBeliefButton = <Button onClick={()=>handleAddDropdown('Poppy')}>Add Poppy's Belief Goal</Button>;
+  let teddyBeliefButton = <Button onClick={()=>handleAddDropdown('Teddy')}>Add Teddy's Belief Goal</Button>;
+  let teddysbeliefdropdowns = dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Teddy").map((obj) => obj.component);
+  let poppysbeliefdropdowns = dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Poppy").map((obj) => obj.component);
+  
+  let teddysBeliefs = <div>
+    <Title level={3}>Teddy's Beliefs</Title>
+        {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="Teddy").map((obj) => obj.component)}
+  </div>;
 
   let poppysBeliefs = <div>
     <Title level={3}>Poppy's Beliefs</Title>
@@ -114,14 +122,13 @@ const Ending =({componentId, dropdownComponents, onDropdownChangeCallback, onCom
       <Space direction="vertical" style={{ padding: "0 15px" }}>
         <Space>
           <Button onClick={()=>handleAddDropdown('world')}>Add World Goal</Button>
-          <Button onClick={()=>handleAddDropdown('Teddy')}>Add Teddy's Belief Goal</Button>
-          {(taskNumber==2)?poppyBeliefButton:''}
+          {(teddysbeliefdropdowns.length>0)?teddyBeliefButton:''}
+          {(poppysbeliefdropdowns.length>0)?poppyBeliefButton:''}
         </Space>
         <Title level={3}>World</Title>
         {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="world").map((obj) => obj.component)}
-        <Title level={3}>Teddy's Beliefs</Title>
-        {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="Teddy").map((obj) => obj.component)}
-        {(taskNumber==2)?poppysBeliefs:''}
+        {(teddysbeliefdropdowns.length>0)?teddysBeliefs:''}
+        {(poppysbeliefdropdowns.length>0)?poppysBeliefs:''}
       </Space>
     </>
   );

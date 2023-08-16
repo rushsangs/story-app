@@ -40,6 +40,7 @@ public class DropdownItemResponse
                         !d.value.Contains("at Poppy") &&
                         !d.value.Contains("contained-in") &&
                         !d.value.Contains("plugged") &&
+                        !d.value.Contains("eaten") &&
                         !d.value.Contains("outlet-empty")).ToList();
         reducedDropdowns.Insert(0, new DropdownItemResponse("The outlet is powering "));
         if(dropdownItems.Any(d => d.value.Contains("at Teddy")))
@@ -48,6 +49,10 @@ public class DropdownItemResponse
             reducedDropdowns.Insert(0, new DropdownItemResponse("The soup is in "));
         if (dropdownItems.Any(d => d.value.Contains("at Poppy")))
             reducedDropdowns.Insert(0, new DropdownItemResponse("Poppy is in the "));
+        if (dropdownItems.Any(d => d.value.Contains("eaten Soup")))
+            reducedDropdowns.Insert(0, new DropdownItemResponse("The Soup has been eaten by "));
+        if (dropdownItems.Any(d => d.value.Contains("eaten Bread")))
+            reducedDropdowns.Insert(0, new DropdownItemResponse("The Bread has been eaten by "));
         
         return reducedDropdowns;
     }
@@ -196,6 +201,10 @@ public class StaticDropdownItems
             return StaticDropdownItems.getItems(new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"});
         else if(dropdownItemRequest.Main_DropDown.Contains("Poppy is in the "))
             return StaticDropdownItems.getItems(new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"});
+        else if(dropdownItemRequest.Main_DropDown.Contains("The Soup has been eaten by "))
+            return StaticDropdownItems.getItems(new string[]{"Teddy", "Poppy", "nobody"});
+        else if(dropdownItemRequest.Main_DropDown.Contains("The Bread has been eaten by "))
+            return StaticDropdownItems.getItems(new string[]{"Teddy", "Poppy", "nobody"});
         else
             return null;
     }
