@@ -1,4 +1,7 @@
 using story_app.Models;
+public class LogMessage {
+    public string message {get; set;}
+}
 public class StudyLogger
 {
     public string filePath {get; set;}

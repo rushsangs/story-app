@@ -2,6 +2,23 @@ import storyData from './story'
 import constraintsData from './constraints'
 
 
+export const logToFile = async(message) => {
+    try{
+        var m = { "message": message};
+        console.log("message is ", m);
+        const response = await fetch('https://localhost:7273/studylogger',{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                },
+            body: JSON.stringify(m),
+        });
+        return;
+    } catch(error)
+    {
+        return;
+    }
+}
 
 export const getInitialDropdownData = async(task_num) => {
     const response = await fetch('https://localhost:7273/dropdowns/'+task_num);

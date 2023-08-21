@@ -59,9 +59,15 @@ app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
     {
         studyLogger.AppendTextToFile("Story produced!");
         List<string> c = textmaker.convertPlan(plan.steps.Select(s=>s.Item1));
-        studyLogger.AppendTextToFile(c.ToString());
+        studyLogger.AppendTextToFile(string.Join("/",c));
         return Results.Created("/storygenerator/1", c.ToArray());
     }
+});
+
+app.MapPost("/studylogger", async (LogMessage lm) =>
+{
+    studyLogger.AppendTextToFile(lm.message);
+    return Results.Created("/studylogger/1", new List<string>());
 });
 
 app.MapGet("/dropdowns/1", async () =>

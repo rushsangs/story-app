@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Space, Button, Divider, Alert } from "antd";
 import { List, Typography } from "antd";
 import { CaretRightOutlined,CheckCircleTwoTone, CloseCircleTwoTone} from "@ant-design/icons";
-import { getStoryData, getMockStoryData } from "../../Data/apis";
+import { getStoryData, getMockStoryData, logToFile } from "../../Data/apis";
 import styles from "./StoryPanel.module.css";
 import { GlobalSingletonObject } from "../../utils/dataContext";
 const { Title, Text } = Typography;
@@ -28,6 +28,7 @@ const checkIfGoalSpecified = (dropdownValues,setErrorMessage, setErrorMessageVis
     if(goalConds===0){
       setErrorMessage("You have not specified any World goals in the Ending tab. There will be no story generated unless atleast one fact is specified for the Ending goal.");
       setErrorMessageVisible(true);
+      logToFile("Story not produced -- no end goal specified");
       return true;
     }
     return false;
@@ -37,6 +38,7 @@ const onGenerateStoryClick = async() => {
   GlobalSingletonInstance.set("showRegenerateMsg", false);
   // const allDropdownData = ExtractDataFromDropdowns(dropdownComponents);
   let requestData=  getDropdownComponents();
+  logToFile("Story Generation Request from front end");
   if(checkIfGoalSpecified(dropdownValues, setErrorMessage, setErrorMessageVisible))
     return;
   const storyData = await getStoryData(requestData, setErrorMessage, setErrorMessageVisible);
