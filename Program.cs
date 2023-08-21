@@ -24,6 +24,7 @@ NarrativePlanning.DomainBuilder.JSONDomainBuilder domain = new NarrativePlanning
 NarrativePlanning.PlanningProblem problem = null;
 HeadSpace.TextMaker.TextMaker textmaker = new HeadSpace.TextMaker.TextMaker(path + "/HeadSpace2/HeadSpace/JSON Files/action_texts.json");
 StaticDropdownItems.Populate();
+StudyLogger studyLogger = new StudyLogger(path + "/StudyData");
 
 app.MapGet("/storygenerator", async() =>
 {
@@ -38,6 +39,7 @@ app.MapGet("/storygenerator", async() =>
 
 app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
 {
+    studyLogger.AppendTextToFile("STORY GENERATION REQUEST");
     allrows = DropdownRowSupport.ExpandDropdowns(allrows);
     var old_domain = domain.cloneForTrackingChanges();
     DropdownRowSupport.parseDropdownsIntoDomain(allrows, domain);
@@ -49,79 +51,99 @@ app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
 
     NarrativePlanning.Plan plan = problem.HeadSpaceXSolution();
     if (plan == null)
+    {
+        studyLogger.AppendTextToFile("Story not produced!");
         return Results.Created("/storygenerator/1", new List<string>());
+    }
     else
-        return Results.Created("/storygenerator/1", textmaker.convertPlan(plan.steps.Select(s=>s.Item1)).ToArray());
+    {
+        studyLogger.AppendTextToFile("Story produced!");
+        List<string> c = textmaker.convertPlan(plan.steps.Select(s=>s.Item1));
+        studyLogger.AppendTextToFile(c.ToString());
+        return Results.Created("/storygenerator/1", c.ToArray());
+    }
 });
 
 app.MapGet("/dropdowns/1", async () =>
 {
+    studyLogger.AppendTextToFile("----------Task 1----------");
     List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +   "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
     return Results.Ok(rows);
 });
 
 app.MapGet("/dropdowns/2", async () =>
     {
+        studyLogger.AppendTextToFile("----------Task 2----------");
         List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-task2.json", domain, textmaker);
         return Results.Ok(rows);
     }); 
 
 app.MapGet("/dropdowns/3", async () =>
     {
+        studyLogger.AppendTextToFile("----------Task 3----------");
         List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
         return Results.Ok(rows);
     }); 
 
 app.MapGet("/dropdowns/4", async () =>
     {
+        studyLogger.AppendTextToFile("----------Task 4----------");
         List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
         return Results.Ok(rows);
     }); 
 
 app.MapGet("/dropdowns/5", async () =>
     {
+        studyLogger.AppendTextToFile("----------Task 5----------");
         List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
         return Results.Ok(rows);
     }); 
 
 app.MapGet("/dropdowns/6", async () =>
     {
+        studyLogger.AppendTextToFile("----------Task 6----------");
         List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
         return Results.Ok(rows);
     });
 
 app.MapGet("/dropdowns/7", async () =>
     {
+        studyLogger.AppendTextToFile("----------Task 7----------");
         List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
         return Results.Ok(rows);
     });
 
 app.MapGet("/dropdowns/8", async () =>
     {
+        studyLogger.AppendTextToFile("----------Task 8----------");
         List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
         return Results.Ok(rows);
     });
 
 app.MapGet("/dropdowns/9", async () =>
     {
+        studyLogger.AppendTextToFile("----------Task 9----------");
         List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
         return Results.Ok(rows);
     });
 
 app.MapGet("/dropdowns/10", async () =>
     {
+        studyLogger.AppendTextToFile("----------Task 10----------");
         List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-teddy.json", domain, textmaker);
         return Results.Ok(rows);
     });
 
 app.MapGet("/dropdowns/11", async () =>
     {
+        studyLogger.AppendTextToFile("----------Task 11----------");
         List<DropdownRow> rows = APISupport.GetInitialDropdowns(path +  "/HeadSpace2/HeadSpace/JSON Files/microwave-both.json", domain, textmaker);
         return Results.Ok(rows);
     });
 
 app.MapPost("/dropdowns", async (DropdownItemRequest dItemRequest) =>
 {
+    studyLogger.AppendTextToFile("asked for next dropdown");
     List<DropdownItemResponse> responses = StaticDropdownItems.GetNextDropdownItem(dItemRequest, domain, textmaker);
     return Results.Created("/dropdowns/1", responses);   
 });
