@@ -61,7 +61,7 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
   <div style={{textAlign: "left"}}>{storyTaskComponents.taskInfo}</div>
   <Divider>Tasks</Divider>
 {storyTaskComponents.tasks.map((item, index) => {
-  console.log(dropdownValues);
+  // console.log(dropdownValues);
   if(item.test(story, dropdownValues))
   {
      return (<div style={{textAlign: "left"}}

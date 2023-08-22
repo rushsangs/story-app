@@ -5,7 +5,7 @@ import constraintsData from './constraints'
 export const logToFile = async(message) => {
     try{
         var m = { "message": message};
-        console.log("message is ", m);
+        // console.log("message is ", m);
         const response = await fetch('https://localhost:7273/studylogger',{
             method: "POST",
             headers: {

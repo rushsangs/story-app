@@ -18,22 +18,77 @@ export default [
 ]
 
 export const task1 = [
-    {key: 0, text: "Teddy starts in Teddy's Room.", status: 0, test:((x,y)=> x!== undefined && x.filter( (step) => (step.includes("Teddy walks over from TeddysRoom to"))).length > 0)},
-    {key: 1, text: "Soup is not heated up initially.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats")).length > 0)},
+    {key: 0, text: "Teddy starts in Teddy's Room.", status: 0, test:((x,y)=> {
+        if(y!== undefined)
+            for (let k in y){
+                console.log(y[k]);
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('Teddy is in the ') && y[k].values.includes("TeddysRoom"))
+                    return true;
+            }
+        return false;
+    })},
+    {key: 1, text: "Soup is not heated up initially.", status: 0, test:((x,y)=> {
+        if(y!== undefined)
+            for (let k in y){
+                console.log(y[k]);
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("False"))
+                    return true;
+            }
+        return false;
+    })},
     {key: 2, text: "Teddy heats up the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats")).length > 0)},
     {key: 3, text: "Teddy eats the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
   ];
 
 export const task2 = [
-    {key: 0, text: "Poppy starts in Poppy's Room.", status: 0, test:((x,y)=> x!== undefined && x.filter( (step) => (step.includes("Poppy walks over from PoppysRoom to"))).length > 0)},
-    {key: 1, text: "Bread is not heated up initially.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy uses ")).length > 0)},
+    {key: 0, text: "Poppy starts in Poppy's Room.", status: 0, test:((x,y)=> {
+        if(y!== undefined)
+            for (let k in y){
+                console.log(y[k]);
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('Poppy is in the ') && y[k].values.includes("PoppysRoom"))
+                    return true;
+            }
+        return false;
+    })},
+
+    {key: 1, text: "Bread is not heated up initially.", status: 0, test:((x,y)=> {
+        if(y!== undefined)
+            for (let k in y){
+                console.log(y[k]);
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Bread') && y[k].values.includes("False"))
+                    return true;
+            }
+        return false;
+    })},
     {key: 2, text: "Poppy heats up the Bread.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy uses")).length > 0)},
     {key: 3, text: "Poppy eats the Bread.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy eats the Bread")).length > 0)},
 ]
 export const task3 = [
-    {key: 0, text: "The power outlet is not powering the Microwave.", status: 0, test:((x,y)=> x!== undefined)},
-    {key: 0, text: "Teddy believes the Microwave is powered.", status: 0, test:((x,y)=> y!== undefined)},
-    {key: 1, text: "Soup is not heated up initially.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats")).length > 0)},
+    {key: 0, text: "The power outlet is not powering the Microwave.", status: 0, test:((x,y)=> {
+        if(y!== undefined)
+            for (let k in y){
+                // console.log(y[k]);
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('The outlet is powering ') && !y[k].values.includes("the Microwave"))
+                    return true;
+            }
+        return false;
+    })},
+    {key: 0, text: "Teddy believes the Microwave is powered.", status: 0, test:((x,y)=> {
+        if(y!== undefined)
+            for (let k in y)
+                if(y[k].page==='beginning'&&y[k].group==="Teddy"&& y[k].values.includes('The outlet is powering ') && y[k].values.includes("the Microwave"))
+                    return true;
+        return false;
+    })},
+    {key: 1, text: "Soup is not heated up initially.", status: 0, test:((x,y)=> {
+        if(y!== undefined)
+            for (let k in y){
+                // console.log(y[k]);
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("False"))
+                    return true;
+            }
+        return false;
+    })},
     {key: 2, text: "Teddy heats up the soup without using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0)},
     {key: 3, text: "Teddy eats the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
   ];
@@ -42,7 +97,7 @@ export const task3 = [
     {key: 0, text: "The power outlet is powering the Microwave.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y){
-                console.log(y[k]);
+                // console.log(y[k]);
                 if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('The outlet is powering ') && y[k].values.includes("the Microwave"))
                     return true;
             }
@@ -86,7 +141,7 @@ export const task3 = [
 
   export const task7 = [
     {key: 0, text: "Teddy attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
-    {key: 1, text: "The soup has not been eaten in the end of the story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length === 0)}
+    {key: 1, text: "The soup has not been eaten in the end of the story.", status: 0, test:((x,y)=> x!== undefined && x.count > 0 && x.filter( step => step.includes("Teddy eats the Soup")).length === 0)}
   ];
 
   export const task8 = [
@@ -100,7 +155,7 @@ export const task3 = [
     {key: 1, text: "An action constraint specifies that Teddy attempts and fails to use the Microwave.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y)
-                if(y[k].page==='actions'&& y[k].values.includes("Teddy tries to start the microwave to heat up the Soup, but it fails."))
+                if(y[k].page==='actions'&& y[k].values.includes("heatWithMicrowave-false Soup Bowl Teddy"))
                     return true;
         return false;
     })},
@@ -110,14 +165,14 @@ export const task3 = [
     {key: 1, text: "An action constraint specifies that Teddy attempts and fails to use the Microwave.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y)
-                if(y[k].page==='actions'&& y[k].values.includes("Teddy tries to start the microwave to heat up the Soup, but it fails."))
+            if(y[k].page==='actions'&& y[k].values.includes("heatWithMicrowave-false Soup Bowl Teddy"))
                     return true;
         return false;
     })},
     {key: 1, text: "An action constraint also has an intent specified.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y)
-                if(y[k].page==='actions'&& (y[k].values.includes("Persist") || y[k].values.includes("Substitute") || y[k].values.includes("Drop")))
+                if(y[k].page==='actions'&& (y[k].values.includes("Persistent Intent") || y[k].values.includes("Flexible Intent") || y[k].values.includes("Default Intent") || y[k].values.includes("Drop Intent")))
                     return true;
         return false;
     })},
@@ -127,14 +182,14 @@ export const task3 = [
     {key: 0, text: "Soup is not heated up initially.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y)
-                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('Soup has been cooked.') && !y[k].values.includes("False"))
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("False"))
                     return true;
         return false;
     })},
     {key: 1, text: "Bread is not heated up initially.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y)
-                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('Bread has been cooked.') && !y[k].values.includes("False"))
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Bread') && y[k].values.includes("False"))
                     return true;
         return false;
     })},
