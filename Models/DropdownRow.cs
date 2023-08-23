@@ -335,14 +335,14 @@ public class DropdownRowSupport
         {
             reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "world", 
                         new string[]{"The Soup has been eaten by "},
-                        new string[]{"Poppy", "Teddy", "nobody"} ));
+                        new string[]{"nobody", "Teddy"} ));
         }
         
         if (dropdowns.Any(d=> d.Main_Dropdown.Contains("eaten Bread")))
         {
             reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "world", 
                         new string[]{"The Bread has been eaten by "},
-                        new string[]{"Poppy", "Teddy", "nobody"} ));
+                        new string[]{"nobody", "Poppy" } ));
         }
         // reducedDropdowns.Add(DropdownRow.createRow(reducedDropdowns.Count,"beginning", "Teddy", 
         //                 new string[]{"The soup is in "},
