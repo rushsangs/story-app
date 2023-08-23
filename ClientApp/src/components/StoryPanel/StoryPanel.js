@@ -70,15 +70,17 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
   <Divider>Tasks</Divider>
 {storyTaskComponents.tasks.map((item, index) => {
   // console.log(dropdownValues);
-  if(item.test(story, dropdownValues))
+  if(item.test(story, dropdownValues) || ('sticky' in item && item.sticky))
   {
-     return (<div style={{textAlign: "left"}}
+    if('sticky' in item)
+      item.sticky = true;
+    return (<div style={{textAlign: "left"}}
      key={index}><Space
      key={index}>
     <CheckCircleTwoTone twoToneColor="#52c41a"/>
     <div>{item.text}</div>
     </Space></div>
-    )
+    );
   }
   else
   {
@@ -87,7 +89,7 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
       <CloseCircleTwoTone twoToneColor="#ff4500" />
       <div>{item.text}</div>
       </Space></div>
-      )
+      );
   }})}
 </div>
 </div>;

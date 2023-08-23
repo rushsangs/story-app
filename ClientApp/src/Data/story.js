@@ -91,8 +91,8 @@ export const task3 = [
                     return true;
         return false;
     })},
-    {key: 2, text: "Teddy heats up the soup without using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0)},
-    {key: 3, text: "Teddy eats the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
+    {key: 2, text: "Generate a story where Teddy heats up the soup over the stove.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0), sticky: false},
+    {key: 3, text: "Generate a story where Teddy heats up the soup using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats up the Soup in the microwave.")).length > 0), sticky: false}
   ];
 
   export const task5 = [
@@ -200,7 +200,7 @@ export const taskData = [
     },
     {
         taskNumber: 4,
-        taskInfo: "Teddy's beliefs can be manipulated so he takes different plans. Try changing Teddy's belief that the microwave is not plugged in, to create a different story.",
+        taskInfo: "Teddy's beliefs can be manipulated so he takes different plans. Try changing Teddy's belief that the microwave is not plugged in, to create different stories. You can click on Generate Story again see other stories resulting from the same beginning and ending!",
         tasks: task4
     },
     {
