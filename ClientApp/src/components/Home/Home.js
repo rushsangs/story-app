@@ -83,6 +83,7 @@ const Home = () => {
     // mocking data
     // const rows = mockInitialDropdowns;
     
+    console.log("Task changed!");
     // // api request
     let rows = await getInitialDropdownData(task_num);
     

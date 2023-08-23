@@ -47,7 +47,7 @@ const onGenerateStoryClick = async() => {
     setLoading(false);
     return;
   } 
-  const storyData = await getStoryData(requestData, setErrorMessage, setErrorMessageVisible);
+  const storyData = await getStoryData(requestData, setErrorMessage, setErrorMessageVisible, setLoading);
   
   // const storyData = ["hello", "test", "list", "of", "strings"];
   if (storyData.length === 0) 

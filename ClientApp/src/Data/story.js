@@ -2,7 +2,7 @@ export const task1 = [
     {key: 0, text: "Teddy starts in Teddy's Room.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y){
-                console.log(y[k]);
+                // console.log(y[k]);
                 if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('Teddy is in the ') && y[k].values.includes("TeddysRoom"))
                     return true;
             }
@@ -11,7 +11,7 @@ export const task1 = [
     {key: 1, text: "Soup is not heated up initially.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y){
-                console.log(y[k]);
+                // console.log(y[k]);
                 if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("False"))
                     return true;
             }
@@ -25,7 +25,7 @@ export const task2 = [
     {key: 0, text: "Poppy starts in Poppy's Room.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y){
-                console.log(y[k]);
+                // console.log(y[k]);
                 if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('Poppy is in the ') && y[k].values.includes("PoppysRoom"))
                     return true;
             }
@@ -35,7 +35,7 @@ export const task2 = [
     {key: 1, text: "Bread is not heated up initially.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y){
-                console.log(y[k]);
+                // console.log(y[k]);
                 if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Bread') && y[k].values.includes("False"))
                     return true;
             }

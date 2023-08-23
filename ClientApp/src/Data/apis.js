@@ -27,7 +27,7 @@ export const getInitialDropdownData = async(task_num) => {
     return data;
 }
 
-export const getStoryData = async(requestData, setErrorMessage, setErrorMessageVisible) => {
+export const getStoryData = async(requestData, setErrorMessage, setErrorMessageVisible, setLoading) => {
     //Currently only full paths are working (with external path)
     try{
         const response = await fetch('https://localhost:7273/storygenerator',{
@@ -41,6 +41,7 @@ export const getStoryData = async(requestData, setErrorMessage, setErrorMessageV
             console.log("error!");
             setErrorMessage("Error interpreting data. Check your selections and send complete data.");
             setErrorMessageVisible(true);
+            setLoading(false);
         }
         else
             setErrorMessage("");
