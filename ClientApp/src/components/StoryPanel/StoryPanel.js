@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Card, Space, Button, Divider, Alert } from "antd";
+import { Card, Space, Button, Divider, Alert, Spin } from "antd";
 import { List, Typography } from "antd";
 import { CaretRightOutlined,CheckCircleTwoTone, CloseCircleTwoTone} from "@ant-design/icons";
 import { getStoryData, getMockStoryData, logToFile } from "../../Data/apis";
@@ -12,9 +12,10 @@ const {ErrorBoundary} = Alert;
 
 const GlobalSingletonInstance = new GlobalSingletonObject();
 
-const StoryPanel = ({dropdownComponents, getDropdownComponents, storyTaskComponents, dropdownValues, story, setStory}) => {
+const StoryPanel = ({dropdownComponents, getDropdownComponents, storyTaskComponents, dropdownValues, story, setStory, firstGenerated, setFirstGenerated}) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   // const [tasks, setTasks] = useState(task1);
 
 const checkIfGoalSpecified = (dropdownValues,setErrorMessage, setErrorMessageVisible) =>
@@ -35,18 +36,25 @@ const checkIfGoalSpecified = (dropdownValues,setErrorMessage, setErrorMessageVis
 }
 
 const onGenerateStoryClick = async() => {
+  setStory([]);
+  setLoading(true);
   GlobalSingletonInstance.set("showRegenerateMsg", false);
   // const allDropdownData = ExtractDataFromDropdowns(dropdownComponents);
   let requestData=  getDropdownComponents();
   logToFile("Story Generation Request from front end");
   if(checkIfGoalSpecified(dropdownValues, setErrorMessage, setErrorMessageVisible))
+  {
+    setLoading(false);
     return;
+  } 
   const storyData = await getStoryData(requestData, setErrorMessage, setErrorMessageVisible);
   
   // const storyData = ["hello", "test", "list", "of", "strings"];
   if (storyData.length === 0) 
     storyData.push("No plan found.")
   setStory(storyData);
+  setFirstGenerated(true);
+  setLoading(false);
 };
 
 const errorHTML = <Alert
@@ -92,9 +100,10 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
       <Title level={3}>Generate story</Title>
 
       <Button type="primary" block onClick={() => onGenerateStoryClick()}>
-        Generate
+        {(firstGenerated)?"Generate Another Story":"Generate"}
         <CaretRightOutlined />
-      </Button>     
+      </Button>
+      <Spin spinning={loading}>
       {GlobalSingletonInstance.get("showRegenerateMsg") && (
         <div className={styles.regenerateMsg}>
           You have updated the settings! Press Regenerate to see new story.{" "}
@@ -116,6 +125,8 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
           }}
         />
       </div>
+      </Spin>     
+      
     </div>
   );
 };

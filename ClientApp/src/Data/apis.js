@@ -1,4 +1,3 @@
-import storyData from './story'
 import constraintsData from './constraints'
 
 
@@ -66,9 +65,9 @@ export const getNextDropdownData = async(requestData) => {
     return data;
 }
 
-export const getMockStoryData = async() => {
-    return storyData
-}
+// export const getMockStoryData = async() => {
+//     return storyData
+// }
 
 export const getConstraintsData = () => {
     return constraintsData

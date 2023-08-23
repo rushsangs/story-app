@@ -1,22 +1,3 @@
-export default [
-    "Dolores picks up a gun",
-    "Dolores picks up a bullet",
-    "Dolores loads bullet in gun",
-    "Dolores shoots at door",
-    "Dolores escapes the jail",
-    "Dolores picks up a bullet",
-    "Dolores loads bullet in gun",
-    "Dolores shoots at door",
-    "Dolores escapes the jail",
-    "Dolores picks up a bullet",
-    "Dolores loads bullet in gun",
-    "Dolores shoots at door",
-    "Dolores escapes the jail",
-    "Dolores loads bullet in gun",
-    "Dolores shoots at door",
-    "Dolores escapes the jail"
-]
-
 export const task1 = [
     {key: 0, text: "Teddy starts in Teddy's Room.", status: 0, test:((x,y)=> {
         if(y!== undefined)
@@ -141,7 +122,9 @@ export const task3 = [
 
   export const task7 = [
     {key: 0, text: "Teddy attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
-    {key: 1, text: "The soup has not been eaten in the end of the story.", status: 0, test:((x,y)=> x!== undefined && x.count > 0 && x.filter( step => step.includes("Teddy eats the Soup")).length === 0)}
+    {key: 1, text: "The soup has not been eaten in the end of the story.", status: 0, test:((x,y)=> {
+        return x!==undefined && x.length > 0 && x.filter(step => step.includes("Teddy eats the Soup")).length===0;
+    })}
   ];
 
   export const task8 = [

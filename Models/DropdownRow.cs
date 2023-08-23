@@ -170,31 +170,35 @@ public class DropdownRowSupport
 
     private static void AddDropdownsToBeliefs(WorldState worldstate, List<DropdownRow> rows)
     {
-        foreach(Character c in worldstate.characters)
+        // if the dropdowns have any options for the character beliefs add them here
+        foreach(DropdownRow row in rows.Where((r)=> !r.Group.Equals("world")))
         {
-            // if the dropdowns have any options for the character beliefs add them here
-            foreach(DropdownRow row in rows.FindAll((r)=> r.Group.Equals(c.name)))
+            Character? c = worldstate.characters.Where((c)=>c.name.Equals(row.Group)).FirstOrDefault();
+            if(c==null)
             {
-                string lit = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Main_Dropdown).First().value;
-                string arg = JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments).First().Select((a)=> a.value).First();
-                if(arg.Equals("bPlus") || arg.Equals("True"))
-                {
-                    c.bPlus.TryAdd(lit, 1);
-                    c.bMinus.Remove(lit);
-                    c.unsure.Remove(lit);
-                }
-                if(arg.Equals("bMinus") || arg.Equals("False"))
-                {
-                    c.bMinus.TryAdd(lit, 1);
-                    c.bPlus.Remove(lit);
-                    c.unsure.Remove(lit);
-                }
-                if(arg.Equals("unknown"))
-                {
-                    c.unsure.TryAdd(lit, 1);
-                    c.bMinus.Remove(lit);
-                    c.bPlus.Remove(lit);
-                }
+                c = new Character();
+                c.name = row.Group;
+                worldstate.characters.Add(c);
+            }
+            string lit = JsonConvert.DeserializeObject<List<DropdownItemResponse>>(row.Main_Dropdown).First().value;
+            string arg = JsonConvert.DeserializeObject<List<List<DropdownItemResponse>>>(row.Arguments).First().Select((a)=> a.value).First();
+            if(arg.Equals("bPlus") || arg.Equals("True"))
+            {
+                c.bPlus.TryAdd(lit, 1);
+                c.bMinus.Remove(lit);
+                c.unsure.Remove(lit);
+            }
+            if(arg.Equals("bMinus") || arg.Equals("False"))
+            {
+                c.bMinus.TryAdd(lit, 1);
+                c.bPlus.Remove(lit);
+                c.unsure.Remove(lit);
+            }
+            if(arg.Equals("unknown"))
+            {
+                c.unsure.TryAdd(lit, 1);
+                c.bMinus.Remove(lit);
+                c.bPlus.Remove(lit);
             }
         }
     }

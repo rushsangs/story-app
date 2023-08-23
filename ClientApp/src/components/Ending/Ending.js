@@ -9,7 +9,6 @@ const { Title } = Typography;
 
 const Ending =({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange, taskNumber}) => {
   const rowData = useRef({});
-  // Users should be unable to add rows to ending tab
 
   const handleAddDropdown = async(group) => {
     let requestDdItem = {
@@ -35,7 +34,7 @@ const Ending =({componentId, dropdownComponents, onDropdownChangeCallback, onCom
           key ={componentId}
           id={componentId}  
           removable={true}
-          enableSettings={true}
+          enableSettings={false}
           input_row_key={componentId}
           page={dropdownRow.Page}
           group= {dropdownRow.Group}
