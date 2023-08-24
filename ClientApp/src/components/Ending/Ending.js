@@ -107,15 +107,11 @@ const Ending =({componentId, dropdownComponents, onDropdownChangeCallback, onCom
   let teddysbeliefdropdowns = dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Teddy").map((obj) => obj.component);
   let poppysbeliefdropdowns = dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Poppy").map((obj) => obj.component);
   
-  let teddysBeliefs = <div>
-    <Title level={3}>Teddy's Beliefs</Title>
-        {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="Teddy").map((obj) => obj.component)}
-  </div>;
+  let teddysBeliefsTitle = <Title level={3}>Teddy's Beliefs</Title>;
+  let teddysBeliefs = dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="Teddy").map((obj) => obj.component);
 
-  let poppysBeliefs = <div>
-    <Title level={3}>Poppy's Beliefs</Title>
-        {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="Poppy").map((obj) => obj.component)}
-  </div>;
+  let poppysBeliefsTitle = <Title level={3}>Poppy's Beliefs</Title>;
+  let poppysBeliefs = dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="Poppy").map((obj) => obj.component);
   return (
     <>
       <Space direction="vertical" style={{ padding: "0 15px" }}>
@@ -126,7 +122,9 @@ const Ending =({componentId, dropdownComponents, onDropdownChangeCallback, onCom
         </Space>
         <Title level={3}>World</Title>
         {dropdownComponents.filter((obj) => obj.page==="ending" && obj.group==="world").map((obj) => obj.component)}
+        {(teddysbeliefdropdowns.length>0)?teddysBeliefsTitle:''}
         {(teddysbeliefdropdowns.length>0)?teddysBeliefs:''}
+        {(poppysbeliefdropdowns.length>0)?poppysBeliefsTitle:''}
         {(poppysbeliefdropdowns.length>0)?poppysBeliefs:''}
       </Space>
     </>
