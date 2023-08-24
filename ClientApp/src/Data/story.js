@@ -201,56 +201,67 @@ export const taskData = [
     {
         taskNumber: 1,
         taskInfo: "Stories have a beginning and ending. Find a story where Teddy starts in TeddysRoom, goes to the Kitchen, heats up the soup, and eats the soup.",
+        taskTips: [],
         tasks: task1
     },
     {
         taskNumber: 2,
         taskInfo: "Different characters have different desires. While Teddy will always have soup, Poppy will always have bread. Bread needs to be cooked using the Toaster. Find a story where Poppy starts in PoppysRoom, goes to the Kitchem, cooks the Bread and then eats it.",
+        taskTips: [],
         tasks: task2
     },
     {
         taskNumber: 3,
         taskInfo: "Now back to Teddy. The world can be manipulated to have characters take different plans. Try changing only the world so Teddy does not use the Microwave to heat up the soup.",
+        taskTips: [],
         tasks: task3
     },
     {
         taskNumber: 4,
-        taskInfo: "Teddy's beliefs can be manipulated so he takes different plans. Try changing Teddy's belief that the microwave is not plugged in, to create different stories. You can click on Generate Story again see other stories resulting from the same beginning and ending!",
+        taskInfo: "Teddy's beliefs can be manipulated so he takes different plans. Try changing Teddy's belief that the microwave is not plugged in, to create different stories.",
+        taskTips: ["You can click on Generate Story again see other stories resulting from the same beginning and ending!"],
         tasks: task4
     },
     {
         taskNumber: 5,
         taskInfo: "Characters can sometimes fail when they attempt an action with incorrect beliefs. If Teddy believes the Microwave is plugged in but it isn't plugged in, he will fail. Try creating a story where he fails.",
+        taskTips: ["To fail an action, the character must have incorrect belief related to the action!"],
         tasks: task5
     },
     {
         taskNumber: 6,
-        taskInfo: "Upon failing, characters can choose an alternate plan, or repair the initial plan. Try creating a story where Teddy fails to use the Microwave initially, and explore different stories. Remember, you can click on Generate multiple times to find other stories.",
+        taskInfo: "Upon failing, characters can choose an alternate plan, or repair the initial plan. Try creating a story where Teddy fails to use the Microwave initially, and explore different stories. ",
+        taskTips: ["Remember, you can click on Generate multiple times to find other stories."],
         tasks: task6
     },
     {
         taskNumber: 7,
-        taskInfo: "By changing the goals, you can explore different endings of a story when a character fails. For example, create a story where Teddy ends up not eating the Soup. Remember, you can add beliefs as goals in the Ending tab.",
+        taskInfo: "By changing the goals, you can explore different endings of a story when a character fails. For example, create a story where Teddy ends up not eating the Soup.",
+        taskTips: ["You can also add beliefs as goals in the Ending tab."],
         tasks: task7
     },
     {
         taskNumber: 8,
         taskInfo: "Using action constraints in the Actions tab, you can directly specify what actions you'd like to see in the story. Try using action constraints to specifically guide Teddy to use the stovetop and the microwave to heat up the Soup.",
+        taskTips: ["Action constraints help you specify what actions you would like to see in the story."],
         tasks: task8
     },
     {
         taskNumber: 9,
         taskInfo: "You can also specify failed actions in action constraints. Create (any) story where Teddy fails to use the microwave by specifying the failed attempt to use the microwave.",
+        taskTips: ["Action constraints can also include a failed action attempt."],
         tasks: task9
     },
     {
         taskNumber: 10,
-        taskInfo: "In an action constraint, you can also specify how you want the character to behave when they fail an action. Characters can either perist with their initial plan, substitute it, or drop their goal entirely. Specify an intent constraint with an action constraint by clicking on the settings icon.",
+        taskInfo: "In an action constraint, you can also specify how you want the character to behave when they fail an action. Characters can either perist with their initial plan, substitute it, or drop their goal entirely.",
+        taskTips: ["Specify an intent constraint with an action constraint by clicking on the settings icon."],
         tasks: task10
     },
     {
         taskNumber: 11,
         taskInfo: "Use all you have learnt to create a story with both Poppy and Teddy achieving their goals, and Teddy failing to use the Microwave at some point. Teddy and Poppy cannot start with incorrect beliefs. Specifically, create a story where Teddy enters the Kitchen after Poppy disconnects the microwave and fails to use the microwave initially because he still believed the microwave was plugged in.",
+        taskTips: [],
         tasks: task11
     }
 ]

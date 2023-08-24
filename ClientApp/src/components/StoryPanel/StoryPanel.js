@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Card, Space, Button, Divider, Alert, Spin } from "antd";
 import { List, Typography } from "antd";
-import { CaretRightOutlined,CheckCircleTwoTone, CloseCircleTwoTone} from "@ant-design/icons";
+import { CaretRightOutlined,CheckCircleTwoTone, CloseCircleTwoTone, InfoCircleTwoTone} from "@ant-design/icons";
 import { getStoryData, getMockStoryData, logToFile } from "../../Data/apis";
 import styles from "./StoryPanel.module.css";
 import { GlobalSingletonObject } from "../../utils/dataContext";
@@ -51,7 +51,7 @@ const onGenerateStoryClick = async() => {
   
   // const storyData = ["hello", "test", "list", "of", "strings"];
   if (storyData.length === 0) 
-    storyData.push("No plan found.")
+    storyData.push("No story found.")
   setStory(storyData);
   setFirstGenerated(true);
   setLoading(false);
@@ -67,7 +67,17 @@ afterClose={()=>setErrorMessageVisible(false)}
 
 const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Title><div>
   <div style={{textAlign: "left"}}>{storyTaskComponents.taskInfo}</div>
-  <Divider>Tasks</Divider>
+  {/* <Divider/> */}
+  <br/>
+  {storyTaskComponents.taskTips.map((item, index) => {
+    return (<div style={{textAlign: "left"}}
+    key={index}><Space
+    key={index}>
+   <InfoCircleTwoTone twoToneColor="#F6BE00"/>
+   <div>{item}</div>
+   </Space></div>);
+  })}
+  <Divider>Task Objectives</Divider>
 {storyTaskComponents.tasks.map((item, index) => {
   // console.log(dropdownValues);
   if(item.test(story, dropdownValues) || ('sticky' in item && item.sticky))
