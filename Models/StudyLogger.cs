@@ -1,6 +1,11 @@
 using story_app.Models;
 public class LogMessage {
     public string message {get; set;}
+
+    public LogMessage()
+    {
+        message = "";
+    }
 }
 public class StudyLogger
 {
@@ -29,7 +34,7 @@ public class StudyLogger
             using (StreamWriter writer = File.AppendText(filePath))
             {
                 // Append the text to the file
-                writer.WriteLine(text);
+                writer.WriteLine( DateTime.Now.ToString("HH:mm:ss: ") + text);
             }
         }
         catch (Exception ex)

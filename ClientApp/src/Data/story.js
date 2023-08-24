@@ -116,8 +116,8 @@ export const task3 = [
 
   export const task6 = [
     {key: 0, text: "Teddy attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
-    {key: 2, text: "Teddy heats up the soup using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats up the Soup in the microwave.")).length > 0)},
-    {key: 3, text: "Teddy eats the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
+    {key: 2, text: "Generate a story where Teddy heats up the soup over the stove.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0), sticky: false},
+    {key: 3, text: "Generate a story where Teddy heats up the soup using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats up the Soup in the microwave.")).length > 0), sticky: false}
   ];
 
   export const task7 = [
@@ -210,12 +210,12 @@ export const taskData = [
     },
     {
         taskNumber: 6,
-        taskInfo: "Upon failing, characters can choose an alternate plan, or repair the initial plan. Try creating a story where Teddy fails to use the Microwave initially, but then sticks to using the Microwave to heat up the Soup.",
+        taskInfo: "Upon failing, characters can choose an alternate plan, or repair the initial plan. Try creating a story where Teddy fails to use the Microwave initially, and explore different stories. Remember, you can click on Generate multiple times to find other stories.",
         tasks: task6
     },
     {
         taskNumber: 7,
-        taskInfo: "By changing the goals, you can explore different endings of a story when a character fails. For example, create a story where Teddy ends up not eating the Soup.",
+        taskInfo: "By changing the goals, you can explore different endings of a story when a character fails. For example, create a story where Teddy ends up not eating the Soup. Remember, you can add beliefs as goals in the Ending tab.",
         tasks: task7
     },
     {
