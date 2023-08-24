@@ -19,7 +19,7 @@ const Home = () => {
   const [dropdownComponents, setDropdownComponents] = useState([]);
   const [componentId, setComponentId] = useState(0);
   const [dropdownValues, setDropdownValues] = useState({});
-  const [storyTaskComponents, setStoryTaskComponents] = useState({tasks: [], taskNumber: 0, taskInfo: ''});
+  const [storyTaskComponents, setStoryTaskComponents] = useState({tasks: [], taskNumber: 0, taskInfo: '', taskTips: []});
   const [taskNumber, setTaskNumber] = useState(0);
   const [groupNumber, setGroupNumber] = useState(1);
   const [story, setStory] = useState();
