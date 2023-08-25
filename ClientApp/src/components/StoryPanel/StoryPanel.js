@@ -66,9 +66,9 @@ afterClose={()=>setErrorMessageVisible(false)}
 />;
 
 const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Title><div>
-  <div style={{textAlign: "left"}}>{storyTaskComponents.taskInfo}</div>
+  <div style={{textAlign: "left"}} dangerouslySetInnerHTML={{ __html: storyTaskComponents.taskInfo}}/>
   {/* <Divider/> */}
-  <br/>
+  {storyTaskComponents.taskTips.length>0?<br/>:''}
   {storyTaskComponents.taskTips.map((item, index) => {
     return (<div style={{textAlign: "left"}}
     key={index}><Space
@@ -88,7 +88,7 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
      key={index}><Space
      key={index}>
     <CheckCircleTwoTone twoToneColor="#52c41a"/>
-    <div>{item.text}</div>
+    <div dangerouslySetInnerHTML={{ __html: item.text }} />
     </Space></div>
     );
   }

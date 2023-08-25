@@ -168,7 +168,7 @@ const Home = () => {
         <TabsPanel componentId = {componentId} onDropdownChangeCallback={handleDropdownChangeCallback} dropdownComponents = {dropdownComponents} onComponentChange={(x) => setComponentId(x)} onDropdownChange={(x) => setDropdownComponents(x)} taskNumber={taskNumber} groupNumber={groupNumber}/>
           
       </Content>
-      <Sider theme={"light"} width="25%">
+      <Sider theme={"light"} width="28%">
         <StoryPanel dropdownComponents = {dropdownComponents} getDropdownComponents={handleGenerateButtonClick} storyTaskComponents={storyTaskComponents} dropdownValues={dropdownValues} story={story} setStory={setStory} firstGenerated={firstGenerated} setFirstGenerated={setFirstGenerated}/>
       </Sider>
 
