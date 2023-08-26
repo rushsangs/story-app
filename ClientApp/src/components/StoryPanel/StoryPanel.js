@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Card, Space, Button, Divider, Alert, Spin } from "antd";
 import { List, Typography } from "antd";
-import { CaretRightOutlined,CheckCircleTwoTone, CloseCircleTwoTone, InfoCircleTwoTone} from "@ant-design/icons";
+import { CaretRightOutlined,CheckCircleTwoTone, CloseCircleTwoTone, InfoCircleTwoTone, MinusCircleTwoTone} from "@ant-design/icons";
 import { getStoryData, getMockStoryData, logToFile } from "../../Data/apis";
 import styles from "./StoryPanel.module.css";
 import { GlobalSingletonObject } from "../../utils/dataContext";
@@ -96,7 +96,7 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
   {
     return (<div style={{textAlign: "left"}} key={index}><Space
     key={index}>
-      <CloseCircleTwoTone twoToneColor="#ff4500" />
+      <MinusCircleTwoTone twoToneColor="#c4aead" />
       <div>{item.text}</div>
       </Space></div>
       );

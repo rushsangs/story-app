@@ -198,8 +198,8 @@ const Home = () => {
         <p>Teddy's only desire is to eat soup.</p>
         <p>Poppy's only desire is to eat Bread.</p>
         <Title level={3}>Locations</Title>
-        <p>Teddy's Room</p>
-        <p>Poppy's Room</p>
+        <p>Living Room</p>
+        
         <p>Kitchen</p>
         <Title level={3}>Actions</Title>
         <p>Connect</p>

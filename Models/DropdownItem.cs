@@ -198,9 +198,9 @@ public class StaticDropdownItems
         else if(dropdownItemRequest.Main_DropDown.Contains("The soup is in "))
             return StaticDropdownItems.getItems(new string[]{"a Pot", "a Bowl"});
         else if(dropdownItemRequest.Main_DropDown.Contains("Teddy is in the "))
-            return StaticDropdownItems.getItems(new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"});
+            return StaticDropdownItems.getItems(new string[]{"Kitchen", "LivingRoom"});
         else if(dropdownItemRequest.Main_DropDown.Contains("Poppy is in the "))
-            return StaticDropdownItems.getItems(new string[]{"Kitchen", "TeddysRoom", "PoppysRoom"});
+            return StaticDropdownItems.getItems(new string[]{"Kitchen", "LivingRoom"});
         else if(dropdownItemRequest.Main_DropDown.Contains("The Soup has been eaten by "))
             return StaticDropdownItems.getItems(new string[]{"Teddy", "nobody"});
         else if(dropdownItemRequest.Main_DropDown.Contains("The Bread has been eaten by "))

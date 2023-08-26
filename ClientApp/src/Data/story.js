@@ -1,9 +1,48 @@
+
+let task4NoChangesChecker = (x,y)=> {
+    //hard check for beginning and ending and action constraints
+    // y
+    let a=[...Array(8).keys()].map((x)=>false), b=true, c=true;
+    if(y!== undefined)
+        for (let k in y)
+        {
+            //beginning constraints
+            if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("False"))
+                a[0]=true;
+            if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('infridge Soup') && y[k].values.includes("True"))
+                a[1]=true;
+            if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('The outlet is powering ') && y[k].values.includes("the Microwave") )
+                a[2]=true;
+            if(y[k].page==='beginning'&&y[k].group==="Teddy"&& y[k].values.includes('The outlet is powering ') && y[k].values.includes("the Microwave") )
+                a[3]=true;
+            if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('The soup is in ') && y[k].values.includes("a Bowl") )
+                a[4] = true;
+            if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('The Soup has been eaten by ') && y[k].values.includes("nobody") )
+                a[5]=true;
+            if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('Teddy is in the ') && y[k].values.includes("Kitchen") )
+                a[6]=true;
+            // ending constraints
+            if(y[k].page==='ending'&&y[k].group==="world"&& y[k].values.includes('The Soup has been eaten by ') && y[k].values.includes("Teddy") )
+                a[7]=true;
+            // no other ending constraints
+            if(y[k].page==='ending'&&y[k].group==="world"&& !y[k].values.includes('The Soup has been eaten by '))
+                b=false;
+            // no middle constraints
+            if(y[k].page==='actions')
+                c= false;
+        }
+    console.log(a, b, c);
+    if(a.filter(x=>x===false).length>0)
+        return false;
+    return b && c;
+}
+
 export const task1 = [
-    {key: 0, text: "Teddy starts in Teddy's Room.", status: 0, test:((x,y)=> {
+    {key: 0, text: "Teddy starts in the Living Room.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y){
                 // console.log(y[k]);
-                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('Teddy is in the ') && y[k].values.includes("TeddysRoom"))
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('Teddy is in the ') && y[k].values.includes("LivingRoom"))
                     return true;
             }
         return false;
@@ -26,7 +65,7 @@ export const task2 = [
         if(y!== undefined)
             for (let k in y){
                 // console.log(y[k]);
-                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('Poppy is in the ') && y[k].values.includes("PoppysRoom"))
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('Poppy is in the ') && y[k].values.includes("LivingRoom"))
                     return true;
             }
         return false;
@@ -85,7 +124,7 @@ export const task2 = [
         }
         return false;
     })},
-
+    {key:6, text: "No other changes or constraints added.", status: 0, test: task4NoChangesChecker},
     {key: 0, text: "Teddy disconnects the Microwave.", status: 0, test:((x,y)=> x!==undefined && x.filter( step => step.includes("Teddy disconnects")).length > 0)},
     {key: 2, text: "Teddy heats up the soup without using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0)},
     {key: 3, text: "Teddy eats the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
@@ -211,13 +250,13 @@ export const task2 = [
 export const taskData = [
     {
         taskNumber: 1,
-        taskInfo: "Stories have a beginning and ending. Find a story where Teddy starts in TeddysRoom, goes to the Kitchen, heats up the soup, and eats the soup.",
+        taskInfo: "Stories have a beginning and ending. Find a story where Teddy starts in LivingRoom, goes to the Kitchen, heats up the soup, and eats the soup.",
         taskTips: [],
         tasks: task1
     },
     {
         taskNumber: 2,
-        taskInfo: "Different characters have different desires. While Teddy will always have soup, Poppy will always have bread. Bread needs to be cooked using the Toaster. Find a story where Poppy starts in PoppysRoom, goes to the Kitchem, cooks the Bread and then eats it.",
+        taskInfo: "Different characters have different desires. While Teddy will always have soup, Poppy will always have bread. Bread needs to be cooked using the Toaster. Find a story where Poppy starts in the LivingRoom, goes to the Kitchem, cooks the Bread and then eats it.",
         taskTips: [],
         tasks: task2
     },
