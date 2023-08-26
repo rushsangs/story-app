@@ -65,7 +65,7 @@ closable
 afterClose={()=>setErrorMessageVisible(false)}
 />;
 
-const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Title><div>
+const TaskHTML = <div><br/>
   <div style={{textAlign: "left"}} dangerouslySetInnerHTML={{ __html: storyTaskComponents.taskInfo}}/>
   {/* <Divider/> */}
   {storyTaskComponents.taskTips.length>0?<br/>:''}
@@ -101,7 +101,6 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
       </Space></div>
       );
   }})}
-</div>
 </div>;
   
   return (
@@ -118,7 +117,7 @@ const TaskHTML = <div><Title level={3}>Task {storyTaskComponents.taskNumber}</Ti
       <Spin spinning={loading}>
       {GlobalSingletonInstance.get("showRegenerateMsg") && (
         <div className={styles.regenerateMsg}>
-          You have updated the settings! Press Regenerate to see new story.{" "}
+          You have updated the settings! Click Generate to see new story.{" "}
         </div>
       )}
       <div
