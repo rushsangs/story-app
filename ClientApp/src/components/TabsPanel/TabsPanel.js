@@ -6,7 +6,7 @@ import Ending from "../Ending/Ending";
 
 const TabsPanel = ({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange, taskNumber, groupNumber}) => {
  
-  //Group 1 does not see an actions tab at all
+  // Group 1 does not see an actions tab at all
   const tabs = (groupNumber===1)?["Beginning", "Ending"]:["Beginning", "Actions", "Ending"];
   const onChange = (key) => {
     // console.log(key);
@@ -37,6 +37,8 @@ const TabsPanel = ({componentId, dropdownComponents, onDropdownChangeCallback, o
           return {
             label: tabs[i],
             key: id,
+            // Tasks 1 through 7 cannot access actions tab
+            disabled: (tabs[i]==='Actions'&&taskNumber<8)?true:false,
             children: <Component componentId={componentId} onDropdownChangeCallback={onDropdownChangeCallback} dropdownComponents={dropdownComponents} onComponentChange={(x) => onComponentChange(x)} onDropdownChange={(x) => onDropdownChange(x)} taskNumber={taskNumber} groupNumber={groupNumber}/>,
           };
         })}
