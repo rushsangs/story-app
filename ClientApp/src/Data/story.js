@@ -101,8 +101,8 @@ export const task2 = [
                     return true;
         return false;
     })},
-    {key: 2, text: "Generate a story where Teddy heats up the soup over the stove.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0), sticky: false},
-    {key: 3, text: "Generate a story where Teddy heats up the soup using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats up the Soup in the microwave.")).length > 0), sticky: false}
+    {key: 2, text: "Teddy heats up the soup without using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0)},
+    
   ];
 
   export const task4 = [
@@ -227,17 +227,22 @@ export const task2 = [
             }
         return a && b && c;
     })},
-    {key: 1, text: "Soup is not heated up initially.", status: 0, test:((x,y)=> {
+    {key: 1, text: "Both Soup and Bread are not heated up initially.", status: 0, test:((x,y)=> {
+        let a=false, b=false
         if(y!== undefined)
             for (let k in y)
+            {
                 if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("False"))
-                    return true;
-        return false;
+                    a= true;
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Bread') && y[k].values.includes("False"))
+                    b= true;
+            }
+        return a && b;
     })},
-    {key: 2, text: "Bread is not heated up initially.", status: 0, test:((x,y)=> {
+    {key: 2, text: "Teddy is <b>not</b> in the Kitchen in the beginning of the story.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y)
-                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Bread') && y[k].values.includes("False"))
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('Teddy is in the ') && y[k].values.includes("LivingRoom"))
                     return true;
         return false;
     })},
@@ -262,7 +267,7 @@ export const taskData = [
     },
     {
         taskNumber: 3,
-        taskInfo: "Teddy's beliefs can be manipulated so he takes different plans. Try changing Teddy's belief that the microwave is not plugged in, to create different stories.",
+        taskInfo: "Now back to Teddy. Teddy's beliefs can be manipulated so he takes different plans. Try changing Teddy's belief that the microwave is not plugged in, to create a different story.",
         taskTips: [],
         tasks: task3
     },

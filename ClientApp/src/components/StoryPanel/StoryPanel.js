@@ -97,7 +97,7 @@ const TaskHTML = <div><br/>
     return (<div style={{textAlign: "left"}} key={index}><Space
     key={index}>
       <MinusCircleTwoTone twoToneColor="#c4aead" />
-      <div>{item.text}</div>
+      <div dangerouslySetInnerHTML={{ __html: item.text }} />
       </Space></div>
       );
   }})}
@@ -108,10 +108,10 @@ const TaskHTML = <div><br/>
        {
           (storyTaskComponents.taskNumber!==0)?TaskHTML:<></>
        }
-      <Title level={3}>Generate story</Title>
-
+      {/* <Title level={5}>Generate story</Title> */}
+       <br/>
       <Button type="primary" block onClick={() => onGenerateStoryClick()}>
-        {(firstGenerated)?"Generate Another Story":"Generate"}
+        {(firstGenerated)?"Generate Another Story":"Generate Story"}
         <CaretRightOutlined />
       </Button>
       <Spin spinning={loading}>
