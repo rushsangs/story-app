@@ -56,12 +56,12 @@ export const task1 = [
             }
         return false;
     })},
-    {key: 2, text: "Teddy heats up the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats")).length > 0)},
-    {key: 3, text: "Teddy eats the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
+    {key: 2, text: "Teddy heats up the soup in the generated story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats")).length > 0)},
+    {key: 3, text: "Teddy eats the soup in the generated story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
   ];
 
 export const task2 = [
-    {key: 0, text: "Poppy starts in Poppy's Room.", status: 0, test:((x,y)=> {
+    {key: 0, text: "Poppy starts in the Living Room.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y){
                 // console.log(y[k]);
@@ -80,12 +80,12 @@ export const task2 = [
             }
         return false;
     })},
-    {key: 2, text: "Poppy heats up the Bread.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy uses")).length > 0)},
-    {key: 3, text: "Poppy eats the Bread.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy eats the Bread")).length > 0)},
+    {key: 2, text: "Poppy heats up the Bread in the generated story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy uses")).length > 0)},
+    {key: 3, text: "Poppy eats the Bread in the generated story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy eats the Bread")).length > 0)},
 ]
 
   export const task3 = [
-    {key: 0, text: "The power outlet is powering the Microwave.", status: 0, test:((x,y)=> {
+    {key: 0, text: "In the beginning, the power outlet is powering the Microwave.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y){
                 // console.log(y[k]);
@@ -94,14 +94,14 @@ export const task2 = [
             }
         return false;
     })},
-    {key: 1, text: "Teddy believes the Microwave is not powered.", status: 0, test:((x,y)=> {
+    {key: 1, text: "In the beginning, Teddy believes the Toaster is powered.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y)
                 if(y[k].page==='beginning'&&y[k].group==="Teddy"&& y[k].values.includes('The outlet is powering ') && !y[k].values.includes("the Microwave"))
                     return true;
         return false;
     })},
-    {key: 2, text: "Teddy heats up the soup without using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0)},
+    {key: 2, text: "Teddy heats up the soup without using the microwave in the generated story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0)},
     
   ];
 
@@ -124,40 +124,40 @@ export const task2 = [
         }
         return false;
     })},
-    {key:6, text: "No other changes or constraints added.", status: 0, test: task4NoChangesChecker},
-    {key: 0, text: "Teddy disconnects the Microwave.", status: 0, test:((x,y)=> x!==undefined && x.filter( step => step.includes("Teddy disconnects")).length > 0)},
-    {key: 2, text: "Teddy heats up the soup without using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0)},
-    {key: 3, text: "Teddy eats the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
+    {key:6, text: "No other changes made in the Beginning/Ending tabs.", status: 0, test: task4NoChangesChecker},
+    {key: 0, text: "Teddy disconnects the Microwave in the story.", status: 0, test:((x,y)=> x!==undefined && x.filter( step => step.includes("Teddy disconnects")).length > 0)},
+    {key: 2, text: "Teddy heats up the soup without using the microwave in the story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0)},
+    {key: 3, text: "Teddy eats the soup in the story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
   ];
 
   export const task5 = [
-    {key: 0, text: "The outlet is not powering the Microwave.", status: 0, test:((x,y)=> {
+    {key: 0, text: "In the beginning, the outlet is not powering the Microwave.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y)
                 if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('The outlet is powering ') && !y[k].values.includes("the Microwave"))
                     return true;
         return false;
     })},
-    {key: 1, text: "Teddy believes the Microwave is plugged in.", status: 0, test:((x,y)=> {
+    {key: 1, text: "In the beginning, Teddy believes the Microwave is plugged in.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y)
                 if(y[k].page==='beginning'&&y[k].group==="Teddy"&& y[k].values.includes('The outlet is powering ') && y[k].values.includes("the Microwave"))
                     return true;
         return false;
     })},
-    {key: 2, text: "Teddy (initially) attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
-    {key: 3, text: "Teddy eventually heats up the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats")).length > 0)},
-    {key: 4, text: "Teddy still eats the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
+    {key: 2, text: "In the story, Teddy (initially) attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
+    {key: 3, text: "Teddy eventually heats up the soup in the story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats")).length > 0)},
+    {key: 4, text: "Teddy still eats the soup in the story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
   ];
 
   export const task6 = [
-    {key: 0, text: "Teddy (initially) attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
+    {key: 0, text: "In the story, Teddy (initially) attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
     {key: 2, text: "Generate a story where Teddy heats up the soup over the stove.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0), sticky: false},
     {key: 3, text: "Generate a story where Teddy heats up the soup using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats up the Soup in the microwave.")).length > 0), sticky: false}
   ];
 
   export const task7 = [
-    {key: 0, text: "Teddy attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
+    {key: 0, text: "In the story, Teddy attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
     {key: 1, text: "The soup has not been eaten in the end of the story.", status: 0, test:((x,y)=> {
         return x!==undefined && x.length > 0 && x.filter(step => step.includes("Teddy eats the Soup")).length===0;
     })}
@@ -180,12 +180,12 @@ export const task2 = [
                     return true;
         return false;
     })},
-    {key: 3, text: "Teddy eats the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
+    {key: 3, text: "Teddy eats the soup in the story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
     
   ];
 
   export const task9 = [
-    {key: 0, text: "Teddy attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
+    {key: 0, text: "In the story, Teddy attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
     {key: 1, text: "An action constraint specifies that Teddy attempts and fails to use the Microwave.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y)
@@ -246,9 +246,9 @@ export const task2 = [
                     return true;
         return false;
     })},
-    {key: 3, text: "Poppy eats the Bread.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy eats the Bread")).length > 0)},
-    {key: 4, text: "Teddy (initially) attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
-    {key: 5, text: "Teddy finally eats the soup.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
+    {key: 3, text: "Poppy eats the Bread in the story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy eats the Bread")).length > 0)},
+    {key: 4, text: "In the story, Teddy (initially) attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
+    {key: 5, text: "Teddy finally eats the soup in the story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
   ];
 
 
@@ -267,14 +267,14 @@ export const taskData = [
     },
     {
         taskNumber: 3,
-        taskInfo: "Now back to Teddy. Teddy's beliefs can be manipulated so he takes different plans. Try changing Teddy's belief that the microwave is not plugged in, to create a different story.",
+        taskInfo: "Now back to Teddy. Teddy's beliefs can be manipulated so he takes different plans. Try changing Teddy's belief about the power outlet to create a different story.",
         taskTips: [],
         tasks: task3
     },
     {
         taskNumber: 4,
-        taskInfo: "<b> For this task, do not change any constraints except the ones specified.</b> Try finding different stories until you find one where Teddy disconnects the Microwave and uses the stove to heat the soup.",
-        taskTips: ["You can always ask the system to generate other stories with the same beginning and ending."],
+        taskInfo: "<b> For this task, do not change details in the Beginning/Ending tabs except the ones specified.</b>  Keep generating different stories until you find one where Teddy disconnects the Microwave and uses the stove to heat the soup.",
+        taskTips: ["You can click the Generate Story button again to generate other stories with the same beginning and ending."],
         tasks: task4
     },
     {
@@ -297,7 +297,7 @@ export const taskData = [
     },
     {
         taskNumber: 8,
-        taskInfo: "Using action constraints in the Actions tab, you can directly specify what actions you'd like to see in the story. Try using action constraints to specifically guide Teddy to use the stovetop and the microwave to heat up the Soup.",
+        taskInfo: "Using action constraints in the Actions tab, you can directly specify what actions you'd like to see in the story. Try using action constraints to specifically guide Teddy to use the stovetop to heat up the Soup.",
         taskTips: ["Action constraints help you specify what actions you would like to see in the story."],
         tasks: task8
     },

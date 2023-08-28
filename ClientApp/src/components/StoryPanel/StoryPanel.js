@@ -110,7 +110,7 @@ const TaskHTML = <div><br/>
        }
       {/* <Title level={5}>Generate story</Title> */}
        <br/>
-      <Button type="primary" block onClick={() => onGenerateStoryClick()}>
+      <Button type="primary" block onClick={() => onGenerateStoryClick()} loading={loading}>
         {(firstGenerated)?"Generate Another Story":"Generate Story"}
         <CaretRightOutlined />
       </Button>

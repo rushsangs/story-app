@@ -75,12 +75,12 @@ const Actions = ({componentId, dropdownComponents, onDropdownChangeCallback, onC
   };
 
   return (
-    <>
+    <div style={{width: "99.5%", overflow: "scroll", paddingBottom: "50px"}}>
       <Space direction="vertical" style={{ padding: "0 15px" }}>
         <Button onClick={handleAddDropdown}>Add Action Constraint</Button>
         {dropdownComponents.filter((obj) => obj.page==="actions").map((obj) => obj.component)}
       </Space>
-    </>
+    </div>
   );
 };
 export default Actions;
