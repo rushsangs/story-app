@@ -56,8 +56,8 @@ export const task1 = [
             }
         return false;
     })},
-    {key: 2, text: "Teddy heats up the soup in the generated story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats")).length > 0)},
-    {key: 3, text: "Teddy eats the soup in the generated story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
+    {key: 2, text: "Teddy heats up the soup in the created story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats")).length > 0)},
+    {key: 3, text: "Teddy eats the soup in the created story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy eats the Soup")).length > 0)},
   ];
 
 export const task2 = [
@@ -80,8 +80,8 @@ export const task2 = [
             }
         return false;
     })},
-    {key: 2, text: "Poppy heats up the Bread in the generated story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy uses")).length > 0)},
-    {key: 3, text: "Poppy eats the Bread in the generated story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy eats the Bread")).length > 0)},
+    {key: 2, text: "Poppy heats up the Bread in the created story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy uses")).length > 0)},
+    {key: 3, text: "Poppy eats the Bread in the created story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Poppy eats the Bread")).length > 0)},
 ]
 
   export const task3 = [
@@ -101,7 +101,7 @@ export const task2 = [
                     return true;
         return false;
     })},
-    {key: 2, text: "Teddy heats up the soup without using the microwave in the generated story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0)},
+    {key: 2, text: "Teddy heats up the soup without using the microwave in the created story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0)},
     
   ];
 
@@ -152,8 +152,8 @@ export const task2 = [
 
   export const task6 = [
     {key: 0, text: "In the story, Teddy (initially) attempts and fails to heat the Soup using the Microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy tries to start the microwave to heat up ")).length > 0)},
-    {key: 2, text: "Generate a story where Teddy heats up the soup over the stove.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0), sticky: false},
-    {key: 3, text: "Generate a story where Teddy heats up the soup using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats up the Soup in the microwave.")).length > 0), sticky: false}
+    {key: 2, text: "Create a story where Teddy heats up the soup over the stove.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0), sticky: false},
+    {key: 3, text: "Create a story where Teddy heats up the soup using the microwave.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats up the Soup in the microwave.")).length > 0), sticky: false}
   ];
 
   export const task7 = [
@@ -274,7 +274,7 @@ export const taskData = [
     {
         taskNumber: 4,
         taskInfo: "<b> For this task, do not change details in the Beginning/Ending tabs except the ones specified.</b>  Keep generating different stories until you find one where Teddy disconnects the Microwave and uses the stove to heat the soup.",
-        taskTips: ["You can click the Generate Story button again to generate other stories with the same beginning and ending."],
+        taskTips: ["You can click the Create Story button again to create other stories with the same beginning and ending."],
         tasks: task4
     },
     {
@@ -286,7 +286,7 @@ export const taskData = [
     {
         taskNumber: 6,
         taskInfo: "Upon failing, characters can choose an alternate plan, or repair the initial plan. Try creating a story where Teddy fails to use the Microwave initially, and explore different stories. ",
-        taskTips: ["Remember, you can click on Generate multiple times to find other stories."],
+        taskTips: ["Remember, you can click on Create Story multiple times to find other stories."],
         tasks: task6
     },
     {
