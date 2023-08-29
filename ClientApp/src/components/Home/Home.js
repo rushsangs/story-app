@@ -83,20 +83,25 @@ const Home = () => {
     // mocking data
     // const rows = mockInitialDropdowns;
     
+    //clear all previous dropdowns
+    setDropdownComponents(prevState=>[]);
+    setComponentId(0);
+    setDropdownValues(prevState=>{});
+    setStoryTaskComponents(taskData[task_num-1]);
+    setTaskNumber(task_num);
+    setStory();
+    setFirstGenerated(false);
     console.log("Task changed!");
+    
     // // api request
     let rows = await getInitialDropdownData(task_num);
     
+    // console.log(rows);
     
-    //clear all previous dropdowns
-    await setDropdownComponents([]);
-    await setComponentId(0);
-    await setDropdownValues({});
-    await setStoryTaskComponents(taskData[task_num-1]);
-    await setTaskNumber(task_num);
-    await setStory();
-    await setFirstGenerated(false);
     
+    
+    
+    console.log("printing dropdown components, hopefully empty", dropdownComponents);
     for(let i=0; i < rows.length; ++i)
     {
       const newComponent = {
@@ -146,6 +151,7 @@ const Home = () => {
         [i]: [JSON.parse(rows[i].main_Dropdown)[0].value, JSON.parse(rows[i].arguments)[0][0].value ],
       };
     }
+    console.log("printing dropdown components, new values", dropdownComponents);
     // GlobalSingletonInstance.set("showRegenerateMsg", false);
     // const storyData = await getStoryData();
     // setStory(storyData);
