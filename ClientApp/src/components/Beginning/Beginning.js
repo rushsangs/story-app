@@ -28,8 +28,8 @@ const Beginning = ({componentId, dropdownComponents, onDropdownChangeCallback, o
       <Space direction="vertical" style={{ padding: "0 15px" }}>
         <Title level={3}>World</Title>
         {dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="world").map((obj) => obj.component)}
-        {(teddysbeliefdropdowns.length>0)?teddysbeliefs:''}
-        {(poppysbeliefdropdowns.length>0)?poppysbeliefs:''}
+        {(teddysbeliefdropdowns.length>0 && taskNumber>=5)?teddysbeliefs:''}
+        {(poppysbeliefdropdowns.length>0  && taskNumber>=5)?poppysbeliefs:''}
       </Space>
     </>
   );

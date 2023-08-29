@@ -271,7 +271,7 @@ export const taskData = [
     },
     {
         taskNumber: 5,
-        taskInfo: "Characters can sometimes fail when they attempt an action with incorrect beliefs. If Teddy believes the Microwave is plugged in but it isn't plugged in, he will fail. Try creating a story where he fails.",
+        taskInfo: "In this story world, characters can have beliefs about what is powered by the power outlet, which can be different from what is actually being powered. Characters can fail when they attempt an action with incorrect beliefs. If Teddy believes the Microwave is plugged in but it isn't plugged in, he will fail. Try creating a story where he fails.",
         taskTips: ["To fail an action, the character must have incorrect belief related to the action!"],
         tasks: task5
     },
