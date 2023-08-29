@@ -285,8 +285,8 @@ export const taskData = [
     },
     {
         taskNumber: 6,
-        taskInfo: "Upon failing, characters can choose an alternate plan, or repair the initial plan. Try creating a story where Teddy fails to use the Microwave initially, and explore different stories. ",
-        taskTips: ["Remember, you can click on Create Story multiple times to find other stories."],
+        taskInfo: "Upon failing, characters can choose an alternate plan, or repair the initial plan. Try creating multiple stories where Teddy fails to use the Microwave initially to explore different outcomes. ",
+        taskTips: ["Remember, you can click on Create Story multiple times to find more stories."],
         tasks: task6
     },
     {

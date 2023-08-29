@@ -27,7 +27,7 @@ const checkIfGoalSpecified = (dropdownValues,setErrorMessage, setErrorMessageVis
         goalConds++;
     }
     if(goalConds===0){
-      setErrorMessage("You have not specified any World goals in the Ending tab. There will be no story generated unless atleast one fact is specified for the Ending goal.");
+      setErrorMessage("You have not specified any World goals in the Ending tab. There will be no story created unless atleast one fact is specified for the Ending goal.");
       setErrorMessageVisible(true);
       logToFile("Story not produced -- no end goal specified");
       return true;
@@ -111,13 +111,13 @@ const TaskHTML = <div><br/>
       {/* <Title level={5}>Generate story</Title> */}
        <br/>
       <Button type="primary" block onClick={() => onGenerateStoryClick()} loading={loading}>
-        {(firstGenerated)?"Generate Another Story":"Generate Story"}
+        {(firstGenerated)?"Create Another Story":"Create Story"}
         <CaretRightOutlined />
       </Button>
       <Spin spinning={loading}>
       {GlobalSingletonInstance.get("showRegenerateMsg") && (
         <div className={styles.regenerateMsg}>
-          You have updated the settings! Click Generate to see new story.{" "}
+          You have updated the settings! Click Create Story to see new story.{" "}
         </div>
       )}
       <div
