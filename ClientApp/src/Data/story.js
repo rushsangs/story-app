@@ -7,9 +7,9 @@ let task4NoChangesChecker = (x,y)=> {
         for (let k in y)
         {
             //beginning constraints
-            if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("False"))
+            if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("No"))
                 a[0]=true;
-            if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('infridge Soup') && y[k].values.includes("True"))
+            if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('infridge Soup') && y[k].values.includes("Yes"))
                 a[1]=true;
             if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('The outlet is powering ') && y[k].values.includes("the Microwave") )
                 a[2]=true;
@@ -51,7 +51,7 @@ export const task1 = [
         if(y!== undefined)
             for (let k in y){
                 // console.log(y[k]);
-                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("False"))
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("No"))
                     return true;
             }
         return false;
@@ -75,7 +75,7 @@ export const task2 = [
         if(y!== undefined)
             for (let k in y){
                 // console.log(y[k]);
-                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Bread') && y[k].values.includes("False"))
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Bread') && y[k].values.includes("No"))
                     return true;
             }
         return false;
@@ -85,32 +85,24 @@ export const task2 = [
 ]
 
   export const task3 = [
-    {key: 0, text: "In the beginning, the power outlet is powering the Microwave.", status: 0, test:((x,y)=> {
+    {key: 1, text: "Soup is not heated up initially.", status: 0, test:((x,y)=> {
         if(y!== undefined)
             for (let k in y){
                 // console.log(y[k]);
-                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('The outlet is powering ') && y[k].values.includes("the Microwave"))
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("No"))
                     return true;
             }
         return false;
     })},
-    {key: 1, text: "In the beginning, Teddy believes the Toaster is powered.", status: 0, test:((x,y)=> {
-        if(y!== undefined)
-            for (let k in y)
-                if(y[k].page==='beginning'&&y[k].group==="Teddy"&& y[k].values.includes('The outlet is powering ') && !y[k].values.includes("the Microwave"))
-                    return true;
-        return false;
-    })},
     {key: 2, text: "Teddy heats up the soup without using the microwave in the created story.", status: 0, test:((x,y)=> x!== undefined && x.filter( step => step.includes("Teddy heats the Soup over the stove.")).length > 0)},
-    
   ];
 
   export const task4 = [
-    {key:4, text: "Beginning Tab: Soup has been cooked is set to False.", status: 0, test:((x,y)=> {
+    {key:4, text: "Beginning Tab: Soup has been cooked is set to No.", status: 0, test:((x,y)=> {
         if(y!== undefined)
         for (let k in y){
             // console.log(y[k]);
-            if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("False"))
+            if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("No"))
                 return true;
         }
         return false;
@@ -168,7 +160,7 @@ export const task2 = [
         if(y!== undefined)
             for (let k in y){
                 // console.log(y[k]);
-                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("False"))
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("No"))
                     return true;
             }
         return false;
@@ -232,9 +224,9 @@ export const task2 = [
         if(y!== undefined)
             for (let k in y)
             {
-                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("False"))
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Soup') && y[k].values.includes("No"))
                     a= true;
-                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Bread') && y[k].values.includes("False"))
+                if(y[k].page==='beginning'&&y[k].group==="world"&& y[k].values.includes('heated Bread') && y[k].values.includes("No"))
                     b= true;
             }
         return a && b;
@@ -267,8 +259,8 @@ export const taskData = [
     },
     {
         taskNumber: 3,
-        taskInfo: "Now back to Teddy. Teddy's beliefs can be manipulated so he takes different plans. Try changing Teddy's belief about the power outlet to create a different story.",
-        taskTips: [],
+        taskInfo: "Now back to Teddy. Teddy can take different plans to achieve his goal. Try creating a story where Teddy uses an alternate approach.",
+        taskTips: ["You can click the Create Story button again to create other stories with the same beginning and ending."],
         tasks: task3
     },
     {

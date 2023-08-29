@@ -74,11 +74,11 @@ public class StaticDropdownItems
         r.tooltip = "The specified first action should occur before the specified second action in the story.";
         r.color = "";
         actionConstraintDropdowns.Add(r);
-        r = new DropdownItemResponse("True");
+        r = new DropdownItemResponse("Yes");
         r.tooltip = "Select one:";
         r.color = "";
         tfDropdowns.Add(r);
-        r = new DropdownItemResponse("False");
+        r = new DropdownItemResponse("No");
         r.tooltip = "Select one:";
         r.color = "";
         tfDropdowns.Add(r);

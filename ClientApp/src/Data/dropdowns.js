@@ -19,7 +19,7 @@ export const ddargs = (args) =>
 }
 
 
-export const sampleDdArgs = ddargs([['True', 'False']]);
+export const sampleDdArgs = ddargs([['Yes', 'No']]);
 const dropdownRow = (page, group, md, args) => 
 {
     return {
@@ -32,10 +32,10 @@ const dropdownRow = (page, group, md, args) =>
 };
 
 export const sampleInitialDropdowns = [
-    dropdownRow("beginning", "world", ['at Teddy L'], [['True', 'False']]),
-    dropdownRow("beginning", "world", ['at Teddy Q'], [['True', 'False']]),
-    dropdownRow("ending", "world", ['at Teddy L'], [['True', 'False']]),
-    dropdownRow("ending", "world", ['at Teddy Q'], [['True', 'False']]),
+    dropdownRow("beginning", "world", ['at Teddy L'], [['Yes', 'No']]),
+    dropdownRow("beginning", "world", ['at Teddy Q'], [['Yes', 'No']]),
+    dropdownRow("ending", "world", ['at Teddy L'], [['Yes', 'No']]),
+    dropdownRow("ending", "world", ['at Teddy Q'], [['Yes', 'No']]),
 ];
 
 export const IntentDropdowns = ddargs([[
@@ -51,7 +51,7 @@ export const mockInitialDropdowns =[
         "page": "beginning",
         "group": "world",
         "main_Dropdown": "[{\"label\":\"at Teddy L\",\"value\":\"at Teddy L\",\"tooltip\":\"Select one:\",\"color\":\"\"}]",
-        "arguments": "[[{\"label\":\"True\",\"value\":\"True\",\"tooltip\":\"Select one:\",\"color\":\"\"},{\"label\":\"False\",\"value\":\"False\",\"tooltip\":\"Select one:\",\"color\":\"\"}]]"
+        "arguments": "[[{\"label\":\"Yes\",\"value\":\"Yes\",\"tooltip\":\"Select one:\",\"color\":\"\"},{\"label\":\"No\",\"value\":\"No\",\"tooltip\":\"Select one:\",\"color\":\"\"}]]"
     },
     {
         "rowId": 1,
@@ -65,7 +65,7 @@ export const mockInitialDropdowns =[
         "page": "ending",
         "group": "world",
         "main_Dropdown": "[{\"label\":\"at Teddy L\",\"value\":\"at Teddy L\",\"tooltip\":\"Select one:\",\"color\":\"\"}]",
-        "arguments": "[[{\"label\":\"True\",\"value\":\"True\",\"tooltip\":\"Select one:\",\"color\":\"\"},{\"label\":\"False\",\"value\":\"False\",\"tooltip\":\"Select one:\",\"color\":\"\"}]]"
+        "arguments": "[[{\"label\":\"Yes\",\"value\":\"Yes\",\"tooltip\":\"Select one:\",\"color\":\"\"},{\"label\":\"No\",\"value\":\"No\",\"tooltip\":\"Select one:\",\"color\":\"\"}]]"
     },
     {
         "rowId": 4,
