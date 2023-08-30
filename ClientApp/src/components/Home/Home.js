@@ -8,7 +8,7 @@ import styles from "./Home.module.css";
 import InputRow from "../InputRow/InputRow";
 import { Layout, Modal } from "antd";
 import { shape_into_dropdownrequestitems } from "../../Data/dropdowns";
-import { getInitialDropdownData } from "../../Data/apis";
+import { getInitialDropdownData, logToFile } from "../../Data/apis";
 import { taskData, tasks } from "../../Data/story";
 import Title from "antd/es/typography/Title";
 import { studygroups } from "../../Data/study_groups";
@@ -47,9 +47,10 @@ const Home = () => {
     }
   };
 
-  const setDefaultDropdowns = async() =>
+  const changeStudyGroup = (v) =>
   {
-
+     setGroupNumber(v);
+     logToFile("STUDY GROUP: " + v.toString());
   }
   // Callback function to handle button click
   const handleGenerateButtonClick = () => {
@@ -91,7 +92,7 @@ const Home = () => {
     setTaskNumber(task_num);
     setStory();
     setFirstGenerated(false);
-    console.log("Task changed!");
+    // console.log("Task changed!");
     
     // // api request
     let rows = await getInitialDropdownData(task_num);
@@ -101,7 +102,7 @@ const Home = () => {
     
     
     
-    console.log("printing dropdown components, hopefully empty", dropdownComponents);
+    // console.log("printing dropdown components, hopefully empty", dropdownComponents);
     for(let i=0; i < rows.length; ++i)
     {
       const newComponent = {
@@ -151,7 +152,7 @@ const Home = () => {
         [i]: [JSON.parse(rows[i].main_Dropdown)[0].value, JSON.parse(rows[i].arguments)[0][0].value ],
       };
     }
-    console.log("printing dropdown components, new values", dropdownComponents);
+    // console.log("printing dropdown components, new values", dropdownComponents);
     // GlobalSingletonInstance.set("showRegenerateMsg", false);
     // const storyData = await getStoryData();
     // setStory(storyData);
@@ -167,7 +168,7 @@ const Home = () => {
       <Content>
       <Space>
           <Title level={2}>Plot Generation Tool Version 3.0</Title>
-          <Select style={{width: 150,}} options={studygroups} placeholder="Study Group" onChange={(v)=>setGroupNumber(v)}/>
+          <Select style={{width: 150,}} options={studygroups} placeholder="Study Group" onChange={(v)=>changeStudyGroup(v)}/>
           <Select style={{width: 120,}} options={tasks} placeholder="Task" onChange={(v)=>onTaskClick(handleDropdownChangeCallback, v)}/>
       </Space>
       
