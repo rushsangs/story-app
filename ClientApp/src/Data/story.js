@@ -98,7 +98,7 @@ export const task2 = [
   ];
 
   export const task4 = [
-    {key:4, text: "Beginning Tab: Soup has been cooked is set to No.", status: 0, test:((x,y)=> {
+    {key:4, text: "Beginning Tab: Soup has been heated is set to No.", status: 0, test:((x,y)=> {
         if(y!== undefined)
         for (let k in y){
             // console.log(y[k]);
@@ -253,7 +253,7 @@ export const taskData = [
     },
     {
         taskNumber: 2,
-        taskInfo: "Different characters have different desires. While Teddy will always have soup, Poppy will always have bread. Bread needs to be cooked using the Toaster. Find a story where Poppy starts in the LivingRoom, goes to the Kitchem, cooks the Bread and then eats it.",
+        taskInfo: "Different characters have different desires. While Teddy will always have soup, Poppy will always have bread. Bread needs to be heated using the Toaster. Find a story where Poppy starts in the LivingRoom, goes to the Kitchem, heats the Bread and then eats it.",
         taskTips: [],
         tasks: task2
     },
