@@ -201,8 +201,8 @@ const Home = () => {
         <p>The Soup can be heated over the stove or in the Microwave. If it is to be heated using the stove, it must be in the Pot. If it is to be heated in the microwave, it must be in the Bowl.</p>
         <p>The Bread can only be heated in the Toaster.</p>
         <Title level={3}>Characters</Title>
-        <p> <span style={{fontWeight: 'bold'}}>Teddy:</span> Teddy's desire is to eat cooked Soup. Teddy will always try to work towards eating Soup if it hasn't been eaten.</p>
-        <p> <span style={{fontWeight: 'bold'}}>Poppy:</span> Poppy's desire is to eat cooked Bread. Poppy will always try to work towards eating Bread if it hasn't been eaten.</p>  
+        <p> <span style={{fontWeight: 'bold'}}>Teddy:</span> Teddy's desire is to eat heated Soup. Teddy will always try to work towards eating Soup if it hasn't been eaten.</p>
+        <p> <span style={{fontWeight: 'bold'}}>Poppy:</span> Poppy's desire is to eat h Bread. Poppy will always try to work towards eating Bread if it hasn't been eaten.</p>  
         <Title level={3}>Locations</Title>
         <p>Living Room</p>
         <p>Kitchen</p>

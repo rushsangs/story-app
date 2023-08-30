@@ -2,6 +2,7 @@ using HeadSpace.TextMaker;
 using Microsoft.EntityFrameworkCore;
 using NarrativePlanning.DomainBuilder;
 using story_app.Models;
+using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
@@ -25,12 +26,13 @@ NarrativePlanning.PlanningProblem problem = null;
 HeadSpace.TextMaker.TextMaker textmaker = new HeadSpace.TextMaker.TextMaker(path + "/HeadSpace2/HeadSpace/JSON Files/action_texts.json");
 StaticDropdownItems.Populate();
 StudyLogger studyLogger = new StudyLogger(path + "/StudyData");
+PriorityQueue<Tuple<Tuple<String, NarrativePlanning.WorldState>, NarrativePlanning.Intention, NarrativePlanning.Plan, List<NarrativePlanning.WorldState>>, int> fringe = null;
 
 app.MapGet("/storygenerator", async() =>
 {
     Tuple<NarrativePlanning.WorldState, NarrativePlanning.WorldState, List<NarrativePlanning.Operator>> compiled_tuple = NarrativePlanning.PAC.PAC_C(domain.initial.clone(), domain.goal.clone(), domain.operators, domain.middle);
     NarrativePlanning.PlanningProblem problem = new NarrativePlanning.PlanningProblem(compiled_tuple.Item1, compiled_tuple.Item2, compiled_tuple.Item3, domain.desires, domain.counterActions, domain.middle);
-    NarrativePlanning.Plan plan = problem.HeadSpaceXSolution();
+    NarrativePlanning.Plan plan = problem.HeadSpaceXSolution().Item1;
     if (plan == null)
         return Results.Created("/storygenerator/1", new List<string>());
     else
@@ -43,13 +45,27 @@ app.MapPost("/storygenerator", async (List<DropdownRow> allrows) =>
     allrows = DropdownRowSupport.ExpandDropdowns(allrows);
     var old_domain = domain.cloneForTrackingChanges();
     DropdownRowSupport.parseDropdownsIntoDomain(allrows, domain);
+    bool select_from_fringe = true;
+    NarrativePlanning.Plan plan;
     if(problem == null || domain.hasChanged(old_domain))
     {
         Tuple<NarrativePlanning.WorldState, NarrativePlanning.WorldState, List<NarrativePlanning.Operator>> compiled_tuple = NarrativePlanning.PAC.PAC_C(domain.initial.clone(), domain.goal.clone(), domain.operators, domain.middle);
         problem = new NarrativePlanning.PlanningProblem(compiled_tuple.Item1, compiled_tuple.Item2, compiled_tuple.Item3, domain.desires, domain.counterActions, domain.middle);
+        fringe = null;
+        select_from_fringe = false;
     }
-
-    NarrativePlanning.Plan plan = problem.HeadSpaceXSolution();
+    if(select_from_fringe)
+    {
+        var result = problem.HeadSpaceXSolution(fringe, true);
+        plan = result.Item1;
+        fringe = result.Item2;
+    }
+    else
+    {
+        var result = problem.HeadSpaceXSolution();   
+        plan = result.Item1;
+        fringe = result.Item2;
+    }
     if (plan == null)
     {
         studyLogger.AppendTextToFile("Story not produced!");
