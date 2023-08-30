@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Space, Select, Popover, Menu } from "antd";
 import { SettingFilled, CloseCircleTwoTone } from "@ant-design/icons";
 import constraints from "../../Data/constraints";
-import { getNextDropdownData } from "../../Data/apis";
+import { getNextDropdownData, logToFile } from "../../Data/apis";
 import { GlobalSingletonObject } from "../../utils/dataContext";
 import { IntentDropdowns, sampleDdArgs, shape_into_dropdownrequestitem } from "../../Data/dropdowns";
 import { array_replace } from "../../utils/array_replace";
@@ -32,7 +32,7 @@ const InputRow = (props) => {
     console.log("requesting next DDitem: ", requestDDitem)
     var argsResponse = await getNextDropdownData(requestDDitem);
     console.log("response: ", argsResponse);
-    if(groupNumber==2)
+    if(groupNumber===2)
       argsResponse = argsResponse.filter(x=>!x.value.includes("false"));
     setNextActionsDropdowns([argsResponse]);
     if(value === "Sometime after")
@@ -61,6 +61,7 @@ const InputRow = (props) => {
   };
   const handleNextDropdownChange = async(value, index, item) => {
     console.log(item);
+    logToFile("nextdropdownchange");
     // let actualValue = item.filter(x=> x.label === value)[0].value;
     if(selectedActionsValues.current.length-1>=index)
       selectedActionsValues.current = array_replace(selectedActionsValues.current, index+1, value);
@@ -118,7 +119,7 @@ const InputRow = (props) => {
     // >
       <div
         onClick={() => {
-          if(nextActionsDropdowns.filter(x=> x.includes("Intent")).length==0)
+          if(nextActionsDropdowns.filter(x=> x.includes("Intent")).length===0)
            setNextActionsDropdowns((prev) => [...prev,IntentDropdowns[0]]);
           setShowSettingsDropdown(true);
         }}
@@ -173,8 +174,8 @@ const InputRow = (props) => {
           key={String(index)}
         />;
         })}
-      {(enableSettings==true)?settingsIcon:''}
-      {(removable==true)?removeButton:''}
+      {(enableSettings===true)?settingsIcon:''}
+      {(removable===true)?removeButton:''}
     </Space>
   );
 };

@@ -52,6 +52,9 @@ const onGenerateStoryClick = async() => {
   // const storyData = ["hello", "test", "list", "of", "strings"];
   if (storyData.length === 0) 
     storyData.push("No story found.")
+
+  if(storyTaskComponents.tasks.map((item) => (item.test(storyData, dropdownValues) || ('sticky' in item && item.sticky))).filter(x=>x===false).length===0)
+    logToFile("all task objectives met.");
   setStory(storyData);
   setFirstGenerated(true);
   setLoading(false);

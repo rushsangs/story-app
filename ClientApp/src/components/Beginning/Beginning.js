@@ -9,13 +9,6 @@ const { Title } = Typography;
 
 const Beginning = ({componentId, dropdownComponents, onDropdownChangeCallback, onComponentChange, onDropdownChange, taskNumber}) => {
   const rowData = useRef({});
- 
-  const handleRemoveDropdown = (id) => {
-    // should be unable to remove dropdowns in beginning tab
-    // onDropdownChange((prevComponents) =>
-    //   prevComponents.filter((comp) => comp.id !== id)
-    // );
-  };
 
   let teddysbeliefdropdowns = dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Teddy").map((obj) => obj.component);
   let poppysbeliefdropdowns = dropdownComponents.filter((obj) => obj.page==="beginning" && obj.group==="Poppy").map((obj) => obj.component);

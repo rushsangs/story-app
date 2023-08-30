@@ -194,27 +194,26 @@ const Home = () => {
         }}
         footer={null}
       >
-        <p>The kitchen has a refridgerator and a stovetop.</p>
-        <p>The kitchen also has a single power outlet that can power one of two appliances at a time: the Microwave or the Toaster.</p>
+        <p>All stories take place in an apartment which has two rooms: the Kitchen and the Living Room.</p>
+        <p>The Kitchen has a refrigerator and a stove. The kitchen also has two other appliances: a Toaster and a Microwave.
+        The Microwave and the Toaster, however, share a power outlet. Only one of the two can be connected to power at the same time.</p>
         <p>Food must be heated before it can be eaten.</p>
-        <p>If food is to be heated over stovetop, it must be in a pot.</p>
-        <p>If food is to be heated using a microwave, it must be in a bowl.</p>
-        <p>The bread can only be heated in the Toaster, and vice versa.</p>
+        <p>The Soup can be heated over the stove or in the Microwave. If it is to be heated using the stove, it must be in the Pot. If it is to be heated in the microwave, it must be in the Bowl.</p>
+        <p>The Bread can only be heated in the Toaster.</p>
         <Title level={3}>Characters</Title>
-        <p>Teddy's only desire is to eat soup.</p>
-        <p>Poppy's only desire is to eat Bread.</p>
+        <p> <span style={{fontWeight: 'bold'}}>Teddy:</span> Teddy's desire is to eat cooked Soup. Teddy will always try to work towards eating Soup if it hasn't been eaten.</p>
+        <p> <span style={{fontWeight: 'bold'}}>Poppy:</span> Poppy's desire is to eat cooked Bread. Poppy will always try to work towards eating Bread if it hasn't been eaten.</p>  
         <Title level={3}>Locations</Title>
         <p>Living Room</p>
-        
         <p>Kitchen</p>
         <Title level={3}>Actions</Title>
-        <p>Connect</p>
         <p>Walk</p>
+        <p>Connect</p>
         <p>Disconnect</p>
-        <p>Check power outlet</p>
+        <p>Check Power Outlet</p>
         <p>Toast</p>
-        <p>Heat over microwave</p>
-        <p>Heat over stovetop</p>
+        <p>Heat in Microwave</p>
+        <p>Heat over stove</p>
         <p>Transfer container</p>
         <p>Remove from fridge</p>
         <p>Eat</p>
